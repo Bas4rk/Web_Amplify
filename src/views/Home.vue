@@ -1,19 +1,73 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <amplify-sign-out></amplify-sign-out>
+      <new-todo></new-todo>
+      <amplify-connect :query="listTodosQuery"
+          :subscription="createTodoSubscription"
+          :onSubscriptionMsg="onCreateTodo">
+        <template slot-scope="{loading, data, errors}">
+          <div v-if="loading">Loading...</div>
+
+          <div v-else-if="errors.length > 0"></div>
+
+          <div v-else-if="data">
+            <TodoList :items="data.listTodos.items"></TodoList>
+          </div>
+          
+          <amplify-sign-out />
+        </template>
+      </amplify-connect>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { components } from 'aws-amplify-vue';
+import TodoList from '@/components/TodoList.vue';
+import NewTodo from '@/components/NewTodo.vue';
+
+const ListTodosQuery = `query ListTodos {
+    listTodos {
+      items {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+    }
+  }`;
+
+  const OnCreateTodoSubscription = `subscription OnCreateTodo {
+      onCreateTodo {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+    }`;
 
 export default {
-  name: 'Home',
+  name: 'home',
   components: {
-    HelloWorld
+    NewTodo,
+    TodoList,
+    ...components
+  },
+  computed: {
+    listTodosQuery() {
+      return this.$Amplify.graphqlOperation(ListTodosQuery);
+    },
+    createTodoSubscription() {
+      return this.$Amplify.graphqlOperation(OnCreateTodoSubscription);
+    }
+  },
+  methods: {
+    onCreateTodo(prevData, newData) {
+      console.log('New todo from subscription...');
+      const newTodo = newData.onCreateTodo;
+      prevData.data.listTodos.items.push(newTodo);
+      return prevData.data;
+    }
   }
 }
 </script>
