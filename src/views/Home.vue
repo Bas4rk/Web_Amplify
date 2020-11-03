@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-      <new-todo></new-todo>
       <amplify-connect :query="listTodosQuery"
           :subscription="createTodoSubscription"
           :onSubscriptionMsg="onCreateTodo">
@@ -10,10 +9,9 @@
           <div v-else-if="errors.length > 0"></div>
 
           <div v-else-if="data">
-            <TodoList :items="data.listTodos.items"></TodoList>
+            <!-- <TodoList :items="data.listTodos.items"></TodoList> -->
+            <List :items="data.listTodos.items"></List>
           </div>
-          
-          <amplify-sign-out />
         </template>
       </amplify-connect>
   </div>
@@ -21,8 +19,9 @@
 
 <script>
 import { components } from 'aws-amplify-vue';
-import TodoList from '@/components/TodoList.vue';
-import NewTodo from '@/components/NewTodo.vue';
+//import TodoList from '@/components/TodoList.vue';
+//import NewTodo from '@/components/NewTodo.vue';
+import List from '@/components/List.vue';
 
 const ListTodosQuery = `query ListTodos {
     listTodos {
@@ -51,8 +50,7 @@ const ListTodosQuery = `query ListTodos {
 export default {
   name: 'home',
   components: {
-    NewTodo,
-    TodoList,
+    List,
     ...components
   },
   computed: {
