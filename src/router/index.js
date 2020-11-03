@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import About from '../views/About.vue'
 
 import store from '../store/index.js'
 
@@ -60,6 +61,12 @@ const router = new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            // アバウトページ
+            path: '/about',
+            name: 'about',
+            component: About
         },
         {
             // トップページ

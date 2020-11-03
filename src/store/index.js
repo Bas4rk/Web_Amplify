@@ -7,6 +7,11 @@ export default new Vuex.Store({
   state: {
     user: null
   },
+  getters: {
+    getUserEmail(state) {
+      return state.user.signInUserSession.idToken.payload.email
+    }
+  },
   mutations: {
     // ユーザー情報保存
     setUser(state, user) {

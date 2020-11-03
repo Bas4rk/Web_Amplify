@@ -5,6 +5,7 @@
         <input v-model="name" placeholder="item name" />
         <input v-model="description" placeholder="item description" />
         <button :disabled="loading" @click="mutate">Create Todo</button>
+        <div>{{ getUserEmail }}</div>
       </template>
     </amplify-connect>
   </div>
@@ -13,10 +14,14 @@
 <script>
 import { components } from 'aws-amplify-vue';
 
-const CreateTodoMutation = `mutation CreateTodo($name: String!, $description: String) {
-    createTodo(input: { name: $name, description: $description }) {
+const CreateTodoMutation = `mutation CreateTodo($name: String!, $description: String, $user_id: String!) {
+    createTodo(input: { name: $name, description: $description, user_id: $user_id }) {
       id
       name
+      description
+      user_id
+      createdAt
+      updatedAt
     }
   }`;
 
@@ -34,7 +39,10 @@ export default {
   computed: {
     createTodoMutation () {
       return this.$Amplify.graphqlOperation(CreateTodoMutation,
-        { name: this.name, description: this.description });
+        { name: this.name, description: this.description, user_id:  this.$store.getters.getUserEmail});
+    },
+    getUserEmail (){
+      return  this.$store.getters.getUserEmail
     }
   },
   methods: {
