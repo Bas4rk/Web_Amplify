@@ -2,10 +2,33 @@
   <div>
     <amplify-connect :mutation="createTodoMutation" @done="onCreateFinished">
       <template slot-scope="{ loading, mutate, }">
-        <input v-model="name" placeholder="item name" />
-        <input v-model="description" placeholder="item description" />
-        <button :disabled="loading" @click="mutate">Create Todo</button>
-        <div>{{ getUserEmail }}</div>
+        <!-- <input v-model="name" placeholder="item name" />
+        <input v-model="description" placeholder="item description" /> -->
+        <!-- <button :disabled="loading" @click="mutate">Create Todo</button> -->
+            <v-form>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="3">
+                    <v-text-field
+                      label="name"
+                      placeholder="タイトル"
+                      v-model="name"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col>
+                    <v-text-field
+                      label="description"
+                      placeholder="説明"
+                      v-model="description"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col>
+                    <v-btn :disabled="loading" @click="mutate" large color="primary">投稿</v-btn>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+
       </template>
     </amplify-connect>
   </div>
