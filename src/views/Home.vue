@@ -30,6 +30,7 @@ const ListTodosQuery = `query ListTodos {
         id
         name
         description
+        user_id
         createdAt
         updatedAt
       }
@@ -41,6 +42,7 @@ const ListTodosQuery = `query ListTodos {
         id
         name
         description
+        user_id
         createdAt
         updatedAt
       }
