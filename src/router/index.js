@@ -32,6 +32,7 @@ function getUser() {
     return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((data) => {
         if (data && data.signInUserSession) {
             store.commit('setUser', data);
+
             return data;
         }
     }).catch(() => {
@@ -49,6 +50,7 @@ AmplifyEventBus.$on('authState', async (state) => {
     } else if (state === 'signedIn') {
         user = await getUser();
         router.push({path: '/'});
+
     }
 });
 
