@@ -9,8 +9,7 @@
           <div v-else-if="errors.length > 0"></div>
 
           <div v-else-if="data">
-            <!-- <TodoList :items="data.listTodos.items"></TodoList> -->
-            <List :items="data.listTodos.items"></List>
+            <TweetList :items="data.listTodos.items"></TweetList>
           </div>
         </template>
       </amplify-connect>
@@ -19,9 +18,7 @@
 
 <script>
 import { components } from 'aws-amplify-vue';
-//import TodoList from '@/components/TodoList.vue';
-//import NewTodo from '@/components/NewTodo.vue';
-import List from '@/components/List.vue';
+import TweetList from '@/components/TweetList.vue';
 
 const ListTodosQuery = `query ListTodos {
     listTodos {
@@ -50,7 +47,7 @@ const ListTodosQuery = `query ListTodos {
 export default {
   name: 'home',
   components: {
-    List,
+    TweetList,
     ...components
   },
   computed: {
