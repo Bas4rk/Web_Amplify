@@ -2,7 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
-import About from '../views/About.vue'
+import Search from '../views/Search.vue'
+import Calendar from '../views/Calendar.vue'
+import Notice from '../views/Notice.vue'
+import Profile from '../views/Profile.vue'
+import Setting from '../views/Setting.vue'
+
 
 import store from '../store/index.js'
 
@@ -59,23 +64,47 @@ const router = new Router({
     mode: 'history',
     routes: [
         {
+            // トップページ
+            path: '/',
+            name: 'home',
+            component: Home,
+            meta: { requiresAuth: true}
+        },
+        {
             // ログインページ
             path: '/login',
             name: 'login',
             component: Login
         },
         {
-            // アバウトページ
-            path: '/about',
-            name: 'about',
-            component: About
+            // 検索ページ
+            path: '/search',
+            name: 'search',
+            component: Search
         },
         {
-            // トップページ
-            path: '/',
-            name: 'home',
-            component: Home,
-            meta: { requiresAuth: true}
+            // カレンダーページ
+            path: '/calendar',
+            name: 'calendar',
+            component: Calendar
+        },
+        {
+            // 通知ページ
+            path: '/notice',
+            name: 'notice',
+            component: Notice
+        },
+        {
+            // プロフィールページ
+            path: '/profile',
+            name: 'profile',
+            component: Profile
+        },
+        {
+            // 設定ページ
+            path: '/setting',
+            name: 'setting',
+            component: Setting
         }
     ]
 });

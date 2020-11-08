@@ -1,6 +1,6 @@
 <template>
   <div class="Navigation">
-    <v-system-bar app>
+    <!-- <v-system-bar app>
       <v-spacer></v-spacer>
 
       <v-icon>mdi-square</v-icon>
@@ -8,7 +8,7 @@
       <v-icon>mdi-circle</v-icon>
 
       <v-icon>mdi-triangle</v-icon>
-    </v-system-bar>
+    </v-system-bar> -->
 
     <v-navigation-drawer
       v-model="drawer"
@@ -33,9 +33,9 @@
 
       <v-list>
         <v-list-item
-          v-for="[icon, text] in links"
+          v-for="[icon, text ,link] in links"
           :key="icon"
-          link
+          :to="link"
         >
           <v-list-item-icon>
             <v-icon>{{ icon }}</v-icon>
@@ -45,6 +45,7 @@
             <v-list-item-title>{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <!-- ↓後できれいにする -->
         <v-list-item>
           <v-list-item-icon>
             <v-icon> mdi-logout</v-icon>
@@ -53,6 +54,29 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+    <v-app-bar app>
+      <!-- アプリケーションバー -->
+      <!-- あとでここも遷移とかつける。 -->
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-icon>mdi-dumbbell</v-icon>
+      <v-toolbar-title>筋トレアプリ</v-toolbar-title>
+      <template v-if="!drawer">
+        <v-spacer />
+        <v-btn icon>
+          <v-icon>mdi-home</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>mdi-account</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>mdi-dots-vertical</v-icon>
+        </v-btn>
+      </template>
+    </v-app-bar>
   </div>
 </template>
 
@@ -64,10 +88,12 @@ export default {
     drawer: null,
     userEmail: 'null',
     links: [
-      ['mdi-inbox-arrow-down', 'Inbox'],
-      ['mdi-send', 'Send'],
-      ['mdi-delete', 'Trash'],
-      ['mdi-alert-octagon', 'Spam'],
+      ['mdi-home', 'ホーム','/'],
+      ['mdi-magnify', '検索','/search'],
+      ['mdi-calendar', 'カレンダー','/calendar'],
+      ['mdi-bell', '通知','/notice'],
+      ['mdi-account', 'プロフィール','/profile'],
+      ['mdi-cog', '設定','/setting']
     ],
   }),
   // computed: {
@@ -80,7 +106,7 @@ export default {
       if (mutation.type === 'setUser') {
         console.log('update prefecture! %s', state.user);
         this.userEmail = state.user.signInUserSession.idToken.payload.email
-        //ここ他の方法ある気がする。
+        //ここもっといい方法ある気がする。
       }
     })
   }

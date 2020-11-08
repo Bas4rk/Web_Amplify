@@ -4,21 +4,21 @@
       class="py-8 px-6"
       fluid
     >
-      <v-row>
+      <v-row justify="center">
           <!-- 日ごとに表示させる -->
         <!-- <v-col
           v-for="card in cards"
           :key="card"
           cols="12"
         > -->
-        <v-col cols="12">
+        <v-col cols="5">
           <v-card>
             <!-- <v-subheader>{{ card }}</v-subheader> -->
             <v-subheader>投稿一覧</v-subheader>
 
             <v-list>
               <template v-for="item in items">
-                <v-list-item :key="item.id">
+                <v-list-item :key="item.id" height="200" :to="`/setting`">
                   <v-list-item-avatar color="grey darken-1">
                     <v-icon size="30">mdi-account</v-icon>
                   </v-list-item-avatar>
@@ -28,10 +28,10 @@
 
                     <v-list-item-subtitle>
                       {{ item.description}}
-                      <div>
+                      <div class="right">
                         <small>投稿者:{{ item.user_id }}</small>
                       </div>
-                      <div>
+                      <div class="right">
                         <small>{{ item.createdAt }}</small>
                       </div>
                     </v-list-item-subtitle>
@@ -46,7 +46,9 @@
             </v-list>
           </v-card>
         </v-col>
+      </v-row>
 
+      <v-row>
         <v-col>
           <v-card >
             <v-subheader>投稿投稿</v-subheader>
@@ -68,3 +70,9 @@ import NewTodo from '@/components/NewTodo.vue';
     }
   }
 </script>
+
+<style scoped>
+  .right{
+    text-align: right;
+  }
+</style>
