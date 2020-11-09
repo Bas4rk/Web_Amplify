@@ -7,7 +7,7 @@ import Calendar from '../views/Calendar.vue'
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
 import Setting from '../views/Setting.vue'
-
+import Tweet from '../views/Tweet.vue'
 
 import store from '../store/index.js'
 
@@ -105,6 +105,12 @@ const router = new Router({
             path: '/setting',
             name: 'setting',
             component: Setting
+        },
+        {
+            // 設定ページ
+            path: '/tweet/:id',
+            name: 'tweet',
+            component: Tweet
         }
     ]
 });

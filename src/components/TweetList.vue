@@ -18,7 +18,7 @@
 
             <v-list>
               <template v-for="item in items">
-                <v-list-item :key="item.id" height="200" :to="`/setting`">
+                <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}">
                   <v-list-item-avatar color="grey darken-1">
                     <v-icon size="30">mdi-account</v-icon>
                   </v-list-item-avatar>
