@@ -48,6 +48,10 @@
         </v-col>
       </v-row>
 
+
+      <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
+      
+
       <v-row>
         <v-col>
           <v-card >
@@ -58,6 +62,7 @@
       </v-row>
     </v-container>
   </div>
+  <!-- tweetカードらへんをコンポーネントにする。一番上に飛ぶボタンつくる -->
 </template>
 
 <script>
@@ -67,7 +72,15 @@ import NewTodo from '@/components/NewTodo.vue';
     props:['items'],
     components: {
       NewTodo
+    },
+    methods: {
+    scrollTop: function(){
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
+  }
   }
 </script>
 
