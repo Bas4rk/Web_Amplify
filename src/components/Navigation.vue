@@ -45,16 +45,6 @@
             <v-list-item-title>{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <!-- ↓後できれいにする -->
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon> mdi-logout</v-icon>
-          </v-list-item-icon>
-          <!-- <v-list-item-content>
-            <v-list-item-title>サインアウト</v-list-item-title>
-          </v-list-item-content> -->
-          <amplify-sign-out />
-        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -84,7 +74,6 @@
 </template>
 
 <script>
-// import signOut from '@/utils/auth.js'
 
 export default {
   data: () => ({
@@ -104,11 +93,6 @@ export default {
       return  this.$store.getters.getUserEmail
     }
   }
-  // methods: {
-  //   signOut() {
-  //     signOut().then((data) => console.log('DONE', data)).catch((err) => console.log('SIGN OUT ERR', err));
-  //   }
-  // }
   // mounted() {
   //   this.$store.subscribe((mutation, state) => {
   //     if (mutation.type === 'setUser') {

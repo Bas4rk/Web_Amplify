@@ -1,15 +1,18 @@
 import { Auth } from 'aws-amplify'
 import { AmplifyEventBus } from 'aws-amplify-vue'
+import store from '../store/index.js'
 
 function getUser() {
   return Auth.currentAuthenticatedUser().then((user) => {
     if (user && user.signInUserSession) {
+      store.commit('setUser', user)
       return user
     } else {
       return null
     }
   }).catch(err => {
     console.log(err);
+    store.commit('setUser', null);
     return null;
   });
 }
