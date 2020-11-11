@@ -1,5 +1,6 @@
 <template>
   <div class="calendar">
+    <Navigation></Navigation>
     <v-sheet tile height="6vh" color="grey lighten-3" class="d-flex align-center">
       <v-btn outlined small class="ma-4" @click="setToday">
         今日
@@ -31,8 +32,12 @@
 
 <script>
 import moment from 'moment';
+import Navigation from '@/components/Navigation.vue';
 
 export default {
+  components: {
+    Navigation
+  },
   data: () => ({
     events: [],
     value: moment().format('yyyy-MM-DD'),

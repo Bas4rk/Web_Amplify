@@ -1,5 +1,6 @@
 <template>
   <div class="calendar">
+    <Navigation></Navigation>
     <h1>設定ページ</h1>
     <v-switch :label="`Dark Theme`" v-model="theme"></v-switch>
     <!-- <div>{{setTheme}}</div> -->
@@ -8,12 +9,17 @@
 </template>
 
 <script>
+import Navigation from '@/components/Navigation.vue';
+
 export default {
-   data() {
-      return {
-        theme: false
-      };
-    },
+  components: {
+    Navigation
+  },
+  data() {
+    return {
+      theme: false
+    };
+  },
     // computed: {
     //   setTheme() {
     //       if (this.goDark == true) {
@@ -25,7 +31,7 @@ export default {
     //       }
     //   }
     // },
-    watch: {
+  watch: {
     theme() {
       this.$vuetify.theme.dark = this.theme
     }

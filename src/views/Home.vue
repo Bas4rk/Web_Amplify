@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Navigation></Navigation>
       <amplify-connect :query="listTodosQuery"
           :subscription="createTodoSubscription"
           :onSubscriptionMsg="onCreateTodo">
@@ -19,6 +20,7 @@
 <script>
 import { components } from 'aws-amplify-vue';
 import TweetList from '@/components/TweetList.vue';
+import Navigation from '@/components/Navigation.vue';
 
 const ListTodosQuery = `query ListTodos {
     listTodos {
@@ -48,6 +50,7 @@ export default {
   name: 'home',
   components: {
     TweetList,
+    Navigation,
     ...components
   },
   computed: {

@@ -1,5 +1,6 @@
 <template>
   <div class="Tweet">
+    <Navigation></Navigation>
     <h1>Tweetページ</h1>
     <!-- {{tweetData}} -->
     <v-row justify="center">
@@ -57,11 +58,11 @@
 </template>
 
 <script>
-
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlQueries from '../graphql/queries' // read
 // import * as gqlMutations from '../graphql/mutations' // create, update, delete
 // import * as gqlSubscriptions from '../graphql/subscriptions' // 監視
+import Navigation from '@/components/Navigation.vue';
 
 // const GetTodoQuery = `query GetTodo($id: ID!) {
 //   getTodo(id: $id) {
@@ -75,6 +76,9 @@ import * as gqlQueries from '../graphql/queries' // read
 // `;
 
 export default {
+  components: {
+    Navigation
+  },
   data() {
     return {
       tweetId: this.$route.params.id,

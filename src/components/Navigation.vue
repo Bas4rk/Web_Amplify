@@ -26,7 +26,7 @@
         <v-icon size="60">mdi-account</v-icon>
         </v-avatar>
 
-        <div>{{userEmail}}</div>
+        <div>{{getUserEmail}}</div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -50,6 +50,9 @@
           <v-list-item-icon>
             <v-icon> mdi-logout</v-icon>
           </v-list-item-icon>
+          <!-- <v-list-item-content>
+            <v-list-item-title>サインアウト</v-list-item-title>
+          </v-list-item-content> -->
           <amplify-sign-out />
         </v-list-item>
       </v-list>
@@ -81,12 +84,12 @@
 </template>
 
 <script>
+// import signOut from '@/utils/auth.js'
 
 export default {
   data: () => ({
-    // cards: ['Today', 'Yesterday'],
     drawer: null,
-    userEmail: 'null',
+    // userEmail: 'null',
     links: [
       ['mdi-home', 'ホーム','/'],
       ['mdi-magnify', '検索','/search'],
@@ -96,19 +99,24 @@ export default {
       ['mdi-cog', '設定','/setting']
     ],
   }),
-  // computed: {
-  //   getUserEmail (){
-  //     return  this.$store.getters.getUserEmail
-  //   }
-  // },
-  mounted() {
-    this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'setUser') {
-        console.log('update prefecture! %s', state.user);
-        this.userEmail = state.user.signInUserSession.idToken.payload.email
-        //ここもっといい方法ある気がする。
-      }
-    })
+  computed: {
+    getUserEmail (){
+      return  this.$store.getters.getUserEmail
+    }
   }
+  // methods: {
+  //   signOut() {
+  //     signOut().then((data) => console.log('DONE', data)).catch((err) => console.log('SIGN OUT ERR', err));
+  //   }
+  // }
+  // mounted() {
+  //   this.$store.subscribe((mutation, state) => {
+  //     if (mutation.type === 'setUser') {
+  //       console.log('update prefecture! %s', state.user);
+  //       this.userEmail = state.user.signInUserSession.idToken.payload.email
+  //       //ここもっといい方法ある気がする。
+  //     }
+  //   })
+  // }
 }
 </script>

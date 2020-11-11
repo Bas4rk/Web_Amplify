@@ -1,5 +1,6 @@
 <template>
   <div class="search">
+    <Navigation></Navigation>
     <v-row justify="center">
       <v-col cols="5">
         <v-card>
@@ -114,7 +115,12 @@
 </template>
 
 <script>
+import Navigation from '@/components/Navigation.vue';
+
 export default {
+  components: {
+    Navigation
+  },
   data: () => ({
     imgUrl: require('../assets/料理.jpg'),
     items: [
