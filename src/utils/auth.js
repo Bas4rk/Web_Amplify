@@ -18,6 +18,7 @@ function getUser() {
           })
         )
         console.log(Graphqluser.data.emailIndex);
+        // [fix]ここなんか二回呼ばれる。
         console.log("emailIndexクエリー飛ばしてます");
         store.commit('setUserGraphql', Graphqluser.data.emailIndex)
       }
@@ -60,6 +61,7 @@ function confirmSignUp(username, code, nickname) {
   return Auth.confirmSignUp(username, code).then(data => {
     AmplifyEventBus.$emit('authState', 'signIn')
 
+    // [fix]ここ最優先
     const user = API.graphql(
       graphqlOperation(gqlMutations.createUser, {
         input: {

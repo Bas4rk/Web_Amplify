@@ -26,8 +26,8 @@ type User
 
 type Relationship
     @model
-    @key(name: "followee", fields: ["followeeId"])
-    @key(name: "follower", fields: ["followerId"])
+    @key(name: "followee", fields: ["followeeId"], queryField: "followeeIndex")
+    @key(name: "follower", fields: ["followerId"], queryField: "followerIndex")
     @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
     followeeId: ID!

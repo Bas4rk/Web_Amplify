@@ -707,3 +707,95 @@ export const emailIndex = /* GraphQL */ `
     }
   }
 `;
+export const followeeIndex = /* GraphQL */ `
+  query FolloweeIndex(
+    $followeeId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelRelationshipFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    followeeIndex(
+      followeeId: $followeeId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        followeeId
+        followerId
+        blockBool
+        followee {
+          id
+          name
+          emailAddress
+          createdAt
+          updatedAt
+          premium
+          owner
+        }
+        follower {
+          id
+          name
+          emailAddress
+          createdAt
+          updatedAt
+          premium
+          owner
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const followerIndex = /* GraphQL */ `
+  query FollowerIndex(
+    $followerId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelRelationshipFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    followerIndex(
+      followerId: $followerId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        followeeId
+        followerId
+        blockBool
+        followee {
+          id
+          name
+          emailAddress
+          createdAt
+          updatedAt
+          premium
+          owner
+        }
+        follower {
+          id
+          name
+          emailAddress
+          createdAt
+          updatedAt
+          premium
+          owner
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;

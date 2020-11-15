@@ -29,6 +29,11 @@
       {{wholeposts}}
     </div> -->
 
+    <!-- <div>
+      全体のポスト
+      {{wholeposts}}
+    </div> -->
+
   </div>
 </template>
 
@@ -48,6 +53,7 @@ import { API, graphqlOperation } from 'aws-amplify'
 // }
 // `
 
+// [fix]ここのクエリーfilter使ってもう少しよくできないか
 const _query2 = `query GetUser($id: ID!) {
   getUser(id: $id) {
     tweetPosts {
@@ -57,6 +63,7 @@ const _query2 = `query GetUser($id: ID!) {
         createdAt
         user {
           name
+          emailAddress
         }
       }
     }
@@ -71,6 +78,7 @@ const _query2 = `query GetUser($id: ID!) {
               createdAt
               user {
                 name
+                emailAddress
               }
             }
           }
@@ -89,9 +97,11 @@ export default {
       user: null,
       myposts: null,
       followeeposts: [],
+      //開発用
+      dev: true,
       // followeeposts2: null,
-      wholeposts: null
-
+      //ここルートなので、他の画面編集してる時もいらんクエリー飛ばすのでテストデータいれてます。
+      wholeposts: [ { "id": "64bc2dec-f6a0-4887-aca1-239ade116588", "content": "テストデータ", "createdAt": "2020-11-14T12:23:50.676Z", "user": { "name": "開発中" } }, { "id": "003f8891-0834-480e-8b3a-e693bff1561b", "content": "開発中", "createdAt": "2020-11-15T01:09:26.983Z", "user": { "name": "開発中" } }, { "id": "3f406308-c49b-4af2-bf85-d7914e918c7b", "content": "開発中", "createdAt": "2020-11-15T04:46:33.514Z", "user": { "name": "開発中" } }, { "id": "39ee2d99-870b-4639-baf4-f5fa1ac3d01f", "content": "開発中", "createdAt": "2020-11-14T12:57:01.263Z", "user": { "name": "開発中" } } ]
     }
   },
   components: {
@@ -103,36 +113,36 @@ export default {
   methods: {
   },
   mounted : async function(){
-    console.log('mounted')
-    const usersorce= this.$store.getters.getUserGraphql
 
-    // const user1 = await API.graphql(
-    //   graphqlOperation(gqlQueries.getUser, {
-    //     id: usersorce.items[0].id // userテーブルの取得したいデータのID
-    //   })
-    // )
-
-    if(!this.$store.getters.getWholeposts){
-      //開発時にクエリーとびまくるので、データ保存してます。
-      //テストデータ作ればクエリー一切飛ばさずにすみますが、だるいのでやってないです
+    //きたないのできれいにする。
+    if(this.dev){
+      const usersorce= this.$store.getters.getUserGraphql
       const query = await API.graphql(
         graphqlOperation(_query2, {id : usersorce.items[0].id})
       )
       console.log("タイムラインクエリー飛ばしました。")
-      this.$store.commit('setWholeposts', query)
+      this.user = query.data.getUser
+      this.myposts= this.user.tweetPosts.items//自分のツイート
+      this.wholeposts= this.myposts//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
+      for(let i = 0; i < this.user.followees.items.length; i++){
+        if(this.user.followees.items[i].follower.tweetPosts.items.length > 0){
+          this.followeeposts.push(this.user.followees.items[i].follower.tweetPosts.items[0])
+        } 
+      }
+      this.wholeposts= this.myposts.concat(this.followeeposts)
     }
 
 
-    //きたないのできれいにする。
-    this.user= this.$store.getters.getWholeposts.data.getUser
-    this.myposts= this.user.tweetPosts.items//自分のツイート
-    this.wholeposts= this.myposts//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
-    for(let i = 0; i < this.user.followees.items.length; i++){
-      if(this.user.followees.items[i].follower.tweetPosts.items.length > 0){
-        this.followeeposts.push(this.user.followees.items[i].follower.tweetPosts.items[0])
-      } 
-    }
-    this.wholeposts= this.myposts.concat(this.followeeposts)
+
+
+
+
+
+
+
+
+
+
     
     // this.user= this.$store.getters.getWholeposts.data.getUser
 

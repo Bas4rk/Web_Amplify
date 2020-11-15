@@ -33,9 +33,14 @@
                         <small>投稿者:{{ item.user.name }}</small>
                       </div>
                       <div class="right">
+                        <small>{{ item.user.emailAddress }}</small>
+                      </div>
+                      <div class="right">
                         <small>{{ item.createdAt }}</small>
                       </div>
                     </v-list-item-subtitle>
+                    <!-- [fix]メアド見てやってるけどidのほうがいい？メアドもプライマリーぽいからいい気がした。idのクエリーとらなくてすむし -->
+                    <v-btn v-if="item.user.emailAddress == currentuser" @click="deleteTweet(item.id)" color="primary">投稿削除</v-btn>
                   </v-list-item-content>
                 </v-list-item>
 
@@ -71,19 +76,51 @@
 // import NewTodo from '@/components/NewTodo.vue';
 import CreateTweet from '@/components/CreateTweet.vue';
 
+import { API, graphqlOperation } from 'aws-amplify'
+
+const deleteTweet_query = /* GraphQL */`
+  mutation DeleteTweet(
+    $input: DeleteTweetInput!
+  ) {
+    deleteTweet(input: $input) {
+      id
+    }
+  }
+`
+
   export default {
+    data () {
+      return {
+        // currentuser: null
+      }
+    },
     props:['items'],
     components: {
       CreateTweet
     },
+    computed: {
+      currentuser(){
+        return this.$store.getters.getUserGraphql.items[0].emailAddress
+      }
+    },
     methods: {
-    scrollTop: function(){
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      scrollTop: function(){
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      },
+      async deleteTweet(id){
+      const deleteTweet = await API.graphql(
+        graphqlOperation(deleteTweet_query, {
+          input: {
+            id: id
+          }
+        })
+      )
+      console.log("投稿を削除しました"+deleteTweet.data.deleteTweet)
     }
-  }
+    },
   }
 </script>
 

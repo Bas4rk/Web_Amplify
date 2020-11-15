@@ -20,10 +20,6 @@ export default new Vuex.Store({
     getUserGraphql(state) {
       // return state.user.signInUserSession.idToken.payload.email
       return state.GraphqlUser
-    },
-    getWholeposts(state) {
-      // return state.user.signInUserSession.idToken.payload.email
-      return state.Wholeposts
     }
   },
   mutations: {
@@ -33,11 +29,7 @@ export default new Vuex.Store({
     },
     setUserGraphql(state, user) {
       state.GraphqlUser = user
-    },
-    setWholeposts(state, posts) {
-      state.Wholeposts = posts
-    },
-
+    }
 
     // async setUserGraphql(state,username,nickname) {
       

@@ -17,27 +17,29 @@
             <v-subheader>フォローしてるユーザー</v-subheader>
 
             <v-list>
-              <template v-for="followee in followees">
+              <template v-for="item in followees">
                 <!-- <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}"> -->
-                  <v-list-item :key="followee.follower.id" height="200">
+                  <v-list-item :key="item.follower.id" height="200">
                   <v-list-item-avatar color="grey darken-1">
                     <v-icon size="30">mdi-account</v-icon>
                   </v-list-item-avatar>
 
                   <v-list-item-content>
-                    <v-list-item-title>{{ followee.follower.name}}</v-list-item-title>
+                    <v-list-item-title>{{ item.follower.name}}</v-list-item-title>
 
                     <v-list-item-subtitle>
                       <!-- {{ item.description}} -->
                       <div>
-                        <small>{{ followee.follower.emailAddress }}</small>
+                        <small>{{ item.follower.emailAddress }}</small>
                       </div>
                     </v-list-item-subtitle>
+                    
+                    <v-btn @click="deleteRelation(item.id)" color="primary">フォロー解除</v-btn>
                   </v-list-item-content>
                 </v-list-item>
 
                 <v-divider
-                  :key="`divider-${followee.follower.id}`"
+                  :key="`divider-${item.follower.id}`"
                   inset
                 ></v-divider>
               </template>
@@ -56,6 +58,18 @@
 
 <script>
 // import NewTodo from '@/components/NewTodo.vue';
+import { API, graphqlOperation } from 'aws-amplify'
+// import * as gqlQueries from '../graphql/queries'
+
+const deleteRelationship_query = /* GraphQL */ `
+  mutation DeleteRelationship(
+    $input: DeleteRelationshipInput!
+  ) {
+    deleteRelationship(input: $input) {
+      id
+    }
+  }
+`
 
   export default {
     props:['followees'],
@@ -67,6 +81,16 @@
         top: 0,
         behavior: "smooth"
       });
+    },
+    async deleteRelation(id){
+      const deleteRelation = await API.graphql(
+        graphqlOperation(deleteRelationship_query, {
+          input: {
+            id: id
+          }
+        })
+      )
+      console.log("フォロー解除しました"+deleteRelation.data.deleteRelationship)
     }
   }
   }

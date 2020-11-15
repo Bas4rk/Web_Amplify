@@ -23,20 +23,45 @@ import { API, graphqlOperation } from 'aws-amplify'
 
 // import store from '../store/index.js'
 
-const followees_query = `query GetUser($id: ID!) {
-  getUser(id: $id) {
-    followees {
+
+//[fix]クエリーfolloweeIndexに変える。
+// const followees_query = `query GetUser($id: ID!) {
+//   getUser(id: $id) {
+//     followees {
+//       items {
+//         follower {
+//           name
+//           emailAddress
+//           id
+//         }
+//       }
+//     }
+//   }
+// }
+// `
+
+const followees_query = /* GraphQL */ `
+  query FolloweeIndex(
+    $followeeId: ID
+  ) {
+    followeeIndex(
+      followeeId: $followeeId
+    ) {
       items {
+        id
         follower {
+          id
           name
           emailAddress
-          id
         }
       }
     }
   }
-}
-`
+`;
+
+
+
+
 
 export default {
   data() {
@@ -82,10 +107,10 @@ export default {
   mounted : async function(){
     const usersorce= this.$store.getters.getUserGraphql
     const query = await API.graphql(
-      graphqlOperation(followees_query, {id : usersorce.items[0].id})
+      graphqlOperation(followees_query, {followeeId : usersorce.items[0].id})
     )
     console.log("followeesクエリー飛ばしました。")
-    this.followees= query.data.getUser.followees.items
+    this.followees= query.data.followeeIndex.items
   }
 }
 </script>
