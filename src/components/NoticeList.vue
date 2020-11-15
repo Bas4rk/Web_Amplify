@@ -46,8 +46,9 @@
                         <v-icon size="30">mdi-account</v-icon>
                       </v-list-item-avatar>
                     </v-list-item-title>
+
                     <!-- ここもいいね、コメントした人のリストで名前乘せたい、2,3人以上いたら「他～人」って表示させたい -->
-                    ～さんと～さんがあなたの投稿をいいねしました
+                    <p>～さんと～さんがあなたの投稿をいいねしました</p>
 
                     <!-- 投稿のタイトル -->
                     <v-list-item-title>{{ item.name }}</v-list-item-title>
@@ -65,7 +66,7 @@
 
                       <div class="right">
                         <!-- いいね、コメント等された日付日時ここ（～時間前、～日前、～週間、～ヶ月前みたいに表示したい、日時とかなくてもいいかも -->
-                        <small>～時間前</small>
+                        <small>～時間前{{ item.createdAt }}</small>
                       </div>
                     </v-list-item-subtitle>
                   </v-list-item-content>
