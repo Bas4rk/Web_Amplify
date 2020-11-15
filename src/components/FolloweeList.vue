@@ -1,5 +1,5 @@
 <template>
-  <div class="TweetList">
+  <div class="FolloweeList">
     <v-container
       class="py-8 px-6"
       fluid
@@ -14,33 +14,30 @@
         <v-col cols="5">
           <v-card>
             <!-- <v-subheader>{{ card }}</v-subheader> -->
-            <v-subheader>投稿一覧</v-subheader>
+            <v-subheader>フォローしてるユーザー</v-subheader>
 
             <v-list>
-              <template v-for="item in items">
+              <template v-for="followee in followees">
                 <!-- <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}"> -->
-                  <v-list-item :key="item.id" height="200">
+                  <v-list-item :key="followee.follower.id" height="200">
                   <v-list-item-avatar color="grey darken-1">
                     <v-icon size="30">mdi-account</v-icon>
                   </v-list-item-avatar>
 
                   <v-list-item-content>
-                    <v-list-item-title>{{ item.content }}</v-list-item-title>
+                    <v-list-item-title>{{ followee.follower.name}}</v-list-item-title>
 
                     <v-list-item-subtitle>
                       <!-- {{ item.description}} -->
-                      <div class="right">
-                        <small>投稿者:{{ item.user.name }}</small>
-                      </div>
-                      <div class="right">
-                        <small>{{ item.createdAt }}</small>
+                      <div>
+                        <small>{{ followee.follower.emailAddress }}</small>
                       </div>
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
 
                 <v-divider
-                  :key="`divider-${item.id}`"
+                  :key="`divider-${followee.follower.id}`"
                   inset
                 ></v-divider>
               </template>
@@ -51,17 +48,7 @@
 
 
       <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
-      
-
-      <v-row>
-        <v-col>
-          <v-card >
-            <v-subheader>ツイート投稿</v-subheader>
-            <!-- <NewTodo></NewTodo> -->
-            <CreateTweet></CreateTweet>
-          </v-card>
-        </v-col>
-      </v-row>
+  
     </v-container>
   </div>
   <!-- tweetカードらへんをコンポーネントにする。一番上に飛ぶボタンつくる -->
@@ -69,12 +56,10 @@
 
 <script>
 // import NewTodo from '@/components/NewTodo.vue';
-import CreateTweet from '@/components/CreateTweet.vue';
 
   export default {
-    props:['items'],
+    props:['followees'],
     components: {
-      CreateTweet
     },
     methods: {
     scrollTop: function(){
@@ -86,9 +71,3 @@ import CreateTweet from '@/components/CreateTweet.vue';
   }
   }
 </script>
-
-<style scoped>
-  .right{
-    text-align: right;
-  }
-</style>

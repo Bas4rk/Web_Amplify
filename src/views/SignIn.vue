@@ -64,7 +64,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(`SIGN IN username: ${this.username}, password: ${this.password}`);
+        console.log(`SIGN IN email: ${this.username}, password: ${this.password}`);
         signIn(this.username, this.password);
       }
     },

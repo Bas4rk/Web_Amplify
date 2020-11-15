@@ -10,6 +10,7 @@
           <v-form v-model="valid" ref="form" lazy-validation>
             <v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
             <v-text-field v-model="code" :rules="codeRules" label="Code" required/>
+            <v-text-field v-model="nickname" label="ニックネーム" required/>
             <v-btn :disabled="!valid" @click="submit">Submit</v-btn>
           </v-form>
           <v-btn @click="resend">Resend Code</v-btn>
@@ -28,6 +29,7 @@ export default {
       valid: false,
       username: '',
       code: '',
+      nickname: ''
     }
   },
   computed: {
@@ -47,12 +49,12 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(`CONFIRM username: ${this.username}, code: ${this.code}`);
-        confirmSignUp(this.username, this.code);
+        console.log(`CONFIRM email: ${this.username}, code: ${this.code}`);
+        confirmSignUp(this.username, this.code, this.nickname);
       }
     },
     resend() {
-      console.log(`RESEND username: ${this.username}`);
+      console.log(`RESEND email: ${this.username}`);
       resendSignUp(this.username);
     }
   },

@@ -2,22 +2,39 @@ import { Auth } from 'aws-amplify'
 import { AmplifyEventBus } from 'aws-amplify-vue'
 import store from '../store/index.js'
 
+import { API, graphqlOperation } from 'aws-amplify'
+import * as gqlQueries from '../graphql/queries'
+import * as gqlMutations from '../graphql/mutations'
+
 function getUser() {
-  return Auth.currentAuthenticatedUser().then((user) => {
+  return Auth.currentAuthenticatedUser().then( async (user) => {
     if (user && user.signInUserSession) {
-      store.commit('setUser', user)
+      store.commit('setUserCognito', user)
+
+      if(!store.getters.getUserGraphql){
+        const Graphqluser = await API.graphql(
+          graphqlOperation(gqlQueries.emailIndex, {
+            emailAddress: user.signInUserSession.idToken.payload.email // userテーブルの取得したいデータのID
+          })
+        )
+        console.log(Graphqluser.data.emailIndex);
+        console.log("emailIndexクエリー飛ばしてます");
+        store.commit('setUserGraphql', Graphqluser.data.emailIndex)
+      }
+
       return user
     } else {
       return null
     }
   }).catch(err => {
     console.log(err);
-    store.commit('setUser', null);
+    store.commit('setUserCognito', null);
     return null;
   });
 }
 
-function signUp(username, password) {
+function signUp(email, password) {
+  const username = email
   return Auth.signUp({
     username,
     password,
@@ -39,9 +56,25 @@ function signUp(username, password) {
     });
 }
 
-function confirmSignUp(username, code) {
+function confirmSignUp(username, code, nickname) {
   return Auth.confirmSignUp(username, code).then(data => {
     AmplifyEventBus.$emit('authState', 'signIn')
+
+    const user = API.graphql(
+      graphqlOperation(gqlMutations.createUser, {
+        input: {
+          name: nickname,
+          emailAddress: username,
+          premium: false
+        }
+      }))
+      console.log(user.data.createUser);
+      store.commit('setUser', user.data.createUser)
+
+      // store.commit('setUserGraphql',username,nickname)
+    
+    // store.dispatch('setUserGraphql',username,nickname)
+    
     return data // 'SUCCESS'
   })
     .catch(err => {
@@ -77,7 +110,7 @@ async function signIn(username, password) {
     } else if (err.code === 'NotAuthorizedException') {
       // The error happens when the incorrect password is provided
     } else if (err.code === 'UserNotFoundException') {
-      // The error happens when the supplied username/email does not exist in the Cognito user pool
+      // The error happens when the supplied email/email does not exist in the Cognito user pool
     } else {
       console.log(err);
     }
@@ -88,6 +121,10 @@ function signOut() {
   return Auth.signOut()
     .then(data => {
       AmplifyEventBus.$emit('authState', 'signedOut');
+
+      store.commit('setUserGraphql', null);
+      store.commit('setWholeposts', null)
+
       return data;
     })
     .catch(err => {

@@ -1,6 +1,128 @@
-type Todo @model {
-  id: ID!
-  name: String!
-  description: String
-  user_id: String!
+# type Todo @model {
+#   id: ID!
+#   name: String!
+#   description: String
+#   user_id: String!
+# }
+
+type User 
+    @model
+    @key(name: "emailAddressIndex", fields: ["emailAddress"], queryField: "emailIndex")
+    @auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+    id: ID!
+    name: String!
+    emailAddress: String!
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
+    premium: Boolean!
+    followees: [Relationship] @connection(keyName: "followee", fields: ["id"])
+    followers: [Relationship] @connection(keyName: "follower", fields: ["id"])
+    tweetPosts: [Tweet] @connection(keyName: "userId",fields: ["id"])
+    traningPosts: [Traning] @connection(keyName: "userId",fields: ["id"])
+    cookingPosts: [Cooking] @connection(keyName: "userId",fields: ["id"])
+    comments: [Comment] @connection(keyName: "userId",fields: ["id"])
 }
+
+type Relationship
+    @model
+    @key(name: "followee", fields: ["followeeId"])
+    @key(name: "follower", fields: ["followerId"])
+    @auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+    followeeId: ID!
+    followerId: ID!
+    blockBool: Boolean!
+    followee: User @connection(fields: ["followeeId"])
+    follower: User @connection(fields: ["followerId"])
+}
+
+type Tweet
+@model
+@key(name: "userId", fields: ["userId"])
+@auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+  id: ID!
+  userId: ID!
+  image: String
+  content: String!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  user: User @connection(fields: ["userId"])
+  comments: [Comment] @connection(keyName: "postId",fields: ["id"])
+}
+
+type Traning 
+@model
+@key(name: "userId", fields: ["userId"])
+@auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+  id: ID!
+  userId: ID!
+  image: String
+  title: String!
+  content: String!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  user: User @connection(fields: ["userId"])
+  comments: [Comment] @connection(keyName: "postId",fields: ["id"])
+}
+
+type Cooking 
+@model
+@key(name: "userId", fields: ["userId"])
+@auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+  id: ID!
+  userId: ID!
+  image: String
+  title: String!
+  content: String!
+  calorie: Int!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  user: User @connection(fields: ["userId"])
+  comments: [Comment] @connection(keyName: "postId",fields: ["id"])
+}
+
+
+type Comment 
+@model
+@key(name: "postId", fields: ["postId"])
+@key(name: "userId", fields: ["userId"])
+@auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+  id: ID!
+  userId: ID!
+  postId: ID!
+  image: String
+  content: String!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  user: User @connection(fields: ["userId"])
+  tweet: Tweet @connection(fields: ["postId"])
+  traning: Traning @connection(fields: ["postId"])
+  cooking : Cooking  @connection(fields: ["postId"])
+}
+
+# type Favorite 
+# @model
+
+# @auth(rules: [{allow: owner, operations: [create, update, delete]}])
+# {
+#   id: ID!
+#   userId: ID!
+#   tweetId: ID!
+#   favoDate: Stinrg!
+# }
+
+# type Bookmark 
+# @model 
+
+# @auth(rules: [{allow: owner, operations: [create, update, delete]}])
+# {
+#   id: ID!
+#   userId: ID!
+#   tweetId: ID!
+#   bmDate: Stinrg!
+# }

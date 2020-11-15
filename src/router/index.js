@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
+import Home2 from '../views/Home2.vue'
 import Search from '../views/Search.vue'
 import Calendar from '../views/Calendar.vue'
 import Notice from '../views/Notice.vue'
@@ -47,7 +48,7 @@ const router = new Router({
       // トップページ
       path: '/',
       name: 'home',
-      component: Home,
+      component: Home2,
       meta: { requiresAuth: true}
     },
     {

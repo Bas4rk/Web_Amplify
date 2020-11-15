@@ -62,10 +62,10 @@ export default {
   computed: {
     createTodoMutation () {
       return this.$Amplify.graphqlOperation(CreateTodoMutation,
-        { name: this.name, description: this.description, user_id:  this.$store.getters.getUserEmail});
+        { name: this.name, description: this.description, user_id:  "this.$store.getters.getUserEmail"});
     },
     getUserEmail (){
-      return  this.$store.getters.getUserEmail
+      return  "this.$store.getters.getUserEmail"
     }
   },
   methods: {

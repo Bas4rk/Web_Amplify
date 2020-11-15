@@ -8,7 +8,7 @@
         <v-col cols="5">
           <h1>Sign Up</h1>
           <v-form v-model="valid" ref="form" lazy-validation>
-            <v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
+            <v-text-field v-model="email" :rules="emailRules" label="Email Address" required/>
             <v-text-field
               v-model="password"
               :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       valid: false,
-      username: '',
+      email: '',
       password: '',
       passwordVisible: false,
     }
@@ -64,8 +64,8 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(`SIGN UP username: ${this.username}, password: ${this.password}, email: ${this.username}`);
-        signUp(this.username, this.password);
+        console.log(`SIGN UP email: ${this.email}, password: ${this.password}, email: ${this.email}`);
+        signUp(this.email, this.password);
       }
     },
     signIn(){

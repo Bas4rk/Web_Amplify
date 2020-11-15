@@ -25,7 +25,8 @@
         >
         <v-icon size="60">mdi-account</v-icon>
         </v-avatar>
-
+        
+        <div>{{getUserName}}</div>
         <div>{{getUserEmail}}</div>
       </v-sheet>
 
@@ -89,8 +90,13 @@ export default {
     ],
   }),
   computed: {
-    getUserEmail (){
-      return  this.$store.getters.getUserEmail
+    getUserEmail(){
+      const user= this.$store.getters.getUserGraphql
+      return  user.items[0].emailAddress
+    },
+    getUserName(){
+      const user= this.$store.getters.getUserGraphql
+      return  user.items[0].name
     }
   }
   // mounted() {
