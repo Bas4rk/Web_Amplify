@@ -13,10 +13,10 @@ export default new Vuex.Store({
     Wholeposts: null
   },
   getters: {
-    getUserCognito(state) {
-      return state.CognitoUser.signInUserSession.idToken.payload.email
-      // return state.user
-    },
+    // getUserCognito(state) {
+    //   return state.CognitoUser.signInUserSession.idToken.payload.email
+    //   // return state.user
+    // },
     getUserGraphql(state) {
       // return state.user.signInUserSession.idToken.payload.email
       return state.GraphqlUser
@@ -24,9 +24,9 @@ export default new Vuex.Store({
   },
   mutations: {
     // ユーザー情報保存
-    setUserCognito(state, user) {
-      state.CognitoUser = user
-    },
+    // setUserCognito(state, user) {
+    //   state.CognitoUser = user
+    // },
     setUserGraphql(state, user) {
       state.GraphqlUser = user
     }

@@ -62,6 +62,7 @@ export default {
   methods: {
     async createTweet(){
       const tweet = await API.graphql(
+        //[fix]あとでクエリー書き直す?
         graphqlOperation(gqlMutations.createTweet, {
           input: {
             content: this.content,

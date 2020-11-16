@@ -9,18 +9,25 @@ import * as gqlMutations from '../graphql/mutations'
 function getUser() {
   return Auth.currentAuthenticatedUser().then( async (user) => {
     if (user && user.signInUserSession) {
-      store.commit('setUserCognito', user)
+      // store.commit('setUserCognito', user)
+      // console.log("なんかはいってるか"+store.getters.getUserGraphql)
 
       if(!store.getters.getUserGraphql){
         const Graphqluser = await API.graphql(
           graphqlOperation(gqlQueries.emailIndex, {
-            emailAddress: user.signInUserSession.idToken.payload.email // userテーブルの取得したいデータのID
+            emailAddress: user.signInUserSession.idToken.payload.email // cognitoでとったuserのemailを使ってクエリー飛ばしてる。
           })
         )
-        console.log(Graphqluser.data.emailIndex);
-        // [fix]ここなんか二回呼ばれる。
-        console.log("emailIndexクエリー飛ばしてます");
-        store.commit('setUserGraphql', Graphqluser.data.emailIndex)
+        console.log("Graphqluser.data.emailIndexの長さ"+Graphqluser.data.emailIndex.items.length);
+
+        if(Graphqluser.data.emailIndex.items.length > 0){
+          store.commit('setUserGraphql', Graphqluser.data.emailIndex)
+        }else if(Graphqluser.data.emailIndex.items.length == 0){
+          console.log("新規作成する")
+        }
+        // [fix1]ここなんか二回呼ばれる。
+        // console.log("emailIndexクエリー飛ばしてます");
+        // store.commit('setUserGraphql', Graphqluser.data.emailIndex)
       }
 
       return user
@@ -57,21 +64,49 @@ function signUp(email, password) {
     });
 }
 
-function confirmSignUp(username, code, nickname) {
-  return Auth.confirmSignUp(username, code).then(data => {
+function confirmSignUp(username, password, code, nickname) {
+  return Auth.confirmSignUp(username, code).then(async data => {
     AmplifyEventBus.$emit('authState', 'signIn')
 
-    // [fix]ここ最優先
-    const user = API.graphql(
-      graphqlOperation(gqlMutations.createUser, {
-        input: {
-          name: nickname,
-          emailAddress: username,
-          premium: false
-        }
-      }))
-      console.log(user.data.createUser);
-      store.commit('setUser', user.data.createUser)
+
+    //cognitoSignInしないとcreateUser飛ばすときのownerがnullでエラーになる。
+    // const user = await getUser()
+    const user = await Auth.signIn(username, password);
+    console.log("userは"+user)
+    if(user){
+      // [fix]ここ最優先
+      const mutation = API.graphql(
+        graphqlOperation(gqlMutations.createUser, {
+          input: {
+            name: nickname,
+            emailAddress: username,
+            premium: false
+          }
+        })
+      )
+      console.log("mutation.data.createUserは"+mutation.data.createUser);
+    }else{
+      console.log("だめでした。")
+    }
+
+
+
+    // tes(username,nickname)
+
+    // const user = await getUser()
+
+    // // [fix]ここ最優先
+    // const user = API.graphql(
+    //   graphqlOperation(gqlMutations.createUser, {
+    //     input: {
+    //       name: nickname,
+    //       emailAddress: username,
+    //       premium: false
+    //     }
+    //   })
+    // )
+    //   console.log(user.data.createUser);
+      // store.commit('setUser', user.data.createUser)
 
       // store.commit('setUserGraphql',username,nickname)
     
@@ -134,5 +169,23 @@ function signOut() {
       return err;
     });
 }
+
+
+// function tes(username,nickname){
+//   const user = await getUser()
+//   if(user){
+//     // [fix]ここ最優先
+//     const mutation = API.graphql(
+//       graphqlOperation(gqlMutations.createUser, {
+//         input: {
+//           name: nickname,
+//           emailAddress: username,
+//           premium: false
+//         }
+//       })
+//     )
+//     console.log(mutation.data.createUser);
+//   }
+// }
 
 export {getUser, signUp, confirmSignUp, resendSignUp, signIn, signOut};

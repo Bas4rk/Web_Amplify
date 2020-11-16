@@ -97,11 +97,11 @@ const router = new Router({
 });
 
 
-getUser().then((user) => {
-  if (user) {
-    router.push({path: '/'})
-  }
-})
+// getUser().then((user) => {
+//   if (user) {
+//     router.push({path: '/'})
+//   }
+// })
   
 AmplifyEventBus.$on('authState', async (state) => {
   const pushPathes = {
