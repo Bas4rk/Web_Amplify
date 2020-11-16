@@ -46,7 +46,7 @@
                         <v-icon size="30">mdi-account</v-icon>
                       </v-list-item-avatar>
                     </v-list-item-title>
-                    
+
                     <!-- ここもいいね、コメントした人のリストで名前乘せたい、2,3人以上いたら「他～人」って表示させたい -->
                     <p>～さんと～さんがあなたの投稿をいいねしました</p>
 
