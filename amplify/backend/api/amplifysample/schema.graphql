@@ -30,7 +30,11 @@ type Relationship
     @key(name: "follower", fields: ["followerId"], queryField: "followerIndex")
     @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
-    followeeId: ID!
+    # followeeId: ID! 
+    # followerId: ID!
+    # 使わない気がする
+
+    followeeId: ID! 
     followerId: ID!
     blockBool: Boolean!
     followee: User @connection(fields: ["followeeId"])

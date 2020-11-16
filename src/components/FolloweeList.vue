@@ -34,7 +34,7 @@
                       </div>
                     </v-list-item-subtitle>
                     
-                    <v-btn @click="deleteRelation(item.id)" color="primary">フォロー解除</v-btn>
+                    <v-btn @click="deleteRelation(item.id)" color="error">フォロー解除</v-btn>
                   </v-list-item-content>
                 </v-list-item>
 

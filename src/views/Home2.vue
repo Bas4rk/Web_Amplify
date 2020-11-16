@@ -101,7 +101,8 @@ export default {
       dev: true,
       // followeeposts2: null,
       //ここルートなので、他の画面編集してる時もいらんクエリー飛ばすのでテストデータいれてます。
-      wholeposts: [ { "id": "64bc2dec-f6a0-4887-aca1-239ade116588", "content": "テストデータ", "createdAt": "2020-11-14T12:23:50.676Z", "user": { "name": "開発中" } }, { "id": "003f8891-0834-480e-8b3a-e693bff1561b", "content": "開発中", "createdAt": "2020-11-15T01:09:26.983Z", "user": { "name": "開発中" } }, { "id": "3f406308-c49b-4af2-bf85-d7914e918c7b", "content": "開発中", "createdAt": "2020-11-15T04:46:33.514Z", "user": { "name": "開発中" } }, { "id": "39ee2d99-870b-4639-baf4-f5fa1ac3d01f", "content": "開発中", "createdAt": "2020-11-14T12:57:01.263Z", "user": { "name": "開発中" } } ]
+      // wholeposts: [ { "id": "64bc2dec-f6a0-4887-aca1-239ade116588", "content": "テストデータ", "createdAt": "2020-11-14T12:23:50.676Z", "user": { "name": "開発中" } }, { "id": "003f8891-0834-480e-8b3a-e693bff1561b", "content": "開発中", "createdAt": "2020-11-15T01:09:26.983Z", "user": { "name": "開発中" } }, { "id": "3f406308-c49b-4af2-bf85-d7914e918c7b", "content": "開発中", "createdAt": "2020-11-15T04:46:33.514Z", "user": { "name": "開発中" } }, { "id": "39ee2d99-870b-4639-baf4-f5fa1ac3d01f", "content": "開発中", "createdAt": "2020-11-14T12:57:01.263Z", "user": { "name": "開発中" } } ]
+      wholeposts: null
     }
   },
   components: {

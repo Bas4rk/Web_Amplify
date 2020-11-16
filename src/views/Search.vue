@@ -41,7 +41,7 @@
 
                 <v-btn v-if="this.judgment.items.length == 0 && this.currentuser != this.user.items[0].id" @click="createRelation" color="primary">フォローする</v-btn>
 
-                <v-btn v-if="this.judgment.items.length > 0" @click="deleteRelation" color="primary">フォロー解除</v-btn>
+                <v-btn v-if="this.judgment.items.length > 0" @click="deleteRelation" color="error">フォロー解除</v-btn>
 
               </v-list-item-content>
             </v-list-item>

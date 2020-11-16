@@ -102,6 +102,8 @@ const router = new Router({
 //     router.push({path: '/'})
 //   }
 // })
+
+// [fix1]でコメントアウトしたけど、router.beforeResolveとやってることかぶってると思う。
   
 AmplifyEventBus.$on('authState', async (state) => {
   const pushPathes = {

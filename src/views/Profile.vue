@@ -24,20 +24,35 @@ import { API, graphqlOperation } from 'aws-amplify'
 // import store from '../store/index.js'
 
 
-//[fix]クエリーfolloweeIndexに変える。
-// const followees_query = `query GetUser($id: ID!) {
-//   getUser(id: $id) {
-//     followees {
-//       items {
-//         follower {
-//           name
-//           emailAddress
-//           id
+//[fix]これでフォローとフォロワーとってくる。フォロワーのフォロー判定はとってきた配列を一つずつチェックする？もっといい方法ありそう。
+// const followees_query = /* GraphQL */`
+//   query GetUser(
+//     $id: ID!
+//     ) {
+//     getUser(
+//     id: $id
+//     ) {
+//         followees {
+//           items {
+//             follower {
+//               id
+//               name
+//               emailAddress
+//             }
+//           }
+//         }
+//         followers {
+//           items {
+//             followee {
+//               id
+//               name
+//               emailAddress
+//             }
+//           }
 //         }
 //       }
 //     }
 //   }
-// }
 // `
 
 const followees_query = /* GraphQL */ `

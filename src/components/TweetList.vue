@@ -18,8 +18,8 @@
 
             <v-list>
               <template v-for="item in items">
-                <!-- <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}"> -->
-                  <v-list-item :key="item.id" height="200">
+                <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id,item: item}}">
+                  <!-- <v-list-item :key="item.id" height="200"> -->
                   <v-list-item-avatar color="grey darken-1">
                     <v-icon size="30">mdi-account</v-icon>
                   </v-list-item-avatar>
@@ -40,7 +40,7 @@
                       </div>
                     </v-list-item-subtitle>
                     <!-- [fix]メアド見てやってるけどidのほうがいい？メアドもプライマリーぽいからいい気がした。idのクエリーとらなくてすむし -->
-                    <v-btn v-if="item.user.emailAddress == currentuser" @click="deleteTweet(item.id)" color="primary">投稿削除</v-btn>
+                    <v-btn v-if="item.user.emailAddress == currentuser" @click="deleteTweet(item.id)" color="error">投稿削除</v-btn>
                   </v-list-item-content>
                 </v-list-item>
 
@@ -111,15 +111,15 @@ const deleteTweet_query = /* GraphQL */`
         });
       },
       async deleteTweet(id){
-      const deleteTweet = await API.graphql(
-        graphqlOperation(deleteTweet_query, {
-          input: {
-            id: id
-          }
-        })
-      )
-      console.log("投稿を削除しました"+deleteTweet.data.deleteTweet)
-    }
+        const deleteTweet = await API.graphql(
+          graphqlOperation(deleteTweet_query, {
+            input: {
+              id: id
+            }
+          })
+        )
+        console.log("投稿を削除しました"+deleteTweet.data.deleteTweet)
+      }
     },
   }
 </script>
