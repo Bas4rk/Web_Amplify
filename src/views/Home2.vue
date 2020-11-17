@@ -32,6 +32,11 @@
     <!-- <div>
       全体のポスト
       {{wholeposts}}
+    </div>
+
+    <div>
+      テストポスト
+      {{testposts}}
     </div> -->
 
   </div>
@@ -90,13 +95,41 @@ const _query2 = `query GetUser($id: ID!) {
 `
 
 
+
+const onCreateTweet = /* GraphQL */ `
+  subscription OnCreateTweet {
+    onCreateTweet {
+      id
+      content
+      createdAt
+      user {
+        name
+        emailAddress
+      }
+    }
+  }
+`;
+
+
+const onDeleteTweet = /* GraphQL */ `
+  subscription OnDeleteTweet {
+    onDeleteTweet {
+      id
+    }
+  }
+`;
+
+
 export default {
   name: 'home2',
   data() {
     return{
       user: null,
+      createSubscription: {},
+      deleteSubscription: {},
       myposts: null,
       followeeposts: [],
+      testposts:[],
       //開発用
       dev: true,
       // followeeposts2: null,
@@ -112,6 +145,27 @@ export default {
   computed: {
   },
   methods: {
+    subscribe(){
+      // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
+      this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
+        next: (eventData) => {
+          const tweet = eventData.value.data.onCreateTweet;
+          this.wholeposts.push(tweet);
+        }
+      })
+
+      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteTweet)).subscribe({
+        next: (eventData) => {
+          const tweet = eventData.value.data.onDeleteTweet;
+          this.wholeposts = this.wholeposts.filter(post => post.id != tweet.id);
+        }
+      })
+    },
+    //[fix]下のよく分からない
+    // beforeDestroy() {
+    //   // TODO(3-2) チャット画面から離れる際に、UnSubscribeする
+    //   this.subscription.unsubscribe();
+    // },
   },
   mounted : async function(){
 
@@ -133,7 +187,7 @@ export default {
       this.wholeposts= this.myposts.concat(this.followeeposts)
     }
 
-
+    this.subscribe()
 
 
 

@@ -5,23 +5,24 @@
     <!-- {{tweetData}} -->
     <v-row justify="center">
       <v-col cols="5">
-        <v-card>
-          
+        <v-card> 
           <v-btn
-          class="ma-2"
-          color="primary"
-          dark
-          @click="back"
-        >
-          <v-icon
+            class="ma-2"
+            color="primary"
             dark
-            left
+            @click="back"
           >
-            mdi-arrow-left
-          </v-icon>Back
-        </v-btn>
+            <v-icon
+              dark
+              left
+            >
+              mdi-arrow-left
+            </v-icon>Back
+          </v-btn>
           <v-divider></v-divider>
+          <!-- [fix]v-cardの中にv-cardあるけどいいんだっけ？ -->
           <v-card>
+            <small>{{tweetData.createdAt}}</small>
             <v-card-title class="mt-8">
                 <v-avatar size="56">
                   <img
@@ -48,6 +49,7 @@
                   </template>
                   <v-list>
                     <v-list-item
+                      v-if="tweetData.user.emailAddress == currentuser"
                       @click="deleteTweet(tweetData.id)"
                     > 
                       <v-list-item-icon>
@@ -114,8 +116,15 @@ const deleteTweet_query = /* GraphQL */`
 // `;
 
 export default {
+  //[fix]componetsとかデータとかの順番全ファイルでそろえる。
+  //あと正しい使い方出来てるかいろいろ整理する。
   components: {
     Navigation
+  },
+  computed: {
+    currentuser(){
+      return this.$store.getters.getUserGraphql.items[0].emailAddress
+    }
   },
   data() {
     return {
@@ -137,6 +146,7 @@ export default {
         })
       )
       console.log("投稿を削除しました"+deleteTweet.data.deleteTweet)
+      this.$router.push('/');
     }
   },
   async mounted() {

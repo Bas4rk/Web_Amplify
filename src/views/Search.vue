@@ -10,6 +10,7 @@
           type="text"
           v-model="emailAddress"
         >
+        <!-- [fix]idで検索できるようにする。ユーザー作成時にidもユーザーに入力してもらう -->
         <template v-slot:append-outer>
           <v-btn @click="searchUser" color="primary">検索</v-btn>
         </template>
