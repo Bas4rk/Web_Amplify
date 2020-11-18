@@ -9,12 +9,17 @@
     {{this.$store.getters.getUserCognito}} -->
     <!-- {{followees}} -->
     <FolloweeList :followees="this.followees"></FolloweeList>
+    <!-- FollowerList.vueを見てます、followsを渡しています。
+    「:」は
+    this.いらない？ -->
+    <FollowerList :follows="follows"></FollowerList>
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation.vue';
 import FolloweeList from '@/components/FolloweeList.vue';
+import FollowerList from '@/components/FollowerList.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
 // import * as gqlQueries from '../graphql/queries'
@@ -24,38 +29,29 @@ import { API, graphqlOperation } from 'aws-amplify'
 // import store from '../store/index.js'
 
 
-//[fix]これでフォローとフォロワーとってくる。フォロワーのフォロー判定はとってきた配列を一つずつチェックする？もっといい方法ありそう。
-// const followees_query = /* GraphQL */`
-//   query GetUser(
-//     $id: ID!
-//     ) {
-//     getUser(
-//     id: $id
-//     ) {
-//         followees {
-//           items {
-//             follower {
-//               id
-//               name
-//               emailAddress
-//             }
-//           }
-//         }
-//         followers {
-//           items {
-//             followee {
-//               id
-//               name
-//               emailAddress
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// `
+//[add]ここgetUserだったけどFollowerIndexで取ってこれた、mock?でテストして取ってこれたのでそのままコピペしてます
+const follows_query = /* GraphQL */`
+  query followerIndex(
+    $followerId: ID
+  ) {
+    followerIndex(
+      followerId: $followerId
+    ) {
+      items {
+        id
+        followee {
+          id
+          name
+          emailAddress
+        }
+      }
+    }
+  }
+`;
 
+//[fix]follweeは「フォローされている人」という意味で、ここに書いてある内容は「フォローしている人」なので名前が逆です。
 const followees_query = /* GraphQL */ `
+
   query FolloweeIndex(
     $followeeId: ID
   ) {
@@ -81,12 +77,15 @@ const followees_query = /* GraphQL */ `
 export default {
   data() {
     return{
-      followees: null
+      followees: null,
+      //ここに入れてFollowerList.vueに渡す？
+      follows: null
     }
   },
   components: {
     Navigation,
-    FolloweeList
+    FolloweeList,
+    FollowerList
   },
   computed: {
     // getUserGraphql(){
@@ -126,6 +125,16 @@ export default {
     )
     console.log("followeesクエリー飛ばしました。")
     this.followees= query.data.followeeIndex.items
+
+    //フォローされてる人リスト取得、変数名がクソ
+    const usersource2 = this.$store.getters.getUserGraphql
+    //クエリ飛ばし、変数名がクソ
+    const query2 = await API.graphql(
+      graphqlOperation(follows_query, {followerId : usersource2.items[0].id})
+    )
+    console.log("followsクエリー飛ばしました。")
+    //80行目のfollowsに受け取ったクエリデータ？入れる
+    this.follows= query2.data.followerIndex.items
   }
 }
 </script>
