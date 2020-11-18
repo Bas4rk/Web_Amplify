@@ -8,18 +8,15 @@
     <!-- {{getUserGraphql}}
     {{this.$store.getters.getUserCognito}} -->
     <!-- {{followees}} -->
-    <FolloweeList :followees="this.followees"></FolloweeList>
-    <!-- FollowerList.vueを見てます、followsを渡しています。
-    「:」は
-    this.いらない？ -->
-    <FollowerList :follows="follows"></FollowerList>
+    <!-- followeesとfollowsを渡しています。this.いらない？ -->
+    <FolloweeList :followees="this.followees" :follows="follows"></FolloweeList>
+   
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/Navigation.vue';
 import FolloweeList from '@/components/FolloweeList.vue';
-import FollowerList from '@/components/FollowerList.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
 // import * as gqlQueries from '../graphql/queries'
@@ -84,8 +81,7 @@ export default {
   },
   components: {
     Navigation,
-    FolloweeList,
-    FollowerList
+    FolloweeList
   },
   computed: {
     // getUserGraphql(){
