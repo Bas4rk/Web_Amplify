@@ -35,7 +35,7 @@
       <v-list>
         <v-list-item
           v-for="[icon, text ,link] in links"
-          :key="icon"
+          :key="text"
           :to="link"
         >
           <v-list-item-icon>
@@ -84,6 +84,7 @@ export default {
       ['mdi-home', 'ホーム','/'],
       ['mdi-magnify', '検索','/search'],
       ['mdi-calendar', 'カレンダー','/calendar'],
+      ['mdi-calendar', 'カレンダー2','/calendar2'],
       ['mdi-bell', '通知','/notice'],
       ['mdi-account', 'プロフィール','/profile'],
       ['mdi-cog', '設定','/setting']

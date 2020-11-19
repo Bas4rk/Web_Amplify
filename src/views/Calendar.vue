@@ -1,7 +1,10 @@
 <template>
   <div class="calendar">
     <Navigation></Navigation>
-    <v-sheet tile height="6vh" color="grey lighten-3" class="d-flex align-center">
+    <!-- <div>
+      {{}}
+    </div> -->
+    <v-sheet  v-if="type == 'month'" tile height="6vh" color="grey lighten-3" class="d-flex align-center">
       <v-btn outlined small class="ma-4" @click="setToday">
         今日
       </v-btn>
@@ -13,10 +16,16 @@
       </v-btn>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
     </v-sheet>
+    <v-sheet v-if="type == 'day'">
+      <v-btn outlined small class="ma-4" @click="typeMonth">
+        戻る
+      </v-btn>
+    </v-sheet>
     <v-sheet height="94vh">
       <v-calendar
         ref="calendar"
         v-model="value"
+        :type="type"
         :events="events"
         :event-color="getEventColor"
         locale="ja-jp"
@@ -39,6 +48,7 @@ export default {
     Navigation
   },
   data: () => ({
+    type: 'month',
     events: [],
     value: moment().format('yyyy-MM-DD'),
   }),
@@ -54,8 +64,15 @@ export default {
     showEvent({ event }) {
       alert(`clicked ${event.name}`);
     },
-    viewDay({ date }) {
-      alert(`date: ${date}`);
+    // viewDay({ date }) {
+    //   alert(`date: ${date}`);
+    //   this.type = "day"
+    // },
+    viewDay() {
+      this.type = "day"
+    },
+    typeMonth(){
+      this.type = "month"
     },
     getEvents() {
       const events = [

@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Home2 from '../views/Home2.vue'
 import Search from '../views/Search.vue'
 import Calendar from '../views/Calendar.vue'
+import Calendar2 from '../views/Calendar2.vue'
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
 import Setting from '../views/Setting.vue'
@@ -63,6 +64,13 @@ const router = new Router({
       path: '/calendar',
       name: 'calendar',
       component: Calendar,
+      meta: { requiresAuth: true }
+    },
+    {
+      // カレンダーページ2
+      path: '/calendar2',
+      name: 'calendar2',
+      component: Calendar2,
       meta: { requiresAuth: true }
     },
     {
