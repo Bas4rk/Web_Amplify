@@ -11,6 +11,8 @@
           :key="card"
           cols="12"
         > -->
+
+        
         <v-col cols="5">
           <v-card>
             <!-- <v-subheader>{{ card }}</v-subheader> -->
@@ -48,9 +50,49 @@
         </v-col>
       </v-row>
 
+      <v-row justify="center">
+        <v-col cols="5">
+          <v-card>
+            <!-- <v-subheader>{{ card }}</v-subheader> -->
+            <v-subheader>フォローされているユーザー</v-subheader>
+
+            <v-list>
+                <!-- v-forでfollowsの数だけ回します -->
+              <template v-for="item in follows">
+                <!-- <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}"> -->
+                  <v-list-item :key="item.id" height="200">
+                  <v-list-item-avatar color="grey darken-1">
+                    <v-icon size="30">mdi-account</v-icon>
+                  </v-list-item-avatar>
+
+                  <v-list-item-content>
+                      <!-- ここから下のitem.followee.~はProfile.vueにクエリ？が書いてあります -->
+                    <v-list-item-title>{{ item.followee.name}}</v-list-item-title>
+
+                    <v-list-item-subtitle>
+                      <!-- {{ item.description}} -->
+                      <div>
+                        <small>{{ item.followee.emailAddress }}</small>
+                      </div>
+                    </v-list-item-subtitle>
+                    
+                    <v-btn @click="deleteRelation(item.id)" color="error">フォロー解除</v-btn>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider
+                  :key="`divider-${item.followee.id}`"
+                  inset
+                ></v-divider>
+              </template>
+            </v-list>
+          </v-card>
+        </v-col>
+      </v-row>
 
       <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
-  
+      <!-- プロフィールページに上に行くボタンが2個できてしまったので1つ消しました -->
+      <!-- <v-btn large color="primary" @click="scrollTop">上にいく</v-btn> -->
     </v-container>
   </div>
   <!-- tweetカードらへんをコンポーネントにする。一番上に飛ぶボタンつくる -->
@@ -72,7 +114,7 @@ const deleteRelationship_query = /* GraphQL */ `
 `
 
   export default {
-    props:['followees'],
+    props:['followees', 'follows'],
     components: {
     },
     methods: {
