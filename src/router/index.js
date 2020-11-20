@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Home from '../views/Home.vue'
-import Home2 from '../views/Home2.vue'
+import Home from '../views/Home.vue'
+import createTweet from '../views/CreateTweet.vue'
+import createTraining from '../views/CreateTraining.vue'
+import createCooking from '../views/CreateCooking.vue'
 import Search from '../views/Search.vue'
 import Calendar from '../views/Calendar.vue'
 import Calendar2 from '../views/Calendar2.vue'
@@ -49,7 +51,28 @@ const router = new Router({
       // トップページ
       path: '/',
       name: 'home',
-      component: Home2,
+      component: Home,
+      meta: { requiresAuth: true}
+    },
+    {
+      // ツイート投稿ページ
+      path: '/createTweet',
+      name: 'createTweet',
+      component: createTweet,
+      meta: { requiresAuth: true}
+    },
+    {
+      // 筋トレ投稿ページ
+      path: '/createTraining',
+      name: 'createTraining',
+      component: createTraining,
+      meta: { requiresAuth: true}
+    },
+    {
+      // 料理投稿ページ
+      path: '/createCooking',
+      name: 'createCooking',
+      component: createCooking,
       meta: { requiresAuth: true}
     },
     {

@@ -75,20 +75,6 @@
           </v-card>
         </v-col>
       </v-row>
-
-
-      <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
-      
-
-      <v-row>
-        <v-col>
-          <v-card >
-            <v-subheader>ツイート投稿</v-subheader>
-            <!-- <NewTodo></NewTodo> -->
-            <CreateTweet></CreateTweet>
-          </v-card>
-        </v-col>
-      </v-row>
     </v-container>
   </div>
   <!-- tweetカードらへんをコンポーネントにする。一番上に飛ぶボタンつくる -->
@@ -96,7 +82,6 @@
 
 <script>
 // import NewTodo from '@/components/NewTodo.vue';
-import CreateTweet from '@/components/CreateTweet.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
 
@@ -118,7 +103,6 @@ const deleteTweet_query = /* GraphQL */`
     },
     props:['items'],
     components: {
-      CreateTweet
     },
     computed: {
       currentuser(){
@@ -126,12 +110,6 @@ const deleteTweet_query = /* GraphQL */`
       }
     },
     methods: {
-      scrollTop: function(){
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-      },
       async deleteTweet(id){
         const deleteTweet = await API.graphql(
           graphqlOperation(deleteTweet_query, {
