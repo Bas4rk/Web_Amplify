@@ -64,7 +64,11 @@
 
         <!-- [fix]画像の元サイズ次第でばかでかくなる時ある、表示サイズ決めてどうにかしたい -->
         <v-col cols="12" sm="6" md="3" justify="left">
-          <img src="@/assets/筋トレ.jpg"/>
+          <v-img
+            src="../assets/筋トレ/筋トレ.png" 
+            max-width="600"
+            max-height="600"
+          ></v-img>
         </v-col>
           
       </v-row>
@@ -177,6 +181,11 @@
 import Navigation from '@/components/Navigation.vue';
 
 export default {
+  data() {
+    return{
+      content: null
+    }
+  },
   components: {
     Navigation,
   },

@@ -3,7 +3,9 @@
     <Navigation></Navigation>
       
     <TweetList :items="this.wholeposts"></TweetList>
-    
+
+    <!-- [fix]これ使えそう -->
+    <!-- https://v2.vuetifyjs.com/ja/components/floating-action-buttons/ -->
     <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
       
     <v-btn large color="primary"  to="/createTweet">ツイート</v-btn>

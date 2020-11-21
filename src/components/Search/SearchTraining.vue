@@ -100,7 +100,7 @@
               </v-img>
   
               <v-card-actions>
-                <subheader>投稿者:こじろう</subheader>
+                <v-subheader>投稿者:こじろう</v-subheader>
                 <v-spacer></v-spacer>
   
                 <v-btn icon>

@@ -64,7 +64,11 @@
 
         <!-- [fix]画像の元サイズ次第でばかでかくなる時ある、表示サイズ決めてどうにかしたい -->
         <v-col cols="12" sm="6" md="3" justify="left">
-          <img src="@/assets/料理3.jpeg"/>
+          <v-img
+            src="../assets/料理/料理.png" 
+            max-width="600"
+            max-height="600"
+          ></v-img>
         </v-col>
 
       </v-row>
@@ -124,33 +128,37 @@
           <v-text-field
             placeholder="たんぱく質"
             v-model="content"
+            suffix="g"
           >
           </v-text-field>
           <v-text-field
             placeholder="脂質"
             v-model="content"
+            suffix="g"
           >
           </v-text-field>
           <v-text-field
             placeholder="炭水化物"
             v-model="content"
+            suffix="g"
           >
           </v-text-field>
           <v-text-field
             placeholder="食物繊維総量"
             v-model="content"
+            suffix="g"
           >
           </v-text-field>
         </v-col>
 
         <!-- g表示、書き方ださい -->
-        <v-col cols="12" sm="6" md="3">
+        <!-- <v-col cols="12" sm="6" md="3">
           <br>
           g<br><br><br>
           g<br><br><br>
           g<br><br><br>
           g
-        </v-col>
+        </v-col> -->
 
       </v-row>
           
@@ -218,6 +226,11 @@
 import Navigation from '@/components/Navigation.vue';
 
 export default {
+  data() {
+    return{
+      content: null
+    }
+  },
   components: {
     Navigation,
   },
