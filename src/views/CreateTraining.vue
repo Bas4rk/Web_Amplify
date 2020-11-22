@@ -52,6 +52,7 @@
             class="ma-2"
             color="primary"
             dark
+            @click="createTraning"
           >
             投稿
           </v-btn>
@@ -100,16 +101,16 @@
         <v-col cols="12" sm="6" md="3">
           <v-text-field
             placeholder="タイトル"
-            v-model="content"
+            v-model="title"
           >
           </v-text-field>
         </v-col>
 
-        <!-- 栄養素入力です -->
+        <!--タグ入力です、Prottにあったから作った、でもDynamoDBに？タグの項目ない -->
         <v-col cols="12" sm="6" md="3">
           <v-text-field
             placeholder="#タグ"
-              v-model="content"
+            v-model="content"
           >
           </v-text-field>
         </v-col>
@@ -179,11 +180,16 @@
 
 <script>
 import Navigation from '@/components/Navigation.vue';
+import { API, graphqlOperation } from 'aws-amplify'
+import * as gqlMutations from '../graphql/mutations'
 
 export default {
   data() {
     return{
-      content: null
+      // メニュー
+      content: null,
+      // タイトル
+      title: null
     }
   },
   components: {
@@ -199,6 +205,19 @@ export default {
       // historyできてなくね？
     },
 
-  }
+    // 投稿作成です、「タグ」の項目なかったからとりあえず無視してます
+    async createTraning(){
+      const traning = await API.graphql(
+        //[fix]あとでクエリー書き直す?
+          graphqlOperation(gqlMutations.createTraning,{
+            input: {userId: this.$store.getters.getUserGraphql.items[0].id,
+            title: this.title,
+            content: this.content
+            }
+          })
+      )
+      console.log(traning.data.createTraning);
+    }
+  },
 }
 </script>

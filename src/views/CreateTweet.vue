@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navigation></Navigation>
    
     <template>
       <!-- <input v-model="name" placeholder="item name" />
@@ -42,6 +43,7 @@
                 class="ma-2"
                 color="primary"
                 dark
+                @click="createTweet"
               >
                 投稿
               </v-btn>
@@ -74,6 +76,7 @@
 </template>
 
 <script>
+import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlMutations from '../graphql/mutations'
 
@@ -95,6 +98,9 @@ export default {
     return {
       content: ''
     }
+  },
+  components: {
+    Navigation,
   },
   computed: {
   },

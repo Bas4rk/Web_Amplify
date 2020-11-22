@@ -1,18 +1,19 @@
 <template>
   <div class="home">
     <Navigation></Navigation>
-      
-    <TweetList :items="this.wholeposts"></TweetList>
 
-    <!-- [fix]これ使えそう -->
-    <!-- https://v2.vuetifyjs.com/ja/components/floating-action-buttons/ -->
-    <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
-      
+    <!-- 上にあったほうが投稿しやすい？と思って上にしました -->
     <v-btn large color="primary"  to="/createTweet">ツイート</v-btn>
 
     <v-btn large color="primary"  to="/createTraining">筋トレ投稿</v-btn>
     
     <v-btn large color="primary"  to="/createCooking">料理投稿</v-btn>
+      
+    <TweetList :items="this.wholeposts" :items2="this.wholeposts2" :items3="this.wholeposts3"></TweetList>
+
+    <!-- [fix]これ使えそう -->
+    <!-- https://v2.vuetifyjs.com/ja/components/floating-action-buttons/ -->
+    <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
     
     <!-- <div>
       全体
@@ -82,6 +83,31 @@ const _query2 = `query GetUser($id: ID!) {
         }
       }
     }
+    cookingPosts {
+      items {
+        id
+        title
+        content
+        calorie
+        createdAt
+        user {
+          name
+          emailAddress
+        }
+      }
+    }
+    traningPosts {
+      items {
+        id
+        title
+        content
+        createdAt
+        user {
+          name
+          emailAddress
+        }
+      }
+    }
     followees {
       items {
         follower {
@@ -91,6 +117,33 @@ const _query2 = `query GetUser($id: ID!) {
               id
               content
               createdAt
+              user {
+                name
+                emailAddress
+              }
+            }
+          }
+          cookingPosts {
+            nextToken
+            items {
+              content
+              calorie
+              createdAt
+              id
+              title
+              user {
+                name
+                emailAddress
+              }
+            }
+          }
+          traningPosts {
+            nextToken
+            items {
+              id
+              content
+              createdAt
+              title
               user {
                 name
                 emailAddress
@@ -120,6 +173,37 @@ const onCreateTweet = /* GraphQL */ `
   }
 `;
 
+const onCreateCooking = /* GraphQL */ `
+  subscription OnCreateCooking {
+    onCreateCooking {
+      id
+      title
+      content
+      calorie
+      createdAt
+      user {
+        name
+        emailAddress
+      }
+    }
+  }
+`;
+
+const onCreateTraning = /* GraphQL */ `
+  subscription OnCreateTraning {
+    onCreateTraning {
+      id
+      title
+      content
+      createdAt
+      user {
+        name
+        emailAddress
+      }
+    }
+  }
+`;
+
 
 const onDeleteTweet = /* GraphQL */ `
   subscription OnDeleteTweet {
@@ -129,6 +213,21 @@ const onDeleteTweet = /* GraphQL */ `
   }
 `;
 
+const onDeleteCooking = /* GraphQL */ `
+  subscription OnDeleteCooking {
+    onDeleteCooking {
+      id
+    }
+  }
+`;
+
+const onDeleteTraning = /* GraphQL */ `
+  subscription OnDeleteTraning {
+    onDeleteTraning {
+      id
+    }
+  }
+`;
 
 export default {
   name: 'home',
@@ -136,16 +235,36 @@ export default {
     return{
       user: null,
       createSubscription: {},
+      // 料理用
+      createSubscription2: {},
+      // 筋トレ用
+      createSubscription3: {},
       deleteSubscription: {},
+      // 料理用
+      deleteSubscription2: {},
+      // 筋トレ用
+      deleteSubscription3: {},
       myposts: null,
+      // 料理用
+      myposts2: null,
+      // 筋トレ用
+      myposts3: null,
       followeeposts: [],
+      // 料理用
+      followeeposts2: [],
+      // 筋トレ用
+      followeeposts3: [],
       testposts:[],
       //開発用
       dev: true,
       // followeeposts2: null,
       //ここルートなので、他の画面編集してる時もいらんクエリー飛ばすのでテストデータいれてます。
       // wholeposts: [ { "id": "64bc2dec-f6a0-4887-aca1-239ade116588", "content": "テストデータ", "createdAt": "2020-11-14T12:23:50.676Z", "user": { "name": "開発中" } }, { "id": "003f8891-0834-480e-8b3a-e693bff1561b", "content": "開発中", "createdAt": "2020-11-15T01:09:26.983Z", "user": { "name": "開発中" } }, { "id": "3f406308-c49b-4af2-bf85-d7914e918c7b", "content": "開発中", "createdAt": "2020-11-15T04:46:33.514Z", "user": { "name": "開発中" } }, { "id": "39ee2d99-870b-4639-baf4-f5fa1ac3d01f", "content": "開発中", "createdAt": "2020-11-14T12:57:01.263Z", "user": { "name": "開発中" } } ]
-      wholeposts: null
+      wholeposts: null,
+      // 料理用
+      wholeposts2: null,
+      // 筋トレ用
+      wholeposts3: null
     }
   },
   components: {
@@ -164,12 +283,45 @@ export default {
         }
       })
 
+      // 料理
+      this.createSubscription2 = API.graphql(graphqlOperation(onCreateCooking)).subscribe({
+        next: (eventData) => {
+          const cooking = eventData.value.data.onCreateCooking;
+          this.wholeposts2.push(cooking);
+        }
+      })
+
+      // 筋トレ
+      this.createSubscription3 = API.graphql(graphqlOperation(onCreateTraning)).subscribe({
+        next: (eventData) => {
+          const traning = eventData.value.data.onCreateTraning;
+          this.wholeposts3.push(traning);
+        }
+      })
+
       this.deleteSubscription = API.graphql(graphqlOperation(onDeleteTweet)).subscribe({
         next: (eventData) => {
           const tweet = eventData.value.data.onDeleteTweet;
           this.wholeposts = this.wholeposts.filter(post => post.id != tweet.id);
         }
       })
+
+      // 料理
+      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteCooking)).subscribe({
+        next: (eventData) => {
+          const cooking = eventData.value.data.onDeleteCooking;
+          this.wholeposts2 = this.wholeposts2.filter(post => post.id != cooking.id);
+        }
+      })
+
+      // 筋トレ
+      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteTraning)).subscribe({
+        next: (eventData) => {
+          const traning = eventData.value.data.onDeleteTraning;
+          this.wholeposts3 = this.wholeposts3.filter(post => post.id != traning.id);
+        }
+      })
+
     },
     scrollTop: function(){
       window.scrollTo({
@@ -201,6 +353,28 @@ export default {
         } 
       }
       this.wholeposts= this.myposts.concat(this.followeeposts)
+
+      //料理
+      this.myposts2 = this.user.cookingPosts.items//自分の料理投稿
+      this.wholeposts2 = this.myposts2//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
+      for(let i = 0; i < this.user.followees.items.length; i++){
+        if(this.user.followees.items[i].follower.cookingPosts.items.length > 0){
+          
+          this.followeeposts2.push(this.user.followees.items[0].follower.cookingPosts.items[0])
+        }
+      }
+      this.wholeposts2= this.myposts2.concat(this.followeeposts2)
+
+      //筋トレ
+      this.myposts3 = this.user.traningPosts.items//自分の料理投稿
+      this.wholeposts3 = this.myposts3//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
+      for(let i = 0; i < this.user.followees.items.length; i++){
+        if(this.user.followees.items[i].follower.traningPosts.items.length > 0){
+          this.followeeposts3.push(this.user.followees.items[i].follower.traningPosts.items[0])
+        }
+      }
+      
+      this.wholeposts3= this.myposts3.concat(this.followeeposts3)
     }
 
     this.subscribe()

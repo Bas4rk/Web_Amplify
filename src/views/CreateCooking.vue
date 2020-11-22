@@ -52,6 +52,7 @@
             class="ma-2"
             color="primary"
             dark
+            @click="createCooking"
           >
             投稿
           </v-btn>
@@ -84,7 +85,7 @@
           >
           <v-icon
             dark
-             left
+            left
           >
             mdi-camera
           </v-icon>
@@ -100,14 +101,15 @@
         <v-col cols="12" sm="6" md="3">
           <v-text-field
             placeholder="タイトル"
-            v-model="content"
+            v-model="title"
           >
           </v-text-field> 
         </v-col>
 
         <!-- カロリー入力ボタンです、中身はまだない、どうやって入力させる？ -->
+        <!-- ここ一旦ボタンやめて数値入力させるようにしました -->
         <v-col cols="12" sm="6" md="3">
-          <v-btn
+          <!-- <v-btn
             class="ma-2"
             color="primary"
             dark
@@ -120,7 +122,12 @@
             mdi-food
           </v-icon>
             ~kcal
-          </v-btn>
+          </v-btn> -->
+          <v-text-field
+            placeholder="カロリー"
+            v-model="calorie"
+          >
+          </v-text-field> 
         </v-col>
 
         <!-- 栄養素入力です -->
@@ -150,15 +157,6 @@
           >
           </v-text-field>
         </v-col>
-
-        <!-- g表示、書き方ださい -->
-        <!-- <v-col cols="12" sm="6" md="3">
-          <br>
-          g<br><br><br>
-          g<br><br><br>
-          g<br><br><br>
-          g
-        </v-col> -->
 
       </v-row>
           
@@ -224,11 +222,25 @@
 
 <script>
 import Navigation from '@/components/Navigation.vue';
+import { API, graphqlOperation } from 'aws-amplify'
+import * as gqlMutations from '../graphql/mutations'
 
+// const createCooking_mutation = /* GraphQL */`
+// mutation createCooking {
+//   createCooking(input: {calorie: 10, content: "tukurikata", userId: "46ca50cb-d45e-4490-b707-d2e2ecb8e0be", title: "taitoru"}) {
+//     id
+//   }
+// }
+// `;
 export default {
   data() {
     return{
-      content: null
+      // 作り方
+      content: null,
+      // タイトル
+      title: null,
+      // カロリー
+      calorie: null
     }
   },
   components: {
@@ -244,6 +256,20 @@ export default {
       // historyできてなくね？
     },
 
-  }
+    // 投稿作成です、「栄養素」の項目なかったからとりあえず無視してます
+    async createCooking(){
+      const cooking =await API.graphql(
+        //[fix]あとでクエリー書き直す?
+          graphqlOperation(gqlMutations.createCooking,{
+            input: {userId: this.$store.getters.getUserGraphql.items[0].id,
+            title: this.title,
+            content: this.content,
+            calorie: this.calorie
+            }
+          })
+      )
+      console.log(cooking.data.createCooking);
+    }
+  },
 }
 </script>
