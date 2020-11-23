@@ -50,6 +50,21 @@
       {{testposts}}
     </div> -->
 
+    <div>
+      全体のツイート
+      {{wholeposts}}
+    </div>
+    <br>
+    <div>
+      全体の料理
+      {{wholeposts2}}
+    </div>
+    <br>
+    <div>
+      全体の筋トレ
+      {{wholeposts3}}
+    </div>
+
   </div>
 </template>
 
@@ -360,7 +375,7 @@ export default {
       for(let i = 0; i < this.user.followees.items.length; i++){
         if(this.user.followees.items[i].follower.cookingPosts.items.length > 0){
           
-          this.followeeposts2.push(this.user.followees.items[0].follower.cookingPosts.items[0])
+          this.followeeposts2.push(this.user.followees.items[i].follower.cookingPosts.items[0])
         }
       }
       this.wholeposts2= this.myposts2.concat(this.followeeposts2)

@@ -106,7 +106,8 @@
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    {{ item.content }}
+                    <div>{{ item.content }}</div>
+                    <div>カロリー：{{ item.calorie }}</div>
                     <v-list-item-subtitle>
                       <!-- {{ item.description}} -->
                       <div class="right">
