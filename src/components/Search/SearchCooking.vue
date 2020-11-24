@@ -117,6 +117,8 @@
               </v-card-actions>
             </v-card>
           </v-col> 
+          <!-- 横線です -->
+        <v-divider></v-divider>
         </v-tab-item>
         <v-tab-item value="tab-2">
           <SearchTraining></SearchTraining>   
