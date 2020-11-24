@@ -173,7 +173,7 @@ const _query2 = `query GetUser($id: ID!) {
 `
 
 
-
+//[fix]これ、フォローしてない人の投稿もタイムラインに映るわ。。
 const onCreateTweet = /* GraphQL */ `
   subscription OnCreateTweet {
     onCreateTweet {

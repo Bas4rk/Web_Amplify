@@ -3,7 +3,7 @@
     <Navigation></Navigation>
       [通知画面]これから書きます。
       <!-- バックエンド変更対応してないので、コメントアウトしてます。 -->
-    
+      {{relation}}
 
       <!-- <amplify-connect :query="listTodosQuery"
           :subscription="createTodoSubscription"
@@ -26,32 +26,48 @@
 // import NoticeList from '@/components/NoticeList.vue';
 import Navigation from '@/components/Navigation.vue';
 
-// const ListTodosQuery = `query ListTodos {
-//     listTodos {
-//       items {
-//         id
-//         name
-//         description
-//         user_id
-//         createdAt
-//         updatedAt
-//       }
-//     }
-//   }`;
+import { API, graphqlOperation } from 'aws-amplify'
 
-//   const OnCreateTodoSubscription = `subscription OnCreateTodo {
-//       onCreateTodo {
-//         id
-//         name
-//         description
-//         user_id
-//         createdAt
-//         updatedAt
-//       }
-//     }`;
+
+const onCreateRelationship = /* GraphQL */ `
+  subscription OnCreateRelationship {
+    onCreateRelationship {
+      id
+      blockBool
+      followee {
+        id
+        name
+        emailAddress
+      }
+      follower {
+        id
+        name
+        emailAddress
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+
+const onDeleteRelationship = /* GraphQL */ `
+  subscription OnDeleteRelationship {
+    onDeleteRelationship {
+      id
+    }
+  }
+`;
 
 export default {
   name: 'home',
+  data(){
+    return{
+      createSubscription: {},
+      deleteSubscription: {},
+      relation: []
+    }
+  },
   components: {
     Navigation,
     // NoticeList,
@@ -66,12 +82,29 @@ export default {
     // }
   },
   methods: {
-    // onCreateTodo(prevData, newData) {
-    //   console.log('New todo from subscription...');
-    //   const newTodo = newData.onCreateTodo;
-    //   prevData.data.listTodos.items.push(newTodo);
-    //   return prevData.data;
-    // }
+    subscribe(){
+      // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
+      this.createSubscription = API.graphql(graphqlOperation(onCreateRelationship)).subscribe({
+        next: (eventData) => {
+          console.log("入った")
+          console.log(eventData.value.data.onCreateRelationship)
+          this.relation = eventData.value.data.onCreateRelationship;
+          // this.messages++
+          // this.wholeposts.push(tweet);
+        }
+      })
+
+      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteRelationship)).subscribe({
+        next: (eventData) => {
+          // const cooking = eventData.value.data.onDeleteRelationship;
+          console.log(eventData.value.data.onDeleteRelationship)
+          
+        }
+      })
+    }
+  },
+  mounted(){
+    this.subscribe()
   }
 }
 </script>

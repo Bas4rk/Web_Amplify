@@ -39,13 +39,23 @@
           :to="link"
         >
           <v-list-item-icon>
-            <v-icon>{{ icon }}</v-icon>
+            <v-badge
+              v-if="icon == 'mdi-bell'"
+              :content="messages"
+              :value="messages"
+              color="green"
+              overlap
+            >
+              <v-icon>{{ icon }}</v-icon>
+            </v-badge>
+            <v-icon v-else>{{ icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
             <v-list-item-title>{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        {{relation}}
       </v-list>
     </v-navigation-drawer>
 
@@ -76,6 +86,30 @@
 
 <script>
 
+// import { API, graphqlOperation } from 'aws-amplify'
+
+// const onCreateRelationship = /* GraphQL */ `
+//   subscription OnCreateRelationship {
+//     onCreateRelationship {
+//       id
+//       blockBool
+//       followee {
+//         id
+//         name
+//         emailAddress
+//       }
+//       follower {
+//         id
+//         name
+//         emailAddress
+//       }
+//       createdAt
+//       updatedAt
+//     }
+//   }
+// `;
+
+
 export default {
   data: () => ({
     drawer: null,
@@ -89,6 +123,9 @@ export default {
       ['mdi-account', 'プロフィール','/profile'],
       ['mdi-cog', '設定','/setting']
     ],
+    // createSubscription: {},
+    // messages: 0,
+    // relation: []
   }),
   computed: {
     getUserEmail(){
@@ -99,6 +136,23 @@ export default {
       const user= this.$store.getters.getUserGraphql
       return  user.items[0].name
     }
+  },
+  methods: {
+    // subscribe(){
+    //   // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
+    //   this.createSubscription = API.graphql(graphqlOperation(onCreateRelationship)).subscribe({
+    //     next: (eventData) => {
+    //       console.log("入った")
+    //       console.log(eventData)
+    //       this.relation = eventData.value.data.onCreateRelationship;
+    //       this.messages++
+    //       // this.wholeposts.push(tweet);
+    //     }
+    //   })
+    // }
+  },
+  mounted(){
+    // this.subscribe()
   }
   // mounted() {
   //   this.$store.subscribe((mutation, state) => {
