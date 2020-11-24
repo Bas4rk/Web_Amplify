@@ -10,6 +10,7 @@ import Calendar2 from '../views/Calendar2.vue'
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
 import Setting from '../views/Setting.vue'
+import SetPremium from '../views/setting-premium.vue'
 import Tweet from '../views/Tweet.vue'
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
@@ -115,6 +116,13 @@ const router = new Router({
       path: '/setting',
       name: 'setting',
       component: Setting,
+      meta: { requiresAuth: true }
+    },
+    {
+      // プレミアム登録ページ
+      path: '/setting-premium',
+      name: 'setting-premium',
+      component: SetPremium,
       meta: { requiresAuth: true }
     },
     {
