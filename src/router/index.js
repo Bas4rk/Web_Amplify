@@ -13,6 +13,7 @@ import Profile from '../views/Profile.vue'
 // import FolloweeList from '../views/FolloweeList.vue'
 import FolloweeList from '../components/FolloweeList.vue'
 import Setting from '../views/Setting.vue'
+import SetPremium from '../views/setting-premium.vue'
 import Tweet from '../views/Tweet.vue'
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
@@ -125,6 +126,13 @@ const router = new Router({
       path: '/setting',
       name: 'setting',
       component: Setting,
+      meta: { requiresAuth: true }
+    },
+    {
+      // プレミアム登録ページ
+      path: '/setting-premium',
+      name: 'setting-premium',
+      component: SetPremium,
       meta: { requiresAuth: true }
     },
     {
