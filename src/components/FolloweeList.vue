@@ -1,5 +1,6 @@
 <template>
   <div class="FolloweeList">
+    <Navigation></Navigation>
     <v-container
       class="py-8 px-6"
       fluid
@@ -11,8 +12,24 @@
           :key="card"
           cols="12"
         > -->
-
+        <v-col cols="12" sm="6" md="3" justify="left">
+          <!-- 戻るボタンです -->
+            <v-btn
+              class="ma-2"
+              color="primary"
+              dark
+              @click="back"
+            >
+            <v-icon
+              dark
+              left
+            >
+              mdi-arrow-left
+            </v-icon>Back</v-btn>
+            </v-col>
+    </v-row>
         
+      <v-row justify="center">
         <v-col cols="5">
           <v-card>
             <!-- <v-subheader>{{ card }}</v-subheader> -->
@@ -99,9 +116,52 @@
 </template>
 
 <script>
+import Navigation from '@/components/Navigation.vue';
 // import NewTodo from '@/components/NewTodo.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 // import * as gqlQueries from '../graphql/queries'
+
+
+//[add]ここgetUserだったけどFollowerIndexで取ってこれた、mock?でテストして取ってこれたのでそのままコピペしてます
+const follows_query = /* GraphQL */`
+  query followerIndex(
+    $followerId: ID
+  ) {
+    followerIndex(
+      followerId: $followerId
+    ) {
+      items {
+        id
+        followee {
+          id
+          name
+          emailAddress
+        }
+      }
+    }
+  }
+`;
+
+//[fix]follweeは「フォローされている人」という意味で、ここに書いてある内容は「フォローしている人」なので名前が逆です。
+const followees_query = /* GraphQL */ `
+
+  query FolloweeIndex(
+    $followeeId: ID
+  ) {
+    followeeIndex(
+      followeeId: $followeeId
+    ) {
+      items {
+        id
+        follower {
+          id
+          name
+          emailAddress
+        }
+      }
+    }
+  }
+`;
 
 const deleteRelationship_query = /* GraphQL */ `
   mutation DeleteRelationship(
@@ -114,8 +174,15 @@ const deleteRelationship_query = /* GraphQL */ `
 `
 
   export default {
-    props:['followees', 'follows'],
+    data() {
+      return{
+        followees: null,
+        follows: null
+      }
+    },
+    // props:['followees', 'follows'],
     components: {
+      Navigation,
     },
     methods: {
     scrollTop: function(){
@@ -133,7 +200,29 @@ const deleteRelationship_query = /* GraphQL */ `
         })
       )
       console.log("フォロー解除しました"+deleteRelation.data.deleteRelationship)
-    }
+    },
+    back: function(){
+      this.$router.push('/Profile');
+      // historyできてなくね？
+    },
+  },
+  mounted : async function(){
+    const usersorce= this.$store.getters.getUserGraphql
+    const query = await API.graphql(
+      graphqlOperation(followees_query, {followeeId : usersorce.items[0].id})
+    )
+    console.log("followeesクエリー飛ばしました。")
+    this.followees= query.data.followeeIndex.items
+
+    //フォローされてる人リスト取得、変数名がクソ
+    const usersource2 = this.$store.getters.getUserGraphql
+    //クエリ飛ばし、変数名がクソ
+    const query2 = await API.graphql(
+      graphqlOperation(follows_query, {followerId : usersource2.items[0].id})
+    )
+    console.log("followsクエリー飛ばしました。")
+    //80行目のfollowsに受け取ったクエリデータ？入れる
+    this.follows= query2.data.followerIndex.items
   }
   }
 </script>

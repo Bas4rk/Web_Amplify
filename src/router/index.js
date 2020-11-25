@@ -10,6 +10,8 @@ import Calendar from '../views/Calendar.vue'
 import Calendar2 from '../views/Calendar2.vue'
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
+// import FolloweeList from '../views/FolloweeList.vue'
+import FolloweeList from '../components/FolloweeList.vue'
 import Setting from '../views/Setting.vue'
 import Tweet from '../views/Tweet.vue'
 import SignUp from '../views/SignUp.vue'
@@ -109,6 +111,13 @@ const router = new Router({
       path: '/profile',
       name: 'profile',
       component: Profile,
+      meta: { requiresAuth: true }
+    },
+    {
+      // フォローリストページ
+      path: '/followeelist',
+      name: 'followeelist',
+      component: FolloweeList,
       meta: { requiresAuth: true }
     },
     {
