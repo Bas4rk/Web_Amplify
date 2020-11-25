@@ -33,12 +33,10 @@
             <v-divider></v-divider>
             <br><div class="indigo--text">・広告の非表示</div><br>
             
+            <v-col><v-btn color="accent" block>PREMIUMに登録する(月額￥280)</v-btn><br></v-col>
 
           </v-list>
         </v-col>
-      </v-row>
-      <v-row justify="center">
-            <v-col><v-btn color="accent" block>PREMIUMに登録する(月額\280)</v-btn><br></v-col>
       </v-row>
     </v-container>
   </div>
