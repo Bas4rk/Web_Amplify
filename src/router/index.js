@@ -11,6 +11,7 @@ import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
 import Setting from '../views/Setting.vue'
 import SetPremium from '../views/setting-premium.vue'
+import SetAccounts from '../views/setting-account.vue'
 import Tweet from '../views/Tweet.vue'
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
@@ -123,6 +124,13 @@ const router = new Router({
       path: '/setting-premium',
       name: 'setting-premium',
       component: SetPremium,
+      meta: { requiresAuth: true }
+    },
+    {
+      // アカウントページ
+      path: '/setting-account',
+      name: 'setting-account',
+      component: SetAccounts,
       meta: { requiresAuth: true }
     },
     {

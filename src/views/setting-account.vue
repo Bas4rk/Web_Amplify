@@ -12,31 +12,38 @@
     <v-layout justify-center>
 
       <!-- class="title"で文字の大きさを変えてます、ここ"display-1"でもいいかも -->
-      <div class="display-1">PREMIUM</div>
-
+      <div class="title">設定・その他</div>
     </v-layout>
 
     <!-- v-rowにjustify="center"すると左右中央、上下中央はalign-content="center" -->
       <v-row justify="center">
-            <v-col cols="4"><br>
-            <p>プレミアムプラン特典です</p>
-            <p>すべての機能が使用可能になります</p>
-            </v-col>
-      </v-row>
-      <v-row justify="center">
+
         <!-- v-colはv-rowの子である、cols="5"はグリッドが～とかで、cols2つ並べて割合で表示させられる
         cols="8"とcols="4"で8対4で表示とか（2対1）最大は12 -->
-        
         <v-col cols="5">
+
           <!-- リストです -->
           <v-list>
             <!-- ↓後できれいにする -->
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
+            <!-- 遷移はまだない -->
+            <v-btn block to="/setting-premium">プレミアムサービスを登録する</v-btn><br>
+            
+
             <!-- 横線です -->
             <v-divider></v-divider>
-            <br><div class="indigo--text">・広告の非表示</div><br>
-            
-            <v-col><v-btn color="accent" block>PREMIUMに登録する(月額￥280)</v-btn><br></v-col>
+
+
+            <!-- サインアウトボタン -->
+            <v-list-item @click="signOut">
+              <v-list-item-icon>
+                <v-icon> mdi-logout</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>サインアウト</v-list-item-title>
+              </v-list-item-content>
+              <!-- <amplify-sign-out /> -->
+            </v-list-item>
 
           </v-list>
         </v-col>
