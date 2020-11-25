@@ -55,6 +55,19 @@ const onDeleteRelationship = /* GraphQL */ `
   subscription OnDeleteRelationship {
     onDeleteRelationship {
       id
+      blockBool
+      followee {
+        id
+        name
+        emailAddress
+      }
+      follower {
+        id
+        name
+        emailAddress
+      }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -86,9 +99,10 @@ export default {
       // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
       this.createSubscription = API.graphql(graphqlOperation(onCreateRelationship)).subscribe({
         next: (eventData) => {
-          console.log("入った")
+          console.log("クリエイト入った")
           console.log(eventData.value.data.onCreateRelationship)
-          this.relation = eventData.value.data.onCreateRelationship;
+          console.log("evenData:"+eventData)
+          this.relation = eventData
           // this.messages++
           // this.wholeposts.push(tweet);
         }
@@ -97,6 +111,7 @@ export default {
       this.deleteSubscription = API.graphql(graphqlOperation(onDeleteRelationship)).subscribe({
         next: (eventData) => {
           // const cooking = eventData.value.data.onDeleteRelationship;
+          console.log("デリーと入った")
           console.log(eventData.value.data.onDeleteRelationship)
           
         }
