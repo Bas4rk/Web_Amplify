@@ -43,7 +43,7 @@
       </v-row>
 
       <v-row>
-        <v-btn large color="primary"  to="../components/FolloweeList">ふぉろーリスト（後で分割する？）</v-btn>
+        <v-btn large color="primary"  to="/followeelist">ふぉろーリスト（後で分割する？）</v-btn>
         <v-btn large color="primary"  to="">プロフィール編集</v-btn>
         <!-- ブックマークボタン、Prottにあったのでとりあえずつけた -->
         <v-btn
@@ -101,23 +101,6 @@
     </v-container>
   </div>
 </template>
-
-<style scoped>
-.v-tabs {
-  width: 100%;
-  height: 100%;
-}
-
-.v-window {
-  height: calc(100% - 48px); /* タブ領域の高さを引く */
-}
-
-.v-tab__items,
-.v-window-item,
-.v-window >>> div.v-window__container { /* ここが重要 */
-  height: 100%;
-}
-</style>
 
 <script>
 import TweetList from '@/components/TweetList.vue';
