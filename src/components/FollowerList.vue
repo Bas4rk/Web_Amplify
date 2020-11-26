@@ -33,25 +33,23 @@
         <v-col cols="5">
           <v-card>
             <!-- <v-subheader>{{ card }}</v-subheader> -->
-            <v-subheader>フォローされているユーザー</v-subheader>
+            <v-subheader>フォローしてるユーザー</v-subheader>
 
             <v-list>
-                <!-- v-forでfollowsの数だけ回します -->
-              <template v-for="item in follows">
+              <template v-for="item in followees">
                 <!-- <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}"> -->
-                  <v-list-item :key="item.id" height="200">
+                  <v-list-item :key="item.follower.id" height="200">
                   <v-list-item-avatar color="grey darken-1">
                     <v-icon size="30">mdi-account</v-icon>
                   </v-list-item-avatar>
 
                   <v-list-item-content>
-                      <!-- ここから下のitem.followee.~はProfile.vueにクエリ？が書いてあります -->
-                    <v-list-item-title>{{ item.followee.name}}</v-list-item-title>
+                    <v-list-item-title>{{ item.follower.name}}</v-list-item-title>
 
                     <v-list-item-subtitle>
                       <!-- {{ item.description}} -->
                       <div>
-                        <small>{{ item.followee.emailAddress }}</small>
+                        <small>{{ item.follower.emailAddress }}</small>
                       </div>
                     </v-list-item-subtitle>
                     
@@ -60,7 +58,7 @@
                 </v-list-item>
 
                 <v-divider
-                  :key="`divider-${item.followee.id}`"
+                  :key="`divider-${item.follower.id}`"
                   inset
                 ></v-divider>
               </template>
@@ -83,18 +81,18 @@ import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 // import * as gqlQueries from '../graphql/queries'
 
+//[fix]follweeは「フォローされている人」という意味で、ここに書いてある内容は「フォローしている人」なので名前が逆です。
+const followees_query = /* GraphQL */ `
 
-//[add]ここgetUserだったけどFollowerIndexで取ってこれた、mock?でテストして取ってこれたのでそのままコピペしてます
-const follows_query = /* GraphQL */`
-  query followerIndex(
-    $followerId: ID
+  query FolloweeIndex(
+    $followeeId: ID
   ) {
-    followerIndex(
-      followerId: $followerId
+    followeeIndex(
+      followeeId: $followeeId
     ) {
       items {
         id
-        followee {
+        follower {
           id
           name
           emailAddress
@@ -118,7 +116,7 @@ const deleteRelationship_query = /* GraphQL */ `
     data() {
       return{
         followees: null,
-        follows: null
+
       }
     },
     // props:['followees', 'follows'],
@@ -148,16 +146,12 @@ const deleteRelationship_query = /* GraphQL */ `
     },
   },
   mounted : async function(){
-
-    //フォローされてる人リスト取得、変数名がクソ
-    const usersource2 = this.$store.getters.getUserGraphql
-    //クエリ飛ばし、変数名がクソ
-    const query2 = await API.graphql(
-      graphqlOperation(follows_query, {followerId : usersource2.items[0].id})
+    const usersorce= this.$store.getters.getUserGraphql
+    const query = await API.graphql(
+      graphqlOperation(followees_query, {followeeId : usersorce.items[0].id})
     )
-    console.log("followsクエリー飛ばしました。")
-    //80行目のfollowsに受け取ったクエリデータ？入れる
-    this.follows= query2.data.followerIndex.items
+    console.log("followeesクエリー飛ばしました。")
+    this.followees= query.data.followeeIndex.items
   }
   }
 </script>

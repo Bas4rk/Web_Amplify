@@ -1,20 +1,87 @@
 <template>
   <div class="home">
     <Navigation></Navigation>
-
+    <!-- ボタンの位置とかアイコンのデザインとか要相談 -->
+      <v-card id="create">
+        <v-speed-dial
+          v-model="fab"
+          :top="top"
+          :right="right"
+          :left="left"
+          :direction="direction"
+          :open-on-hover="hover"
+          :transition="transition"
+        >
+          <template v-slot:activator>
+            <v-btn
+              v-model="fab"
+              color="blue darken-2"
+              dark
+              fab
+            >
+              <v-icon v-if="fab">mdi-close</v-icon>
+              <v-icon v-else>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+            <v-btn
+              fab
+              dark
+              small
+              color="green"
+              to="/createTweet"
+            >
+            <!-- https://materialdesignicons.com/「comment」で検索した
+            comment-outlineもあり？
+            comment-text
+            comment-text-multiple
+            comment-processing
+            comment-account -->
+              <v-icon>mdi-comment</v-icon>
+            </v-btn>
+            <v-btn
+              fab
+              dark
+              small
+              color="indigo"
+              to="/createTraining"
+            >
+              <v-icon>mdi-dumbbell</v-icon>
+            </v-btn>
+            <v-btn
+              fab
+              dark
+              small
+              color="red"
+              to="/createCooking"
+            >
+              <v-icon>mdi-silverware-fork-knife</v-icon>
+            </v-btn>
+          </v-speed-dial>
+        </v-card>
     <!-- 上にあったほうが投稿しやすい？と思って上にしました -->
-    <v-btn large color="primary"  to="/createTweet">ツイート</v-btn>
-
+    <!-- <v-btn large color="primary"  to="/createTweet">ツイート</v-btn>
     <v-btn large color="primary"  to="/createTraining">筋トレ投稿</v-btn>
-    
-    <v-btn large color="primary"  to="/createCooking">料理投稿</v-btn>
+    <v-btn large color="primary"  to="/createCooking">料理投稿</v-btn> -->
 
     <TweetList :items="this.wholeposts" :items2="this.wholeposts2" :items3="this.wholeposts3"></TweetList>
 
     <!-- [fix]これ使えそう -->
     <!-- https://v2.vuetifyjs.com/ja/components/floating-action-buttons/ -->
-    <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
+    <!-- <v-btn large color="primary" @click="scrollTop">上にいく</v-btn> -->
     
+    <!-- 上に行くボタン、↑のURLに書いてあったやつで作ってみた -->
+    <v-btn
+      color="primary"
+      dark
+      absolute
+      bottom
+      right
+      fab
+      @click="scrollTop"
+    >
+    <v-icon>mdi-chevron-up</v-icon>
+    </v-btn>
+
     <!-- <div>
       全体
       {{user}}
@@ -252,6 +319,18 @@ export default {
   name: 'home',
   data() {
     return{
+      // ここ変えるとボタンの表示位置とか変わる
+      direction: 'right',
+      fab: false,
+      fling: false,
+      hover: true,
+      tabs: null,
+      top: true,
+      right: false,
+      bottom: false,
+      left: false,
+      transition: 'slide-x-transition',
+      // 表示変わるところここまで
       user: null,
       createSubscription: {},
       // 料理用
@@ -404,3 +483,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* 投稿ボタン */
+  #create .v-speed-dial {
+    position: absolute;
+  }
+
+  #create .v-btn--floating {
+    position: relative;
+  }
+</style>

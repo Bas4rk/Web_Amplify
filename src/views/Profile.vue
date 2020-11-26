@@ -43,7 +43,8 @@
       </v-row>
 
       <v-row>
-        <v-btn large color="primary"  to="/followeelist">ふぉろーリスト（後で分割する？）</v-btn>
+        <v-btn large color="primary"  to="/followerlist">フォロー中</v-btn>
+        <v-btn large color="primary"  to="/followeelist">フォロワー</v-btn>
         <v-btn large color="primary"  to="">プロフィール編集</v-btn>
         <!-- ブックマークボタン、Prottにあったのでとりあえずつけた -->
         <v-btn
