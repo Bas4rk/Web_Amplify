@@ -65,6 +65,10 @@
       {{wholeposts3}}
     </div>
 
+  <div>
+    {{relation}}
+  </div>
+
   </div>
 </template>
 
@@ -279,7 +283,8 @@ export default {
       // 料理用
       wholeposts2: null,
       // 筋トレ用
-      wholeposts3: null
+      wholeposts3: null,
+      relation: null
     }
   },
   components: {
@@ -293,8 +298,10 @@ export default {
       // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
       this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
         next: (eventData) => {
+          console.log("evenData:"+eventData)
           const tweet = eventData.value.data.onCreateTweet;
           this.wholeposts.push(tweet);
+          this.relation = eventData
         }
       })
 

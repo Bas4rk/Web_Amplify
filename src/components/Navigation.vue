@@ -124,8 +124,8 @@ export default {
       ['mdi-cog', '設定','/setting']
     ],
     // createSubscription: {},
-    // messages: 0,
-    // relation: []
+    messages: 0,
+    relation: []
   }),
   computed: {
     getUserEmail(){

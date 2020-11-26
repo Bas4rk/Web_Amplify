@@ -71,6 +71,19 @@ const createRelation_query = `
   ) {
     createRelationship(input: $input) {
       id
+      blockBool
+      followee {
+        id
+        name
+        emailAddress
+      }
+      follower {
+        id
+        name
+        emailAddress
+      }
+      createdAt
+      updatedAt
     }
   }
 `
@@ -82,6 +95,19 @@ const deleteRelationship_query = `
   ) {
     deleteRelationship(input: $input) {
       id
+      blockBool
+      followee {
+        id
+        name
+        emailAddress
+      }
+      follower {
+        id
+        name
+        emailAddress
+      }
+      createdAt
+      updatedAt
     }
   }
 `
