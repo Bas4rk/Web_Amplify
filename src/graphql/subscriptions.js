@@ -15,7 +15,6 @@ export const onCreateUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -27,7 +26,6 @@ export const onCreateUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -104,7 +102,6 @@ export const onUpdateUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -116,7 +113,6 @@ export const onUpdateUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -193,7 +189,6 @@ export const onDeleteUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -205,7 +200,6 @@ export const onDeleteUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -274,7 +268,6 @@ export const onCreateRelationship = /* GraphQL */ `
       id
       followeeId
       followerId
-      blockBool
       followee {
         id
         name
@@ -341,7 +334,6 @@ export const onUpdateRelationship = /* GraphQL */ `
       id
       followeeId
       followerId
-      blockBool
       followee {
         id
         name
@@ -408,7 +400,6 @@ export const onDeleteRelationship = /* GraphQL */ `
       id
       followeeId
       followerId
-      blockBool
       followee {
         id
         name
@@ -466,6 +457,36 @@ export const onDeleteRelationship = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+    }
+  }
+`;
+export const onCreateBlock = /* GraphQL */ `
+  subscription OnCreateBlock($owner: String!) {
+    onCreateBlock(owner: $owner) {
+      owner
+      blockId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateBlock = /* GraphQL */ `
+  subscription OnUpdateBlock($owner: String!) {
+    onUpdateBlock(owner: $owner) {
+      owner
+      blockId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteBlock = /* GraphQL */ `
+  subscription OnDeleteBlock($owner: String!) {
+    onDeleteBlock(owner: $owner) {
+      owner
+      blockId
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1273,6 +1294,276 @@ export const onDeleteComment = /* GraphQL */ `
         owner
       }
       owner
+    }
+  }
+`;
+export const onCreateCalendar = /* GraphQL */ `
+  subscription OnCreateCalendar($owner: String!) {
+    onCreateCalendar(owner: $owner) {
+      owner
+      memo {
+        items {
+          id
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCalendar = /* GraphQL */ `
+  subscription OnUpdateCalendar($owner: String!) {
+    onUpdateCalendar(owner: $owner) {
+      owner
+      memo {
+        items {
+          id
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCalendar = /* GraphQL */ `
+  subscription OnDeleteCalendar($owner: String!) {
+    onDeleteCalendar(owner: $owner) {
+      owner
+      memo {
+        items {
+          id
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateMemo = /* GraphQL */ `
+  subscription OnCreateMemo($owner: String!) {
+    onCreateMemo(owner: $owner) {
+      id
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      traningMemos {
+        items {
+          id
+          owner
+          memoDate
+          image
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMemo = /* GraphQL */ `
+  subscription OnUpdateMemo($owner: String!) {
+    onUpdateMemo(owner: $owner) {
+      id
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      traningMemos {
+        items {
+          id
+          owner
+          memoDate
+          image
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMemo = /* GraphQL */ `
+  subscription OnDeleteMemo($owner: String!) {
+    onDeleteMemo(owner: $owner) {
+      id
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      traningMemos {
+        items {
+          id
+          owner
+          memoDate
+          image
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateFoodMemo = /* GraphQL */ `
+  subscription OnCreateFoodMemo($owner: String!) {
+    onCreateFoodMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFoodMemo = /* GraphQL */ `
+  subscription OnUpdateFoodMemo($owner: String!) {
+    onUpdateFoodMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFoodMemo = /* GraphQL */ `
+  subscription OnDeleteFoodMemo($owner: String!) {
+    onDeleteFoodMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateTraningMemo = /* GraphQL */ `
+  subscription OnCreateTraningMemo($owner: String!) {
+    onCreateTraningMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      image
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTraningMemo = /* GraphQL */ `
+  subscription OnUpdateTraningMemo($owner: String!) {
+    onUpdateTraningMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      image
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTraningMemo = /* GraphQL */ `
+  subscription OnDeleteTraningMemo($owner: String!) {
+    onDeleteTraningMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      image
+      content
+      createdAt
+      updatedAt
     }
   }
 `;

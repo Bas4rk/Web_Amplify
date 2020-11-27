@@ -36,10 +36,18 @@ type Relationship
 {
     followeeId: ID! 
     followerId: ID!
-    blockBool: Boolean!
     followee: User @connection(fields: ["followeeId"])
     follower: User @connection(fields: ["followerId"])
 }
+
+type Block
+  @model
+  @key(fields:["owner"])
+  @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+  {
+    owner: ID!
+    blockId: ID!
+  }
 
 
 type Tweet
@@ -136,3 +144,48 @@ type Comment
 #   tweetId: ID!
 #   bmDate: Stinrg!
 # }
+
+type Calendar
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(fields:["owner"])
+{
+    owner: ID!
+    memo :[Memo] @connection(keyName: "memo",fields: ["owner"])
+}
+type Memo
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(name: "memo",fields:["owner"])
+{
+    id: ID!
+    owner: ID! 
+    date: DATE!
+    weight: Float
+    bfp: Float
+    foodMemos: [FoodMemo] @connection(keyName: "food",fields: ["date", "owner"])
+    traningMemos :[TraningMemo] @connection(keyName: "traning",fields: ["date", "owner"])
+}
+type FoodMemo
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(name: "food",fields:["memoDate", "owner"])
+{
+    owner: ID!
+    memoDate: DATE!
+    title: String!
+    image: String
+    calorele: Int
+    lipid: Int
+    proteins: Int
+}
+type TraningMemo
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(name: "traning",fields:["memoDate", "owner"])
+{
+    owner: ID!
+    memoDate: DATE!
+    image: String
+    content: String
+}

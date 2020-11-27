@@ -15,7 +15,6 @@ export const getUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -27,7 +26,6 @@ export const getUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -134,7 +132,6 @@ export const getRelationship = /* GraphQL */ `
       id
       followeeId
       followerId
-      blockBool
       followee {
         id
         name
@@ -206,7 +203,6 @@ export const listRelationships = /* GraphQL */ `
         id
         followeeId
         followerId
-        blockBool
         followee {
           id
           name
@@ -228,6 +224,41 @@ export const listRelationships = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getBlock = /* GraphQL */ `
+  query GetBlock($owner: ID!) {
+    getBlock(owner: $owner) {
+      owner
+      blockId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listBlocks = /* GraphQL */ `
+  query ListBlocks(
+    $owner: ID
+    $filter: ModelBlockFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listBlocks(
+      owner: $owner
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        owner
+        blockId
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -661,6 +692,192 @@ export const listComments = /* GraphQL */ `
     }
   }
 `;
+export const getCalendar = /* GraphQL */ `
+  query GetCalendar($owner: ID!) {
+    getCalendar(owner: $owner) {
+      owner
+      memo {
+        items {
+          id
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCalendars = /* GraphQL */ `
+  query ListCalendars(
+    $owner: ID
+    $filter: ModelCalendarFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listCalendars(
+      owner: $owner
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        owner
+        memo {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMemo = /* GraphQL */ `
+  query GetMemo($id: ID!) {
+    getMemo(id: $id) {
+      id
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      traningMemos {
+        items {
+          id
+          owner
+          memoDate
+          image
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMemos = /* GraphQL */ `
+  query ListMemos(
+    $filter: ModelMemoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMemos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        owner
+        date
+        weight
+        bfp
+        foodMemos {
+          nextToken
+        }
+        traningMemos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getFoodMemo = /* GraphQL */ `
+  query GetFoodMemo($id: ID!) {
+    getFoodMemo(id: $id) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFoodMemos = /* GraphQL */ `
+  query ListFoodMemos(
+    $filter: ModelFoodMemoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFoodMemos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        owner
+        memoDate
+        title
+        image
+        calorele
+        lipid
+        proteins
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getTraningMemo = /* GraphQL */ `
+  query GetTraningMemo($id: ID!) {
+    getTraningMemo(id: $id) {
+      id
+      owner
+      memoDate
+      image
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTraningMemos = /* GraphQL */ `
+  query ListTraningMemos(
+    $filter: ModelTraningMemoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTraningMemos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        owner
+        memoDate
+        image
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const emailIndex = /* GraphQL */ `
   query EmailIndex(
     $emailAddress: String
@@ -726,7 +943,6 @@ export const followeeIndex = /* GraphQL */ `
         id
         followeeId
         followerId
-        blockBool
         followee {
           id
           name
@@ -772,7 +988,6 @@ export const followerIndex = /* GraphQL */ `
         id
         followeeId
         followerId
-        blockBool
         followee {
           id
           name

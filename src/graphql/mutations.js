@@ -18,7 +18,6 @@ export const createUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -30,7 +29,6 @@ export const createUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -110,7 +108,6 @@ export const updateUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -122,7 +119,6 @@ export const updateUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -202,7 +198,6 @@ export const deleteUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -214,7 +209,6 @@ export const deleteUser = /* GraphQL */ `
           id
           followeeId
           followerId
-          blockBool
           createdAt
           updatedAt
           owner
@@ -286,7 +280,6 @@ export const createRelationship = /* GraphQL */ `
       id
       followeeId
       followerId
-      blockBool
       followee {
         id
         name
@@ -356,7 +349,6 @@ export const updateRelationship = /* GraphQL */ `
       id
       followeeId
       followerId
-      blockBool
       followee {
         id
         name
@@ -426,7 +418,6 @@ export const deleteRelationship = /* GraphQL */ `
       id
       followeeId
       followerId
-      blockBool
       followee {
         id
         name
@@ -484,6 +475,45 @@ export const deleteRelationship = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+    }
+  }
+`;
+export const createBlock = /* GraphQL */ `
+  mutation CreateBlock(
+    $input: CreateBlockInput!
+    $condition: ModelBlockConditionInput
+  ) {
+    createBlock(input: $input, condition: $condition) {
+      owner
+      blockId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateBlock = /* GraphQL */ `
+  mutation UpdateBlock(
+    $input: UpdateBlockInput!
+    $condition: ModelBlockConditionInput
+  ) {
+    updateBlock(input: $input, condition: $condition) {
+      owner
+      blockId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteBlock = /* GraphQL */ `
+  mutation DeleteBlock(
+    $input: DeleteBlockInput!
+    $condition: ModelBlockConditionInput
+  ) {
+    deleteBlock(input: $input, condition: $condition) {
+      owner
+      blockId
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1327,6 +1357,312 @@ export const deleteComment = /* GraphQL */ `
         owner
       }
       owner
+    }
+  }
+`;
+export const createCalendar = /* GraphQL */ `
+  mutation CreateCalendar(
+    $input: CreateCalendarInput!
+    $condition: ModelCalendarConditionInput
+  ) {
+    createCalendar(input: $input, condition: $condition) {
+      owner
+      memo {
+        items {
+          id
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCalendar = /* GraphQL */ `
+  mutation UpdateCalendar(
+    $input: UpdateCalendarInput!
+    $condition: ModelCalendarConditionInput
+  ) {
+    updateCalendar(input: $input, condition: $condition) {
+      owner
+      memo {
+        items {
+          id
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteCalendar = /* GraphQL */ `
+  mutation DeleteCalendar(
+    $input: DeleteCalendarInput!
+    $condition: ModelCalendarConditionInput
+  ) {
+    deleteCalendar(input: $input, condition: $condition) {
+      owner
+      memo {
+        items {
+          id
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createMemo = /* GraphQL */ `
+  mutation CreateMemo(
+    $input: CreateMemoInput!
+    $condition: ModelMemoConditionInput
+  ) {
+    createMemo(input: $input, condition: $condition) {
+      id
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      traningMemos {
+        items {
+          id
+          owner
+          memoDate
+          image
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMemo = /* GraphQL */ `
+  mutation UpdateMemo(
+    $input: UpdateMemoInput!
+    $condition: ModelMemoConditionInput
+  ) {
+    updateMemo(input: $input, condition: $condition) {
+      id
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      traningMemos {
+        items {
+          id
+          owner
+          memoDate
+          image
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMemo = /* GraphQL */ `
+  mutation DeleteMemo(
+    $input: DeleteMemoInput!
+    $condition: ModelMemoConditionInput
+  ) {
+    deleteMemo(input: $input, condition: $condition) {
+      id
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      traningMemos {
+        items {
+          id
+          owner
+          memoDate
+          image
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createFoodMemo = /* GraphQL */ `
+  mutation CreateFoodMemo(
+    $input: CreateFoodMemoInput!
+    $condition: ModelFoodMemoConditionInput
+  ) {
+    createFoodMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFoodMemo = /* GraphQL */ `
+  mutation UpdateFoodMemo(
+    $input: UpdateFoodMemoInput!
+    $condition: ModelFoodMemoConditionInput
+  ) {
+    updateFoodMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFoodMemo = /* GraphQL */ `
+  mutation DeleteFoodMemo(
+    $input: DeleteFoodMemoInput!
+    $condition: ModelFoodMemoConditionInput
+  ) {
+    deleteFoodMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createTraningMemo = /* GraphQL */ `
+  mutation CreateTraningMemo(
+    $input: CreateTraningMemoInput!
+    $condition: ModelTraningMemoConditionInput
+  ) {
+    createTraningMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      image
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTraningMemo = /* GraphQL */ `
+  mutation UpdateTraningMemo(
+    $input: UpdateTraningMemoInput!
+    $condition: ModelTraningMemoConditionInput
+  ) {
+    updateTraningMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      image
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTraningMemo = /* GraphQL */ `
+  mutation DeleteTraningMemo(
+    $input: DeleteTraningMemoInput!
+    $condition: ModelTraningMemoConditionInput
+  ) {
+    deleteTraningMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      image
+      content
+      createdAt
+      updatedAt
     }
   }
 `;
