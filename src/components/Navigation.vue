@@ -60,12 +60,13 @@
     </v-navigation-drawer>
 
     <v-app-bar app>
-      <!-- アプリケーションバー -->
-      <!-- 遷移つけた -->
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <!-- アプリケーションバー
+      遷移つけた -->
+      <v-app-bar-nav-icon @click="drawer = !drawer"/>
+      <!-- <v-app-bar-nav-icon @click="drawer = !drawer; click=drawer2 = !drawer2"/> -->
       <v-icon>mdi-dumbbell</v-icon>
       <v-toolbar-title>筋トレアプリ</v-toolbar-title>
-      <template v-if="!drawer">
+      <!-- <template v-if="drawer2">
         <v-spacer />
         <v-btn icon to="/">
           <v-icon>mdi-home</v-icon>
@@ -79,7 +80,7 @@
         <v-btn icon>
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
-      </template>
+      </template> -->
     </v-app-bar>
   </div>
 </template>
@@ -112,7 +113,10 @@
 
 export default {
   data: () => ({
-    drawer: null,
+    // 左のハンバーガーメニュー表示用
+    drawer: false,
+    // 上のアプリケーションバー表示用
+    // drawer2: true,
     // userEmail: 'null',
     links: [
       ['mdi-home', 'ホーム','/'],

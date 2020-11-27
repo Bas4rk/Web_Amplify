@@ -63,7 +63,29 @@
     <v-btn large color="primary"  to="/createTraining">筋トレ投稿</v-btn>
     <v-btn large color="primary"  to="/createCooking">料理投稿</v-btn> -->
 
-    <TweetList :items="this.wholeposts" :items2="this.wholeposts2" :items3="this.wholeposts3"></TweetList>
+ <!-- Tabとその中身入れ替えです、TweetListそのまま使いました、Profile.vueと同じです -->
+      <v-tabs fixed-tabs v-model="tab">
+        <v-tab href="#tab-1">つぶやき</v-tab>
+        <v-tab href="#tab-2">料理</v-tab>
+        <v-tab href="#tab-3">筋トレ</v-tab>
+        <v-tab href="#tab-4">いいね</v-tab>
+      </v-tabs>
+        
+      <!-- 中身 -->
+      <v-tabs-items v-model="tab">
+        <v-tab-item value="tab-1">
+          <v-divider></v-divider>
+          <TweetList :items="this.wholeposts"></TweetList>
+        </v-tab-item>
+        <v-tab-item value="tab-2">
+          <TweetList :items="this.wholeposts2"></TweetList>  
+        </v-tab-item>
+        <v-tab-item value="tab-3">
+          <TweetList :items="this.wholeposts3"></TweetList>  
+        </v-tab-item>
+      </v-tabs-items>
+
+    <!-- <TweetList :items="this.wholeposts" :items2="this.wholeposts2" :items3="this.wholeposts3"></TweetList> -->
 
     <!-- [fix]これ使えそう -->
     <!-- https://v2.vuetifyjs.com/ja/components/floating-action-buttons/ -->
@@ -322,11 +344,13 @@ export default {
   name: 'home',
   data() {
     return{
+      // tab初期値
+      tab: 'tab-1',
       // 上に行くボタン用
       buttonActive: false,
       scroll: 0,
       // ここ変えるとボタンの表示位置とか変わる
-      direction: 'right',
+      direction: 'bottom',
       fab: false,
       fling: false,
       hover: true,
@@ -335,7 +359,7 @@ export default {
       right: false,
       bottom: false,
       left: false,
-      transition: 'slide-x-transition',
+      transition: 'slide-y-transition',
       // 表示変わるところここまで
       user: null,
       createSubscription: {},

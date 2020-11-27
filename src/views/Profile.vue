@@ -42,7 +42,7 @@
         ここにプロフィール紹介文
       </v-row>
 
-      <v-row>
+      <v-row justify="center">
         <v-btn large color="primary"  to="/followerlist">フォロー中</v-btn>
         <v-btn large color="primary"  to="/followeelist">フォロワー</v-btn>
         <v-btn large color="primary"  to="">プロフィール編集</v-btn>
@@ -83,6 +83,21 @@
           <TweetList :items="this.wholeposts3"></TweetList>  
         </v-tab-item>
       </v-tabs-items>
+
+      <transition name="button">
+      <v-btn
+        v-show="buttonActive"
+        @click="scrollTop"
+        fixed
+        color="primary"
+        dark
+        bottom
+        right
+        fab
+      >
+      <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </transition>
 
       <!-- <div>
         自分の投稿
@@ -206,6 +221,9 @@ export default {
   data() {
     return{
       tab: 'tab-1',
+      // 上に行くボタン用
+      buttonActive: false,
+      scroll: 0,
       user: null,
       followees: null,
       //ここに入れてFollowerList.vueに渡す？
@@ -245,6 +263,23 @@ export default {
     }
   },
   methods: {
+    // behavior: autoだと瞬間移動になる
+    scrollTop: function(){
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    },
+    // buttonActiveにtrueとfalse渡して表示非表示してる、上行くボタンのv-show="buttonActiveてとこのやつ
+    scrollWindow() {
+      const top = 100 // ボタンを表示させたい位置
+      this.scroll = window.scrollY
+      if (top <= this.scroll) {
+        this.buttonActive = true
+      } else {
+        this.buttonActive = false
+      }
+    },
     // async signUp(){
       // const user = await API.graphql(
       //   graphqlOperation(gqlMutations.createUser, {
@@ -271,6 +306,9 @@ export default {
     // }
   },
   mounted : async function(){
+    // 上行くボタン
+    window.addEventListener('scroll', this.scrollWindow)
+
     if(this.dev){
       const usersorce = this.$store.getters.getUserGraphql
       const query = await API.graphql(
@@ -315,3 +353,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+/* 上に行くボタン */
+.button-enter-active,
+.button-leave-active {
+  transition: opacity 0.5s;
+}
+.button-enter,
+.button-leave-to {
+  opacity: 0;
+}
+</style>

@@ -57,7 +57,20 @@
         </v-col>
       </v-row>
 
-      <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
+      <transition name="button">
+        <v-btn
+          v-show="buttonActive"
+          @click="scrollTop"
+          fixed
+          color="primary"
+          dark
+          bottom
+          right
+          fab
+        >
+        <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
+      </transition>
     </v-container>
   </div>
   <!-- tweetカードらへんをコンポーネントにする。一番上に飛ぶボタンつくる -->
@@ -104,7 +117,9 @@ const deleteRelationship_query = /* GraphQL */ `
     data() {
       return{
         followees: null,
-
+        // 上に行くボタン用、ここの画面ではスクロールがないので今はtrueにしてます
+        buttonActive: true,
+        scroll: 0,
       }
     },
     // props:['followees', 'follows'],
@@ -116,7 +131,17 @@ const deleteRelationship_query = /* GraphQL */ `
       window.scrollTo({
         top: 0,
         behavior: "smooth"
-      });
+      })
+    },
+    // buttonActiveにtrueとfalse渡して表示非表示してる、上行くボタンのv-show="buttonActiveてとこのやつ
+    scrollWindow() {
+      const top = 100 // ボタンを表示させたい位置
+      this.scroll = window.scrollY
+      if (top <= this.scroll) {
+        this.buttonActive = true
+      } else {
+        this.buttonActive = false
+      }
     },
     async deleteRelation(id){
       const deleteRelation = await API.graphql(
@@ -134,6 +159,9 @@ const deleteRelationship_query = /* GraphQL */ `
     },
   },
   mounted : async function(){
+    // 上行くボタン
+    window.addEventListener('scroll', this.scrollWindow)
+    
     const usersorce= this.$store.getters.getUserGraphql
     const query = await API.graphql(
       graphqlOperation(followees_query, {followeeId : usersorce.items[0].id})
@@ -143,3 +171,15 @@ const deleteRelationship_query = /* GraphQL */ `
   }
   }
 </script>
+
+<style scoped>
+/* 上に行くボタン */
+.button-enter-active,
+.button-leave-active {
+  transition: opacity 0.5s;
+}
+.button-enter,
+.button-leave-to {
+  opacity: 0;
+}
+</style>
