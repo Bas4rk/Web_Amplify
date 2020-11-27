@@ -5,29 +5,19 @@
       class="py-8 px-6"
       fluid
     >
-      <v-row justify="center">
-          <!-- 日ごとに表示させる -->
-        <!-- <v-col
-          v-for="card in cards"
-          :key="card"
-          cols="12"
-        > -->
-        <v-col cols="12" sm="6" md="3" justify="left">
-          <!-- 戻るボタンです -->
-            <v-btn
-              class="ma-2"
-              color="primary"
-              dark
-              @click="back"
-            >
-            <v-icon
-              dark
-              left
-            >
-              mdi-arrow-left
-            </v-icon>Back</v-btn>
-            </v-col>
-    </v-row>
+      <v-btn
+        class="ma-2"
+        color="primary"
+        dark
+        @click="back"
+      >
+        <v-icon
+          dark
+          left
+        >
+          mdi-arrow-left
+        </v-icon>Back
+      </v-btn>
         
       <v-row justify="center">
         <v-col cols="5">

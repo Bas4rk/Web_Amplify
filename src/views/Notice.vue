@@ -33,20 +33,16 @@ const onCreateRelationship = /* GraphQL */ `
   subscription OnCreateRelationship {
     onCreateRelationship {
       id
-      blockBool
-      followee {
-        id
-        name
-        emailAddress
-      }
+      
+    }
       follower {
         id
         name
         emailAddress
-      }
+  }
       createdAt
       updatedAt
-    }
+  }
   }
 `;
 
@@ -72,6 +68,7 @@ const onDeleteRelationship = /* GraphQL */ `
   }
 `;
 
+
 export default {
   name: 'home',
   data(){
@@ -96,13 +93,21 @@ export default {
   },
   methods: {
     subscribe(){
+
+      // this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
+      //   next: (eventData) => {
+      //     console.log(eventData.value.data.onCreateTweet)
+      //     const tweet = eventData.value.data.onCreateTweet;
+      //     this.wholeposts.push(tweet);
+      //   }
+      // })
+
       // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
       this.createSubscription = API.graphql(graphqlOperation(onCreateRelationship)).subscribe({
         next: (eventData) => {
-          console.log("クリエイト入った")
+          console.log("createです")
           console.log(eventData.value.data.onCreateRelationship)
-          console.log("evenData:"+eventData)
-          this.relation = eventData
+          this.relation = eventData.value.data.onCreateRelationship;
           // this.messages++
           // this.wholeposts.push(tweet);
         }
@@ -110,8 +115,8 @@ export default {
 
       this.deleteSubscription = API.graphql(graphqlOperation(onDeleteRelationship)).subscribe({
         next: (eventData) => {
+          console.log("deleteです")
           // const cooking = eventData.value.data.onDeleteRelationship;
-          console.log("デリーと入った")
           console.log(eventData.value.data.onDeleteRelationship)
           
         }

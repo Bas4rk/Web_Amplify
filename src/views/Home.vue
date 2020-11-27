@@ -69,19 +69,22 @@
     <!-- https://v2.vuetifyjs.com/ja/components/floating-action-buttons/ -->
     <!-- <v-btn large color="primary" @click="scrollTop">上にいく</v-btn> -->
     
-    <!-- 上に行くボタン、↑のURLに書いてあったやつで作ってみた -->
-    <v-btn
-      color="primary"
-      dark
-      absolute
-      bottom
-      right
-      fab
-      @click="scrollTop"
-    >
-    <v-icon>mdi-chevron-up</v-icon>
-    </v-btn>
-
+    <!-- 上に行くボタン、↑のURLに書いてあったやつで作ってみた、アニメーション？とかはこれ見た -->
+    <!-- https://qiita.com/TK-C/items/42b25ff4ec56528ad870 -->
+    <transition name="button">
+      <v-btn
+        v-show="buttonActive"
+        @click="scrollTop"
+        fixed
+        color="primary"
+        dark
+        bottom
+        right
+        fab
+      >
+      <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </transition>
     <!-- <div>
       全体
       {{user}}
@@ -319,6 +322,9 @@ export default {
   name: 'home',
   data() {
     return{
+      // 上に行くボタン用
+      buttonActive: false,
+      scroll: 0,
       // ここ変えるとボタンの表示位置とか変わる
       direction: 'right',
       fab: false,
@@ -424,19 +430,32 @@ export default {
       })
 
     },
-    scrollTop: function(){
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    },
     //[fix]下のよく分からない
     // beforeDestroy() {
     //   // TODO(3-2) チャット画面から離れる際に、UnSubscribeする
     //   this.subscription.unsubscribe();
     // },
+    // behavior: autoだと瞬間移動になる
+    scrollTop: function(){
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    },
+    // buttonActiveにtrueとfalse渡して表示非表示してる、上行くボタンのv-show="buttonActiveてとこのやつ
+    scrollWindow() {
+      const top = 100 // ボタンを表示させたい位置
+      this.scroll = window.scrollY
+      if (top <= this.scroll) {
+        this.buttonActive = true
+      } else {
+        this.buttonActive = false
+      }
+    },
   },
   mounted : async function(){
+    // 上行くボタン
+    window.addEventListener('scroll', this.scrollWindow)
 
     //きたないのできれいにする。
     if(this.dev){
@@ -493,4 +512,13 @@ export default {
   #create .v-btn--floating {
     position: relative;
   }
+/* 上に行くボタン */
+.button-enter-active,
+.button-leave-active {
+  transition: opacity 0.5s;
+}
+.button-enter,
+.button-leave-to {
+  opacity: 0;
+}
 </style>

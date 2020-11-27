@@ -61,19 +61,19 @@
 
     <v-app-bar app>
       <!-- アプリケーションバー -->
-      <!-- あとでここも遷移とかつける。 -->
+      <!-- 遷移つけた -->
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-icon>mdi-dumbbell</v-icon>
       <v-toolbar-title>筋トレアプリ</v-toolbar-title>
       <template v-if="!drawer">
         <v-spacer />
-        <v-btn icon>
+        <v-btn icon to="/">
           <v-icon>mdi-home</v-icon>
         </v-btn>
-        <v-btn icon>
+        <v-btn icon to="/search">
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-        <v-btn icon>
+        <v-btn icon to="/profile">
           <v-icon>mdi-account</v-icon>
         </v-btn>
         <v-btn icon>

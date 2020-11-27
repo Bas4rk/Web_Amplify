@@ -29,12 +29,12 @@
 
       <!-- アカウント名 -->
       <v-row justify="center">
-        てすと
+        {{getUserName}}
       </v-row>
 
       <!-- アカウントID -->
       <v-row justify="center">
-          @test
+          {{getUserEmail}}
       </v-row>
 
       <!-- プロフィール文、位置はここか左にあるボタンとTabの間？ -->
@@ -234,9 +234,15 @@ export default {
     Navigation
   },
   computed: {
-    // getUserGraphql(){
-    //   return this.$store.getters.getUserGraphql
-    // }
+    // プロフィール表示、Navigation.vueのやつ貰った
+    getUserEmail(){
+      const user= this.$store.getters.getUserGraphql
+      return  user.items[0].emailAddress
+    },
+    getUserName(){
+      const user= this.$store.getters.getUserGraphql
+      return  user.items[0].name
+    }
   },
   methods: {
     // async signUp(){
