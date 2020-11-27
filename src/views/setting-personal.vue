@@ -12,7 +12,7 @@
     <v-layout justify-center>
 
       <!-- class="title"で文字の大きさを変えてます、ここ"display-1"でもいいかも -->
-      <div class="title">アカウント管理</div>
+      <div class="title">個人情報に関するお問い合わせはこちら</div>
     </v-layout>
 
     <!-- v-rowにjustify="center"すると左右中央、上下中央はalign-content="center" -->
@@ -27,28 +27,10 @@
             <!-- ↓後できれいにする -->
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
             <!-- 遷移はまだない -->
-            <v-btn block>ユーザ名</v-btn><br>
-            <v-btn block>パスワード</v-btn><br>
-            <v-btn block>メールアドレス</v-btn><br>
-            <v-btn block>電話番号</v-btn><br>
-            <v-btn block color="red">アカウント削除</v-btn><br>
             
 
-            <!-- 横線です -->
-            <v-divider></v-divider>
 
-
-            <!-- サインアウトボタン -->
-            <v-list-item @click="signOut">
-              <v-list-item-icon>
-                <v-icon> mdi-logout</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>サインアウト</v-list-item-title>
-              </v-list-item-content>
-              <!-- <amplify-sign-out /> -->
-            </v-list-item>
-
+            
           </v-list>
         </v-col>
       </v-row>

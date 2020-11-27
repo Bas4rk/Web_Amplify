@@ -12,6 +12,11 @@ import Profile from '../views/Profile.vue'
 import Setting from '../views/Setting.vue'
 import SetPremium from '../views/setting-premium.vue'
 import SetAccounts from '../views/setting-account.vue'
+import SetNot from '../views/setting-notification.vue'
+import SetHelp from '../views/setting-help.vue'
+import SetPersonal from '../views/setting-personal.vue'
+import SetContact from '../views/setting-contact.vue'
+import SetService from '../views/setting-service.vue'
 import Tweet from '../views/Tweet.vue'
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
@@ -131,6 +136,41 @@ const router = new Router({
       path: '/setting-account',
       name: 'setting-account',
       component: SetAccounts,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 通知設定ページ
+      path: '/setting-notification',
+      name: 'setting-notification',
+      component: SetNot,
+      meta: { requiresAuth: true }
+    },
+    {
+      // お困りの方はこちらページ
+      path: '/setting-help',
+      name: 'setting-help',
+      component: SetHelp,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 個人情報ページ
+      path: '/setting-personal',
+      name: 'setting-personal',
+      component: SetPersonal,
+      meta: { requiresAuth: true }
+    },
+    {
+      // お問い合わせページ
+      path: '/setting-contact',
+      name: 'setting-contact',
+      component: SetContact,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 利用規約ページ
+      path: '/setting-service',
+      name: 'setting-service',
+      component: SetService,
       meta: { requiresAuth: true }
     },
     {

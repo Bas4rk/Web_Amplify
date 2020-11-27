@@ -29,11 +29,11 @@
             <!-- 遷移はまだない -->
             <v-btn block to="/setting-premium">プレミアムサービスを登録する</v-btn><br>
             <v-btn block to="/setting-account">アカウント管理</v-btn><br>
-            <v-btn block>通知の設定</v-btn><br>
-            <v-btn block>お困りの方はこちら</v-btn><br>
-            <v-btn block>個人情報に関するお問い合わせ</v-btn><br>
-            <v-btn block>お問い合わせ履歴</v-btn><br>
-            <v-btn block>利用規約</v-btn><br>
+            <v-btn block to="/setting-notification">通知の設定</v-btn><br>
+            <v-btn block to="/setting-help">お困りの方はこちら</v-btn><br>
+            <v-btn block to="/setting-personal">個人情報に関するお問い合わせ</v-btn><br>
+            <v-btn block to="/setting-contact">お問い合わせ履歴</v-btn><br>
+            <v-btn block to="/setting-service">利用規約</v-btn><br>
 
             <!-- 横線です -->
             <v-divider></v-divider>
@@ -42,17 +42,7 @@
             <v-switch :label="`Dark Theme`" v-model="theme" ></v-switch>
             <!-- <div>{{setTheme}}</div> -->
 
-            <!-- サインアウトボタン -->
-            <v-list-item @click="signOut">
-              <v-list-item-icon>
-                <v-icon> mdi-logout</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>サインアウト</v-list-item-title>
-              </v-list-item-content>
-              <!-- <amplify-sign-out /> -->
-            </v-list-item>
-
+            
           </v-list>
         </v-col>
       </v-row>
