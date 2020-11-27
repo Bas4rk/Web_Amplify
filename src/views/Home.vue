@@ -8,7 +8,7 @@
     <v-btn large color="primary"  to="/createTraining">筋トレ投稿</v-btn>
     
     <v-btn large color="primary"  to="/createCooking">料理投稿</v-btn>
-      
+
     <TweetList :items="this.wholeposts" :items2="this.wholeposts2" :items3="this.wholeposts3"></TweetList>
 
     <!-- [fix]これ使えそう -->
@@ -381,7 +381,7 @@ export default {
       this.wholeposts2= this.myposts2.concat(this.followeeposts2)
 
       //筋トレ
-      this.myposts3 = this.user.traningPosts.items//自分の料理投稿
+      this.myposts3 = this.user.traningPosts.items//自分の筋トレ投稿
       this.wholeposts3 = this.myposts3//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
       for(let i = 0; i < this.user.followees.items.length; i++){
         if(this.user.followees.items[i].follower.traningPosts.items.length > 0){

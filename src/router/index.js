@@ -10,7 +10,10 @@ import Calendar from '../views/Calendar.vue'
 import Calendar2 from '../views/Calendar2.vue'
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
+// import FolloweeList from '../views/FolloweeList.vue'
+import FolloweeList from '../components/FolloweeList.vue'
 import Setting from '../views/Setting.vue'
+import SetPremium from '../views/setting-premium.vue'
 import Tweet from '../views/Tweet.vue'
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
@@ -112,10 +115,24 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
+      // フォローリストページ
+      path: '/followeelist',
+      name: 'followeelist',
+      component: FolloweeList,
+      meta: { requiresAuth: true }
+    },
+    {
       // 設定ページ
       path: '/setting',
       name: 'setting',
       component: Setting,
+      meta: { requiresAuth: true }
+    },
+    {
+      // プレミアム登録ページ
+      path: '/setting-premium',
+      name: 'setting-premium',
+      component: SetPremium,
       meta: { requiresAuth: true }
     },
     {

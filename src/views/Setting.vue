@@ -27,7 +27,7 @@
             <!-- ↓後できれいにする -->
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
             <!-- 遷移はまだない -->
-            <v-btn block>プレミアムサービスを登録する</v-btn><br>
+            <v-btn block to="/setting-premium">プレミアムサービスを登録する</v-btn><br>
             <v-btn block>アカウント管理</v-btn><br>
             <v-btn block>通知の設定</v-btn><br>
             <v-btn block>お困りの方はこちら</v-btn><br>
