@@ -10,7 +10,9 @@ export default new Vuex.Store({
   state: {
     CognitoUser: null,
     GraphqlUser: null,
-    Wholeposts: null
+    Wholeposts: null,
+    Messages: [],
+    Count: 0
   },
   getters: {
     // getUserCognito(state) {
@@ -20,7 +22,13 @@ export default new Vuex.Store({
     getUserGraphql(state) {
       // return state.user.signInUserSession.idToken.payload.email
       return state.GraphqlUser
-    }
+    },
+    getMessages(state){
+      return state.Messages
+    },
+    getCount(state) {
+      return state.Count
+    },
   },
   mutations: {
     // ユーザー情報保存
@@ -29,7 +37,13 @@ export default new Vuex.Store({
     // },
     setUserGraphql(state, user) {
       state.GraphqlUser = user
-    }
+    },
+    setMessage(state, message) {
+      state.Messages.push(message)
+    },
+    setCount(state, count) {
+      state.Count = count
+    },
 
     // async setUserGraphql(state,username,nickname) {
       
