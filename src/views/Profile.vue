@@ -29,12 +29,12 @@
 
       <!-- アカウント名 -->
       <v-row justify="center">
-        てすと
+        {{getUserName}}
       </v-row>
 
       <!-- アカウントID -->
       <v-row justify="center">
-          @test
+          {{getUserEmail}}
       </v-row>
 
       <!-- プロフィール文、位置はここか左にあるボタンとTabの間？ -->
@@ -42,8 +42,9 @@
         ここにプロフィール紹介文
       </v-row>
 
-      <v-row>
-        <v-btn large color="primary"  to="../components/FolloweeList">ふぉろーリスト（後で分割する？）</v-btn>
+      <v-row justify="center">
+        <v-btn large color="primary"  to="/followerlist">フォロー中</v-btn>
+        <v-btn large color="primary"  to="/followeelist">フォロワー</v-btn>
         <v-btn large color="primary"  to="">プロフィール編集</v-btn>
         <!-- ブックマークボタン、Prottにあったのでとりあえずつけた -->
         <v-btn
@@ -83,6 +84,21 @@
         </v-tab-item>
       </v-tabs-items>
 
+      <transition name="button">
+      <v-btn
+        v-show="buttonActive"
+        @click="scrollTop"
+        fixed
+        color="primary"
+        dark
+        bottom
+        right
+        fab
+      >
+      <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </transition>
+
       <!-- <div>
         自分の投稿
         {{myposts}}
@@ -101,23 +117,6 @@
     </v-container>
   </div>
 </template>
-
-<style scoped>
-.v-tabs {
-  width: 100%;
-  height: 100%;
-}
-
-.v-window {
-  height: calc(100% - 48px); /* タブ領域の高さを引く */
-}
-
-.v-tab__items,
-.v-window-item,
-.v-window >>> div.v-window__container { /* ここが重要 */
-  height: 100%;
-}
-</style>
 
 <script>
 import TweetList from '@/components/TweetList.vue';
@@ -222,6 +221,9 @@ export default {
   data() {
     return{
       tab: 'tab-1',
+      // 上に行くボタン用
+      buttonActive: false,
+      scroll: 0,
       user: null,
       followees: null,
       //ここに入れてFollowerList.vueに渡す？
@@ -250,11 +252,34 @@ export default {
     Navigation
   },
   computed: {
-    // getUserGraphql(){
-    //   return this.$store.getters.getUserGraphql
-    // }
+    // プロフィール表示、Navigation.vueのやつ貰った
+    getUserEmail(){
+      const user= this.$store.getters.getUserGraphql
+      return  user.items[0].emailAddress
+    },
+    getUserName(){
+      const user= this.$store.getters.getUserGraphql
+      return  user.items[0].name
+    }
   },
   methods: {
+    // behavior: autoだと瞬間移動になる
+    scrollTop: function(){
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    },
+    // buttonActiveにtrueとfalse渡して表示非表示してる、上行くボタンのv-show="buttonActiveてとこのやつ
+    scrollWindow() {
+      const top = 100 // ボタンを表示させたい位置
+      this.scroll = window.scrollY
+      if (top <= this.scroll) {
+        this.buttonActive = true
+      } else {
+        this.buttonActive = false
+      }
+    },
     // async signUp(){
       // const user = await API.graphql(
       //   graphqlOperation(gqlMutations.createUser, {
@@ -281,6 +306,9 @@ export default {
     // }
   },
   mounted : async function(){
+    // 上行くボタン
+    window.addEventListener('scroll', this.scrollWindow)
+
     if(this.dev){
       const usersorce = this.$store.getters.getUserGraphql
       const query = await API.graphql(
@@ -325,3 +353,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+/* 上に行くボタン */
+.button-enter-active,
+.button-leave-active {
+  transition: opacity 0.5s;
+}
+.button-enter,
+.button-leave-to {
+  opacity: 0;
+}
+</style>

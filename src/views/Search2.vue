@@ -44,6 +44,21 @@
       </v-tabs-items>
       </v-col>
     </v-row>
+
+    <transition name="button">
+      <v-btn
+        v-show="buttonActive"
+        @click="scrollTop"
+        fixed
+        color="primary"
+        dark
+        bottom
+        right
+        fab
+      >
+      <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </transition>
   </div>
 </template>
 
@@ -58,7 +73,10 @@ export default {
   data () {
     return {
       imgUrl: require('../assets/料理/料理.png'),
-      tab: 'tab-1'
+      tab: 'tab-1',
+      // 上に行くボタン用
+      buttonActive: false,
+      scroll: 0,
     }
   },
   components: {
@@ -67,5 +85,39 @@ export default {
     SearchTraining,
     SearchUser,
   },
+  methods: {
+    scrollTop: function(){
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    },
+    // buttonActiveにtrueとfalse渡して表示非表示してる、上行くボタンのv-show="buttonActiveてとこのやつ
+    scrollWindow() {
+      const top = 100 // ボタンを表示させたい位置
+      this.scroll = window.scrollY
+      if (top <= this.scroll) {
+        this.buttonActive = true
+      } else {
+        this.buttonActive = false
+      }
+    },
+  },
+  mounted : async function(){
+    // 上行くボタン
+    window.addEventListener('scroll', this.scrollWindow)
+  }
 }
 </script>
+
+<style scoped>
+/* 上に行くボタン */
+.button-enter-active,
+.button-leave-active {
+  transition: opacity 0.5s;
+}
+.button-enter,
+.button-leave-to {
+  opacity: 0;
+}
+</style>
