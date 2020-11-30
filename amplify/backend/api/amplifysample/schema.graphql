@@ -1,19 +1,16 @@
-#全体
-#AWSDateTimeよりAWSTimestampの方がソートとか扱いやすい？
+# type Todo @model {
+#   id: ID!
+#   name: String!
+#   description: String
+#   user_id: String!
+# }
 
-#投稿全体
-#imageの実装方法
-#タグフィールドの追加？
-
-#idは自分で入力できるようにする
-#idの値はownerにしたい
-#premiumの権限見直し
 type User 
     @model
     @key(name: "emailAddressIndex", fields: ["emailAddress"], queryField: "emailIndex")
     @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
-    id: ID! 
+    id: ID!
     name: String!
     emailAddress: String!
     createdAt: AWSDateTime
@@ -27,20 +24,18 @@ type User
     comments: [Comment] @connection(keyName: "userId",fields: ["id"])
 }
 
-# followeeId、followerId、名前変更
 type Relationship
     @model
     @key(name: "followee", fields: ["followeeId"], queryField: "followeeIndex")
     @key(name: "follower", fields: ["followerId"], queryField: "followerIndex")
     @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
-    followeeId: ID! 
+    followeeId: ID!
     followerId: ID!
     blockBool: Boolean!
     followee: User @connection(fields: ["followeeId"])
     follower: User @connection(fields: ["followerId"])
 }
-
 
 type Tweet
 @model
@@ -57,8 +52,6 @@ type Tweet
   comments: [Comment] @connection(keyName: "postId",fields: ["id"])
 }
 
-
-#コンテントを配列にする。
 type Traning 
 @model
 @key(name: "userId", fields: ["userId"])
@@ -75,9 +68,6 @@ type Traning
   comments: [Comment] @connection(keyName: "postId",fields: ["id"])
 }
 
-
-#カロリーはオブジェクトタイプにする。
-#コンテントを配列にする。
 type Cooking 
 @model
 @key(name: "userId", fields: ["userId"])

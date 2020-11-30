@@ -1,20 +1,112 @@
 <template>
   <div class="home">
     <Navigation></Navigation>
-
+    <!-- ボタンの位置とかアイコンのデザインとか要相談 -->
+      <v-card id="create">
+        <v-speed-dial
+          v-model="fab"
+          :top="top"
+          :right="right"
+          :left="left"
+          :direction="direction"
+          :open-on-hover="hover"
+          :transition="transition"
+        >
+          <template v-slot:activator>
+            <v-btn
+              v-model="fab"
+              color="blue darken-2"
+              dark
+              fab
+            >
+              <v-icon v-if="fab">mdi-close</v-icon>
+              <v-icon v-else>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+            <v-btn
+              fab
+              dark
+              small
+              color="green"
+              to="/createTweet"
+            >
+            <!-- https://materialdesignicons.com/「comment」で検索した
+            comment-outlineもあり？
+            comment-text
+            comment-text-multiple
+            comment-processing
+            comment-account -->
+              <v-icon>mdi-comment</v-icon>
+            </v-btn>
+            <v-btn
+              fab
+              dark
+              small
+              color="indigo"
+              to="/createTraining"
+            >
+              <v-icon>mdi-dumbbell</v-icon>
+            </v-btn>
+            <v-btn
+              fab
+              dark
+              small
+              color="red"
+              to="/createCooking"
+            >
+              <v-icon>mdi-silverware-fork-knife</v-icon>
+            </v-btn>
+          </v-speed-dial>
+        </v-card>
     <!-- 上にあったほうが投稿しやすい？と思って上にしました -->
-    <v-btn large color="primary"  to="/createTweet">ツイート</v-btn>
-
+    <!-- <v-btn large color="primary"  to="/createTweet">ツイート</v-btn>
     <v-btn large color="primary"  to="/createTraining">筋トレ投稿</v-btn>
-    
-    <v-btn large color="primary"  to="/createCooking">料理投稿</v-btn>
+    <v-btn large color="primary"  to="/createCooking">料理投稿</v-btn> -->
 
-    <TweetList :items="this.wholeposts" :items2="this.wholeposts2" :items3="this.wholeposts3"></TweetList>
+ <!-- Tabとその中身入れ替えです、TweetListそのまま使いました、Profile.vueと同じです -->
+      <v-tabs fixed-tabs v-model="tab">
+        <v-tab href="#tab-1">つぶやき</v-tab>
+        <v-tab href="#tab-2">料理</v-tab>
+        <v-tab href="#tab-3">筋トレ</v-tab>
+        <v-tab href="#tab-4">いいね</v-tab>
+      </v-tabs>
+        
+      <!-- 中身 -->
+      <v-tabs-items v-model="tab">
+        <v-tab-item value="tab-1">
+          <v-divider></v-divider>
+          <TweetList :items="this.wholeposts"></TweetList>
+        </v-tab-item>
+        <v-tab-item value="tab-2">
+          <TweetList :items="this.wholeposts2"></TweetList>  
+        </v-tab-item>
+        <v-tab-item value="tab-3">
+          <TweetList :items="this.wholeposts3"></TweetList>  
+        </v-tab-item>
+      </v-tabs-items>
+
+    <!-- <TweetList :items="this.wholeposts" :items2="this.wholeposts2" :items3="this.wholeposts3"></TweetList> -->
 
     <!-- [fix]これ使えそう -->
     <!-- https://v2.vuetifyjs.com/ja/components/floating-action-buttons/ -->
-    <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
+    <!-- <v-btn large color="primary" @click="scrollTop">上にいく</v-btn> -->
     
+    <!-- 上に行くボタン、↑のURLに書いてあったやつで作ってみた、アニメーション？とかはこれ見た -->
+    <!-- https://qiita.com/TK-C/items/42b25ff4ec56528ad870 -->
+    <transition name="button">
+      <v-btn
+        v-show="buttonActive"
+        @click="scrollTop"
+        fixed
+        color="primary"
+        dark
+        bottom
+        right
+        fab
+      >
+      <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </transition>
     <!-- <div>
       全体
       {{user}}
@@ -64,6 +156,10 @@
       全体の筋トレ
       {{wholeposts3}}
     </div>
+
+  <div>
+    {{relation}}
+  </div>
 
   </div>
 </template>
@@ -173,7 +269,7 @@ const _query2 = `query GetUser($id: ID!) {
 `
 
 
-
+//[fix]これ、フォローしてない人の投稿もタイムラインに映るわ。。
 const onCreateTweet = /* GraphQL */ `
   subscription OnCreateTweet {
     onCreateTweet {
@@ -248,6 +344,23 @@ export default {
   name: 'home',
   data() {
     return{
+      // tab初期値
+      tab: 'tab-1',
+      // 上に行くボタン用
+      buttonActive: false,
+      scroll: 0,
+      // ここ変えるとボタンの表示位置とか変わる
+      direction: 'bottom',
+      fab: false,
+      fling: false,
+      hover: true,
+      tabs: null,
+      top: true,
+      right: false,
+      bottom: false,
+      left: false,
+      transition: 'slide-y-transition',
+      // 表示変わるところここまで
       user: null,
       createSubscription: {},
       // 料理用
@@ -279,7 +392,8 @@ export default {
       // 料理用
       wholeposts2: null,
       // 筋トレ用
-      wholeposts3: null
+      wholeposts3: null,
+      relation: null
     }
   },
   components: {
@@ -293,8 +407,10 @@ export default {
       // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
       this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
         next: (eventData) => {
+          console.log("evenData:"+eventData)
           const tweet = eventData.value.data.onCreateTweet;
           this.wholeposts.push(tweet);
+          this.relation = eventData
         }
       })
 
@@ -338,19 +454,32 @@ export default {
       })
 
     },
-    scrollTop: function(){
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    },
     //[fix]下のよく分からない
     // beforeDestroy() {
     //   // TODO(3-2) チャット画面から離れる際に、UnSubscribeする
     //   this.subscription.unsubscribe();
     // },
+    // behavior: autoだと瞬間移動になる
+    scrollTop: function(){
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    },
+    // buttonActiveにtrueとfalse渡して表示非表示してる、上行くボタンのv-show="buttonActiveてとこのやつ
+    scrollWindow() {
+      const top = 100 // ボタンを表示させたい位置
+      this.scroll = window.scrollY
+      if (top <= this.scroll) {
+        this.buttonActive = true
+      } else {
+        this.buttonActive = false
+      }
+    },
   },
   mounted : async function(){
+    // 上行くボタン
+    window.addEventListener('scroll', this.scrollWindow)
 
     //きたないのできれいにする。
     if(this.dev){
@@ -397,3 +526,23 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* 投稿ボタン */
+  #create .v-speed-dial {
+    position: absolute;
+  }
+
+  #create .v-btn--floating {
+    position: relative;
+  }
+/* 上に行くボタン */
+.button-enter-active,
+.button-leave-active {
+  transition: opacity 0.5s;
+}
+.button-enter,
+.button-leave-to {
+  opacity: 0;
+}
+</style>

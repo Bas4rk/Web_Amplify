@@ -12,6 +12,7 @@ import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
 // import FolloweeList from '../views/FolloweeList.vue'
 import FolloweeList from '../components/FolloweeList.vue'
+import FollowerList from '../components/FollowerList.vue'
 import Setting from '../views/Setting.vue'
 import SetPremium from '../views/setting-premium.vue'
 import Tweet from '../views/Tweet.vue'
@@ -119,6 +120,13 @@ const router = new Router({
       path: '/followeelist',
       name: 'followeelist',
       component: FolloweeList,
+      meta: { requiresAuth: true }
+    },
+    {
+      // フォロワーリストページ
+      path: '/followerlist',
+      name: 'followerlist',
+      component: FollowerList,
       meta: { requiresAuth: true }
     },
     {
