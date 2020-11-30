@@ -9,14 +9,17 @@ import Calendar from '../views/Calendar.vue'
 import Calendar2 from '../views/Calendar2.vue'
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
-import Setting from '../views/Setting.vue'
-import SetPremium from '../views/setting-premium.vue'
-import SetAccounts from '../views/setting-account.vue'
-import SetNot from '../views/setting-notification.vue'
-import SetHelp from '../views/setting-help.vue'
-import SetPersonal from '../views/setting-personal.vue'
-import SetContact from '../views/setting-contact.vue'
-import SetService from '../views/setting-service.vue'
+//設定関連
+import Setting from '../views/setting/Setting.vue'
+import SetPremium from '../views/setting/Setting-premium.vue'
+import SetAccounts from '../views/setting/SettingAccount.vue'
+import AccountsUser from '../views/setting/AccountUser.vue'
+import SetNot from '../views/setting/SettingNotification.vue'
+import SetHelp from '../views/setting/SettingHelp.vue'
+import SetPersonal from '../views/setting/SetitngPersonal.vue'
+import SetContact from '../views/setting/SettingContact.vue'
+import SetService from '../views/setting/SettingService.vue'
+
 import Tweet from '../views/Tweet.vue'
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
@@ -126,50 +129,57 @@ const router = new Router({
     },
     {
       // プレミアム登録ページ
-      path: '/setting-premium',
-      name: 'setting-premium',
+      path: '/settingpremium',
+      name: 'settingpremium',
       component: SetPremium,
       meta: { requiresAuth: true }
     },
     {
       // アカウントページ
-      path: '/setting-account',
-      name: 'setting-account',
+      path: '/settingaccount',
+      name: 'settingaccount',
       component: SetAccounts,
       meta: { requiresAuth: true }
     },
     {
+      // ユーザ情報変更ページ
+      path: '/accountuser',
+      name: 'accountuser',
+      component: AccountsUser,
+      meta: { requiresAuth: true }
+    },
+    {
       // 通知設定ページ
-      path: '/setting-notification',
-      name: 'setting-notification',
+      path: '/settingnotification',
+      name: 'settingnotification',
       component: SetNot,
       meta: { requiresAuth: true }
     },
     {
       // お困りの方はこちらページ
-      path: '/setting-help',
-      name: 'setting-help',
+      path: '/settinghelp',
+      name: 'settinghelp',
       component: SetHelp,
       meta: { requiresAuth: true }
     },
     {
       // 個人情報ページ
-      path: '/setting-personal',
-      name: 'setting-personal',
+      path: '/settingpersonal',
+      name: 'settingpersonal',
       component: SetPersonal,
       meta: { requiresAuth: true }
     },
     {
       // お問い合わせページ
-      path: '/setting-contact',
-      name: 'setting-contact',
+      path: '/settingcontact',
+      name: 'settingcontact',
       component: SetContact,
       meta: { requiresAuth: true }
     },
     {
       // 利用規約ページ
-      path: '/setting-service',
-      name: 'setting-service',
+      path: '/settingservice',
+      name: 'settingservice',
       component: SetService,
       meta: { requiresAuth: true }
     },
