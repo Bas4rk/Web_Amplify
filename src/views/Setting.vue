@@ -33,7 +33,7 @@
             <v-btn block>お困りの方はこちら</v-btn><br>
             <v-btn block>個人情報に関するお問い合わせ</v-btn><br>
             <v-btn block>お問い合わせ履歴</v-btn><br>
-            <v-btn block>利用規約</v-btn><br>
+            <v-btn block  to='/Terms'>利用規約</v-btn><br>
 
             <!-- 横線です -->
             <v-divider></v-divider>
