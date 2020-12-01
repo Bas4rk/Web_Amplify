@@ -215,6 +215,22 @@
 
       </v-row>
 
+    <!-- いい感じのデザインに変える -->
+      <v-row justify="center">
+      <v-dialog
+        v-model="dialog"
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="headline">投稿完了</v-card-title>
+  
+          <v-card-text>
+            筋トレ記事を投稿しました。
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </v-row>
+
     </v-container>
   </div>
 </template>
@@ -240,7 +256,8 @@ export default {
       // タイトル
       title: null,
       // カロリー
-      calorie: null
+      calorie: null,
+      dialog: true
     }
   },
   components: {
@@ -269,6 +286,8 @@ export default {
           })
       )
       console.log(cooking.data.createCooking);
+      // createTweetにそのまま書いてるけど、thenとかerrorで投稿成功、投稿失敗とか分けた方がいいと思った。
+      this.dialog = true;
     }
   },
 }
