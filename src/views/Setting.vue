@@ -27,13 +27,13 @@
             <!-- ↓後できれいにする -->
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
             <!-- 遷移はまだない -->
-            <v-btn block to="/setting/SettingPremium">プレミアムサービスを登録する</v-btn><br>
-            <v-btn block to="/setting/SettingAccount">アカウント管理</v-btn><br>
-            <v-btn block to="/setting/SettingNotification">通知の設定</v-btn><br>
-            <v-btn block to="/setting/SettingHelp">お困りの方はこちら</v-btn><br>
-            <v-btn block to="/setting/SettingPersonal">個人情報に関するお問い合わせ</v-btn><br>
-            <v-btn block to="/setting/SettingContact">お問い合わせ履歴</v-btn><br>
-            <v-btn block to="/setting/SettingService">利用規約</v-btn><br>
+            <v-btn block to="/SettingPremium">プレミアムサービスを登録する</v-btn><br>
+            <v-btn block to="/SettingAccount">アカウント管理</v-btn><br>
+            <v-btn block to="/SettingNotification">通知の設定</v-btn><br>
+            <v-btn block to="/SettingHelp">お困りの方はこちら</v-btn><br>
+            <v-btn block to="/SettingPersonal">個人情報に関するお問い合わせ</v-btn><br>
+            <v-btn block to="/SettingContact">お問い合わせ履歴</v-btn><br>
+            <v-btn block to="/SettingService">利用規約</v-btn><br>
 
             <!-- 横線です -->
             <v-divider></v-divider>

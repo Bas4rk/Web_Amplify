@@ -87,7 +87,7 @@ export default {
       ['mdi-calendar', 'カレンダー2','/calendar2'],
       ['mdi-bell', '通知','/notice'],
       ['mdi-account', 'プロフィール','/profile'],
-      ['mdi-cog', '設定','/setting/setting']
+      ['mdi-cog', '設定','Setting']
     ],
   }),
   computed: {
