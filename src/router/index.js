@@ -14,6 +14,8 @@ import Setting from '../views/Setting.vue'
 import SetPremium from '../views/setting/SettingPremium.vue'
 import SetAccounts from '../views/setting/SettingAccount.vue'
 import AccountsUser from '../views/setting/AccountUser.vue'
+import UserName from '../views/setting/user/UserNameChange.vue'
+
 import SetNot from '../views/setting/SettingNotification.vue'
 import SetHelp from '../views/setting/SettingHelp.vue'
 import SetPersonal from '../views/setting/SettingPersonal.vue'
@@ -146,6 +148,13 @@ const router = new Router({
       path: '/accountuser',
       name: 'accountuser',
       component: AccountsUser,
+      meta: { requiresAuth: true }
+    },
+    {
+      // ユーザ名前変更ページ
+      path: '/usernamechange',
+      name: 'usernamechange',
+      component: UserName,
       meta: { requiresAuth: true }
     },
     {
