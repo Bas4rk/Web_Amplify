@@ -19,6 +19,8 @@ import Tweet from '../views/Tweet.vue'
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
 import SignIn from '../views/SignIn.vue'
+import Terms from '../views/Terms.vue'
+// import help from '../views/help.vue'
 
 
 import {AmplifyEventBus} from 'aws-amplify-vue'
@@ -148,6 +150,13 @@ const router = new Router({
       path: '/tweet/:id',
       name: 'tweet',
       component: Tweet,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 利用規約
+      path: '/Terms',
+      name: 'Terms',
+      component: Terms,
       meta: { requiresAuth: true }
     }
   ]
