@@ -31,9 +31,10 @@
             <v-btn block to="/UserIDChange">ユーザID</v-btn><br>
             <v-btn block>パスワード</v-btn><br>
             <v-btn block>メールアドレス</v-btn><br>
-            <v-btn block>電話番号</v-btn><br>
+            <v-btn block to="/PhoneNumberChange">電話番号</v-btn><br>
             <v-btn block>パスワード</v-btn><br>
             <v-btn block>セキュリティ</v-btn><br>
+            <v-btn block color="bule" to="/TestComponents">テスト</v-btn><br>
             <v-btn block color="red">アカウント削除</v-btn><br>
             
 

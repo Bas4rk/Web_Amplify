@@ -21,7 +21,9 @@ import SetService from '../views/setting/SettingService.vue'
 
 import UserName from '../views/setting/user/UserNameChange.vue'
 import UserID from '../views/setting/user/UserIDChange.vue'
+import UserPhone from '../views/setting/user/PhoneNumberChange.vue'
 
+import Test from '../views/setting/TestComponents.vue'
 
 import Tweet from '../views/Tweet.vue'
 import SignUp from '../views/SignUp.vue'
@@ -42,6 +44,13 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   routes: [
+    {
+      // テストコンポーネント
+      path: '/testcomponents',
+      name: 'testcomponents',
+      component: Test,
+      meta: { requiresAuth: true}
+    },
     {
       path: '/signUp',
       name: 'signUp',
@@ -177,6 +186,13 @@ const router = new Router({
       path: '/settingpersonal',
       name: 'settingpersonal',
       component: SetPersonal,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 電話番号変更ページ
+      path: '/phonenumberchange',
+      name: 'phonenumberchange',
+      component: UserPhone,
       meta: { requiresAuth: true }
     },
     {
