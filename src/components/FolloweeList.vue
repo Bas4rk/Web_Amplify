@@ -18,22 +18,33 @@
           mdi-arrow-left
         </v-icon>Back
       </v-btn>
+      されてるほう
+      <!-- <div>{{user}}</div> -->
+      <br>
+      <!-- <div>{{currentuser}}</div>
+      <br>
+      <div>{{judgment}}</div> -->
+      <br>
+      しているほう
+      <!-- <div>{{followees}}</div> -->
+      {{kotae}}
+      <!-- <div>{{i}}</div> -->
         
       <v-row justify="center">
         <v-col cols="5">
           <v-card>
             <!-- <v-subheader>{{ card }}</v-subheader> -->
             <v-subheader>フォローされているユーザー</v-subheader>
-
+            
             <v-list>
                 <!-- v-forでfollowsの数だけ回します -->
-              <template v-for="item in follows">
+              <template v-for="(item) in follows">
                 <!-- <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}"> -->
                   <v-list-item :key="item.id" height="200">
                   <v-list-item-avatar color="grey darken-1">
                     <v-icon size="30">mdi-account</v-icon>
                   </v-list-item-avatar>
-
+            
                   <v-list-item-content>
                       <!-- ここから下のitem.followee.~はProfile.vueにクエリ？が書いてあります -->
                     <v-list-item-title>{{ item.followee.name}}</v-list-item-title>
@@ -44,8 +55,16 @@
                         <small>{{ item.followee.emailAddress }}</small>
                       </div>
                     </v-list-item-subtitle>
-                    
-                    <v-btn @click="deleteRelation(item.id)" color="error">フォロー解除</v-btn>
+                    <!-- <v-btn v-if="this.kotae[1] == false" @click="createRelation" color="primary">フォローする</v-btn>
+
+                    <v-btn v-if="this.kotae[1] == true" @click="deleteRelation" color="error">フォロー解除</v-btn> -->
+
+                    <!-- <div v-for="item2 in item.kotae" :key="item2">
+                      <v-btn :key="item2" v-if="this.item2[a] == false" @click="createRelation" color="primary">フォローする</v-btn>
+
+                      <v-btn :key="item2" v-if="this.item2[a] == true" @click="deleteRelation" color="error">フォロー解除</v-btn> -->
+                    <!-- <v-btn @click="deleteRelation(item.id)" color="error">フォロー解除</v-btn> -->
+                    <!-- </div> -->
                   </v-list-item-content>
                 </v-list-item>
 
@@ -54,8 +73,16 @@
                   inset
                 ></v-divider>
               </template>
+              <!-- <v-btn v-if="this.kotae[1] == false" @click="createRelation" color="primary">フォローする</v-btn>
+
+              <v-btn v-if="this.kotae[1] == true" @click="deleteRelation" color="error">フォロー解除</v-btn> -->
             </v-list>
           </v-card>
+          <div v-for="(item3, t) in kotae" :key="item3">
+            <v-btn v-if="this.item3[t] == false" @click="createRelation" color="primary">フォローする</v-btn>
+
+            <v-btn v-if="this.item3[t] == true" @click="deleteRelation" color="error">フォロー解除</v-btn>
+          </div>
         </v-col>
       </v-row>
 
@@ -86,16 +113,35 @@ import { API, graphqlOperation } from 'aws-amplify'
 
 
 //[add]ここgetUserだったけどFollowerIndexで取ってこれた、mock?でテストして取ってこれたのでそのままコピペしてます
-const follows_query = /* GraphQL */`
+const follows_query =`
   query followerIndex(
     $followerId: ID
   ) {
-    followerIndex(
-      followerId: $followerId
+  followerIndex(
+    followerId: $followerId ,
+  ) {
+    items {
+      id
+      followee {
+        id
+        name
+        emailAddress
+      }
+    }
+  }
+}
+`;
+
+const followees_query = `
+  query FolloweeIndex(
+    $followeeId: ID
+  ) {
+    followeeIndex(
+      followeeId: $followeeId
     ) {
       items {
         id
-        followee {
+        follower {
           id
           name
           emailAddress
@@ -105,23 +151,132 @@ const follows_query = /* GraphQL */`
   }
 `;
 
-const deleteRelationship_query = /* GraphQL */ `
+// const a = `
+//   query MyQuery {
+//     listRelationships {
+//       items {
+//         followerId
+//         followeeId
+//         id
+//       }
+//     }
+//   }
+// `;
+
+// const follows_query =`
+//   query followerIndex(
+//     $followerId: ID
+//     $filter: ModelRelationshipFilterInput
+//   ) {
+//     followerIndex(
+//       followerId: $followerId
+//       filter: $filter
+//     ) {
+//       items {
+//         id
+//         followee {
+//           id
+//           name
+//           emailAddress
+//         }
+//       }
+//     }
+//   }
+// `;
+
+// const _query = `
+//   query FolloweeIndex(
+//     $followeeId: ID 
+//     $filter: ModelRelationshipFilterInput
+//   ) {
+//   followeeIndex(
+//     followeeId: $followeeId 
+//     filter: $filter
+//   ) {
+//     items{
+//       id
+//     }
+//   }
+// }
+// `
+
+const createRelation_query = `
+  mutation CreateRelationship(
+    $input: CreateRelationshipInput!
+  ) {
+    createRelationship(input: $input) {
+      id
+      blockBool
+      followee {
+        id
+        name
+        emailAddress
+      }
+      follower {
+        id
+        name
+        emailAddress
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+
+const deleteRelationship_query = `
   mutation DeleteRelationship(
     $input: DeleteRelationshipInput!
   ) {
     deleteRelationship(input: $input) {
       id
+      blockBool
+      followee {
+        id
+        name
+        emailAddress
+      }
+      follower {
+        id
+        name
+        emailAddress
+      }
+      createdAt
+      updatedAt
     }
   }
 `
 
+// const deleteRelationship_query = /* GraphQL */ `
+//   mutation DeleteRelationship(
+//     $input: DeleteRelationshipInput!
+//   ) {
+//     deleteRelationship(input: $input) {
+//       id
+//     }
+//   }
+// `
+
+
+
   export default {
     data() {
       return{
+        i: null,
         follows: null,
         // 上に行くボタン用、ここの画面ではスクロールがないので今はtrueにしてます
         buttonActive: true,
         scroll: 0,
+        // 判定用
+        user: null,
+        judgment: null,
+        emailAddress: '',
+        currentuser: null,
+        // 判定入れる配列
+        kotae: [],
+        // k: null,
+        // t: null,
+        // true,falseでいる、いない
+        tei: null,
       }
     },
     // props:['followees', 'follows'],
@@ -129,6 +284,7 @@ const deleteRelationship_query = /* GraphQL */ `
       Navigation,
     },
     methods: {
+    // 上に行くボタン
     scrollTop: function(){
       window.scrollTo({
         top: 0,
@@ -145,35 +301,140 @@ const deleteRelationship_query = /* GraphQL */ `
         this.buttonActive = false
       }
     },
-    async deleteRelation(id){
+    // フォローするところ
+    async createRelation(){
+      const createRelation = await API.graphql(
+        graphqlOperation(createRelation_query, {
+          input: {
+            blockBool: false, 
+            followeeId: this.currentuser, 
+            followerId: "a903aa7a-fa56-4285-b4cd-db68bffa3c8f"
+          }
+        })
+      )
+      console.log("フォローしました"+createRelation.data.createRelationship)
+    },
+    // フォロー解除するところ
+    async deleteRelation(){
       const deleteRelation = await API.graphql(
         graphqlOperation(deleteRelationship_query, {
           input: {
-            id: id
+            id: this.judgment.items[0].id
           }
         })
       )
       console.log("フォロー解除しました"+deleteRelation.data.deleteRelationship)
     },
+    // 戻るボタン
     back: function(){
       this.$router.push('/Profile');
       // historyできてなくね？
     },
   },
-  mounted : async function(){
-    // 上行くボタン
-    window.addEventListener('scroll', this.scrollWindow)
+  mounted: async function(){
 
+    const usersorce= this.$store.getters.getUserGraphql
+    const query = await API.graphql(
+      graphqlOperation(followees_query, {followeeId : usersorce.items[0].id})
+    )
+    console.log("followeesクエリー飛ばしました。")
+    this.followees= query.data.followeeIndex.items
+    
     //フォローされてる人リスト取得、変数名がクソ
     const usersource2 = this.$store.getters.getUserGraphql
+    // const w = await API.graphql(
+    //   graphqlOperation(a, {
+    //   })
+    // )
+    // this.i = w.data.listRelationships
+
+
     //クエリ飛ばし、変数名がクソ
     const query2 = await API.graphql(
-      graphqlOperation(follows_query, {followerId : usersource2.items[0].id})
+      graphqlOperation(follows_query, {
+        followerId : usersource2.items[0].id
+      })
     )
+    // this.user = query2.data.emailIndex
     console.log("followsクエリー飛ばしました。")
     //80行目のfollowsに受け取ったクエリデータ？入れる
     this.follows= query2.data.followerIndex.items
-  }
+    this.user= query2.data.followerIndex.items
+    // this.follows= this.$store.getters.getUserGraphql.items[0].id
+    // じぶんのID
+    this.currentuser = usersource2.items[0].id
+
+    // nagasadousuru
+    console.log("はじめます")
+    for(var k = 0; k< this.user.length; k++){
+      for(var t = 0; t < this.user.length; t++){
+        if(this.followees[k].follower.id == this.user[t].followee.id){
+          console.log("いた")
+          this.tei = true
+          this.kotae[k] = this.tei
+          break;
+        }else{
+          console.log("いない")
+          this.tei = false
+          this.kotae[k] = this.tei
+        }
+      }
+    }
+    // this.follows = this.follows.concat(this.kotae)
+
+    // 判定
+    // const followJudg = await API.graphql(
+    //     graphqlOperation(follows_query, {
+    //       filter: {followeeId: {eq: this.user.items[0].followee.id}},
+    //       followeeId: this.currentuser
+    //     })
+    //   )
+    //   // console.log(followJudg.data.followeeIndex);
+    //   this.judgment = followJudg.data.followerIndex
+  },
+
+    // 上行くボタン
+    // window.addEventListener('scroll', this.scrollWindow)
+
+
+    // //フォローされてる人リスト取得、変数名がクソ
+    // const usersource2 = this.$store.getters.getUserGraphql
+    // //クエリ飛ばし、変数名がクソ
+    // const query2 = await API.graphql(
+    //   graphqlOperation(follows_query, {
+    //     followerId : usersource2.items[0].id
+    //   })
+    // )
+    // // this.user = query2.data.emailIndex
+    // console.log("followsクエリー飛ばしました。")
+    // //80行目のfollowsに受け取ったクエリデータ？入れる
+    // this.follows= query2.data.followerIndex
+    // this.user= query2.data.followerIndex
+    // // this.follows= this.$store.getters.getUserGraphql.items[0].id
+    // // じぶんのID
+    // this.currentuser = usersource2.items[0].id
+
+    // // 判定
+    // const followJudg = await API.graphql(
+    //     graphqlOperation(follows_query, {
+    //       filter: {followerId: {eq: this.user.items[0].id}},
+    //       followeeId: this.currentuser
+    //     })
+    //   )
+    //   // console.log(followJudg.data.followeeIndex);
+    //   this.judgment = followJudg.data.followerIndex
+
+
+    // //フォローされてる人リスト取得、変数名がクソ
+    // const usersource2 = this.$store.getters.getUserGraphql
+    // //クエリ飛ばし、変数名がクソ
+    // const query2 = await API.graphql(
+    //   graphqlOperation(follows_query, {followerId : usersource2.items[0].id})
+    // )
+    // console.log("followsクエリー飛ばしました。")
+    // //80行目のfollowsに受け取ったクエリデータ？入れる
+    // this.follows= query2.data.followerIndex.items
+  
   }
 </script>
 
