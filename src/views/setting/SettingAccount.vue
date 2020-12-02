@@ -27,10 +27,13 @@
             <!-- ↓後できれいにする -->
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
             <!-- 遷移はまだない -->
-            <v-btn block to="/AccountUser">ユーザ名</v-btn><br>
+            <v-btn block to="/UserNameChange">ユーザ名</v-btn><br>
+            <v-btn block to="/UserIDChange">ユーザID</v-btn><br>
             <v-btn block>パスワード</v-btn><br>
             <v-btn block>メールアドレス</v-btn><br>
             <v-btn block>電話番号</v-btn><br>
+            <v-btn block>パスワード</v-btn><br>
+            <v-btn block>セキュリティ</v-btn><br>
             <v-btn block color="red">アカウント削除</v-btn><br>
             
 
