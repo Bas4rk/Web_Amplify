@@ -95,8 +95,6 @@
 import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlMutations from '../graphql/mutations'
-
-
 // const CreateTodoMutation = `mutation CreateTodo($name: String!, $description: String, $user_id: String!) {
 //     createTodo(input: { name: $name, description: $description, user_id: $user_id }) {
 //       id
@@ -107,9 +105,7 @@ import * as gqlMutations from '../graphql/mutations'
 //       updatedAt
 //     }
 //   }`;
-
 export default {
-
   data () {
     return {
       content: '',

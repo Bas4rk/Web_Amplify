@@ -52,22 +52,22 @@
     </v-row>
     <!-- <v-row justify="center">
       <div class="display-2">今日のごはん</div>
-    </v-row> -->
-
-    <div class="display-2">今日のごはん</div>
-        <v-divider></v-divider>
-    <v-row>
-        
+    </v-row>
+    <v-divider></v-divider>
+    <!--<button v-on:click="test">add</button>-->
+    <v-row id="clmenu" align="center">
+    <!--<p id="clmenu"></p>-->
+          <!-- [fix]v-for="(card,index) in cards"でindex使ってダイアログうまく管理できない？ -->
           <v-col
-            v-for="card in cards"
+            v-for="(card) in todayMenu"
             :key="card.title"
-            :cols="card.flex"
+            :cols=3
             @click.stop="dialog = true"
           >
-            <v-subheader>{{card.ranking}}</v-subheader>
+            <v-subheader>{{card.subtitle}}</v-subheader>
             <v-card>
               <v-img
-                :src="card.src"
+                :src="card.image"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="200px"
@@ -81,7 +81,7 @@
                 <v-btn icon>
                   <v-icon>mdi-fire</v-icon>
                 </v-btn>
-                <span>400kcal</span>
+                <span>{{card.calorele}}kcal</span>
               </v-card-actions>
             </v-card>
             <v-dialog
@@ -90,7 +90,8 @@
             >
               <v-card>
               <v-img
-                :src= " require('../assets/料理/料理.png')"
+                :src= "card.image"
+
                 class="white--text align-end"
               >
               </v-img>
@@ -156,12 +157,19 @@ export default {
       readonly: false,
       disabled: false,
       enableEvents: true,
-      cards: [
-        { title: 'スパゲッティ', src: require('../assets/料理/料理.png'), flex: 3,ranking: '朝食'},
-        { title: 'ハンバーガー', src: require('../assets/料理/ハンバーガー.png'), flex: 3,ranking: '昼食' },
-        { title: '牛丼', src: require('../assets/料理/牛丼.png'), flex: 3,ranking: '夜食' },
-      ],
       dialog: false,
+      // cards: [
+      //   { title: 'スパゲッティ', src: require('../assets/料理/料理.png'),dialog: false, flex: 3,ranking: '朝食',num:0},
+      //   { title: 'ハンバーガー', src: require('../assets/料理/ハンバーガー.png'),dialog: false, flex: 3,ranking: '昼食',num:1 },
+      //   { title: '牛丼', src: require('../assets/料理/牛丼.png'),dialog: false, flex: 3,ranking: '夜食',num:2 },
+      // ],
+      foodMemos: [
+        { memoDate: "2020-12-02",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 100 },
+        { memoDate: "2020-12-02",title: "ハンバーガー",image: require('../assets/料理/ハンバーガー.png'),subtitle: "夜食",calorele: 200 },
+        { memoDate: "2020-12-06",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 500 },
+      ]
+      
+      
     }
   },
 
@@ -169,13 +177,32 @@ export default {
     functionEvents () {
       return this.month ? this.monthFunctionEvents : this.dateFunctionEvents
     },
+    todayMenu(){
+      const menu = []
+      const today = this.picker
+      this.foodMemos.forEach(function (value) {
+        // console.log(index + '番目 : ' + value);
+        if(value.memoDate == today){menu.push(value)}
+      });
+      return menu
+    }
   },
 
   methods: {
     dateFunctionEvents (date) {
+      // console.log("date:"+date)
+      // console.log("parseInt(day, 10):"+parseInt(day, 10))
       const [,, day] = date.split('-')
-      if ([12, 17, 28].includes(parseInt(day, 10))) return true
-      if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f']
+      const memoDay = []
+      this.foodMemos.forEach(function (value) {
+        // console.log(index + '番目 : ' + value);
+        const [,, memo] = value.memoDate.split('-')
+        memoDay.push(Number(memo))
+      });
+      //[fix]ここら辺めっちゃ呼び出されてるけど、どうにかならないか？
+      console.log("memoDay:"+memoDay)
+      if (memoDay.includes(parseInt(day, 10))) return true
+      // if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f']
       return false
     },
     monthFunctionEvents (date) {
