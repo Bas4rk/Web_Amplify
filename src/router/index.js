@@ -14,6 +14,7 @@ import FollowerList from '../components/FollowerList.vue'
 import Setting from '../views/Setting.vue'
 import SetPremium from '../views/setting-premium.vue'
 import Tweet from '../views/Tweet.vue'
+import Cooking from '../views/Cooking.vue'
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
 import SignIn from '../views/SignIn.vue'
@@ -137,10 +138,17 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      // 設定ページ
+      // ツイートページ
       path: '/tweet/:id',
       name: 'tweet',
       component: Tweet,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 料理記事ページ
+      path: '/cooking/:id',
+      name: 'cooking',
+      component: Cooking,
       meta: { requiresAuth: true }
     },
     {

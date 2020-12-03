@@ -75,13 +75,14 @@
       <v-tabs-items v-model="tab">
         <v-tab-item value="tab-1">
           <v-divider></v-divider>
+          <!-- [fix]タブ事にコンポーネント作った方がいいかも -->
           <TweetList :items="this.wholeposts"></TweetList>
         </v-tab-item>
         <v-tab-item value="tab-2">
-          <TweetList :items="this.wholeposts2"></TweetList>  
+          <CookingList :items2="this.wholeposts2"></CookingList>  
         </v-tab-item>
         <v-tab-item value="tab-3">
-          <TweetList :items="this.wholeposts3"></TweetList>  
+          <TweetList :items3="this.wholeposts3"></TweetList>  
         </v-tab-item>
       </v-tabs-items>
 
@@ -142,7 +143,7 @@
       {{testposts}}
     </div> -->
 
-    <div>
+    <!-- <div>
       全体のツイート
       {{wholeposts}}
     </div>
@@ -159,13 +160,15 @@
 
   <div>
     {{relation}}
-  </div>
+  </div> -->
 
   </div>
 </template>
 
 <script>
 import TweetList from '@/components/TweetList.vue';
+import CookingList from '@/components/CookingList.vue';
+
 import Navigation from '@/components/Navigation.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
@@ -398,6 +401,7 @@ export default {
   },
   components: {
     TweetList,
+    CookingList,
     Navigation
   },
   computed: {

@@ -225,7 +225,7 @@
           <v-card-title class="headline">投稿完了</v-card-title>
   
           <v-card-text>
-            筋トレ記事を投稿しました。
+            料理記事を投稿しました。
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -257,7 +257,7 @@ export default {
       title: null,
       // カロリー
       calorie: null,
-      dialog: true
+      dialog: false
     }
   },
   components: {
