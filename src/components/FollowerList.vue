@@ -18,7 +18,6 @@
           mdi-arrow-left
         </v-icon>Back
       </v-btn>
-
             <!-- {{followees}} -->
       <v-row justify="center">
         <v-col cols="5">
