@@ -22,6 +22,8 @@ import SetService from '../views/setting/SettingService.vue'
 import UserName from '../views/setting/user/UserNameChange.vue'
 import UserID from '../views/setting/user/UserIDChange.vue'
 import UserPhone from '../views/setting/user/PhoneNumberChange.vue'
+import Passwd from '../views/setting/user/PasswdChange.vue'
+import PasswdNew from '../views/setting/user/PasswdChangeNew.vue'
 
 import Test from '../views/setting/TestComponents.vue'
 
@@ -165,6 +167,20 @@ const router = new Router({
       path: '/useridchange',
       name: 'useridchange',
       component: UserID,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 旧パスワード入力ページ
+      path: '/passwdchange',
+      name: 'passwdchange',
+      component: Passwd,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 新パスワード入力ページ
+      path: '/passwdchangenew',
+      name: 'passwdchangenew',
+      component: PasswdNew,
       meta: { requiresAuth: true }
     },
     {

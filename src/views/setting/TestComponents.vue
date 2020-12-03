@@ -1,4 +1,6 @@
-<template>
+
+
+<!--<template>
   <v-row justify="center">
     <v-dialog
       v-model="dialog"
@@ -108,7 +110,7 @@
       }
     },
   }
-</script>
+</script>-->
 
 <!--<template>
   <v-row justify="center">
