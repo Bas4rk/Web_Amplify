@@ -288,24 +288,26 @@ const deleteRelationship_query = `
     },
     // フォローするところ
     async createRelation(){
+      // [fix]押したボタンによって関係が変わるようになってない、要修正
       const createRelation = await API.graphql(
         graphqlOperation(createRelation_query, {
-          input: {
-            blockBool: false, 
-            followeeId: this.currentuser, 
-            followerId: "a903aa7a-fa56-4285-b4cd-db68bffa3c8f"
-          }
+          // input: {
+          //   blockBool: false, 
+          //   followeeId: this.currentuser, 
+          //   followerId: "a903aa7a-fa56-4285-b4cd-db68bffa3c8f"
+          // }
         })
       )
       console.log("フォローしました"+createRelation.data.createRelationship)
     },
     // フォロー解除するところ
     async deleteRelation(){
+      // [fix]押したボタンによって関係が変わるようになってない、要修正
       const deleteRelation = await API.graphql(
         graphqlOperation(deleteRelationship_query, {
-          input: {
-            id: this.judgment.items[0].id
-          }
+      //     input: {
+      //       id: this.judgment.items[0].id
+      //     }
         })
       )
       console.log("フォロー解除しました"+deleteRelation.data.deleteRelationship)
