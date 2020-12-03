@@ -19,16 +19,16 @@
           mdi-arrow-left
         </v-icon>Back
       </v-btn>
-      されてるほう
-      <!-- <div>{{user}}</div> -->
-      <br>
+      <!-- されてるほう -->
+      <!-- <div>{{follows}}</div> -->
+      <!-- <br> -->
       <!-- <div>{{currentuser}}</div>
       <br>
       <div>{{judgment}}</div> -->
-      <br>
-      しているほう
+      <!-- <br> -->
+      <!-- しているほう -->
       <!-- <div>{{followees}}</div> -->
-      {{kotae}}
+      <!-- {{kotae}} -->
       <!-- <div>{{i}}</div> -->
         
       <v-row justify="center">
@@ -71,9 +71,14 @@
           <!-- [fix]位置調整のためのv-subheader、v-list-item-contentをいい感じに書き直す -->
           <v-subheader></v-subheader>
           <v-list-item-content></v-list-item-content>
-          <v-col v-for="(item2, index) in kotae" :key="index">
-              <v-btn v-if="item2 == false" @click="createRelation" color="primary">フォローする</v-btn>
-              <v-btn v-if="item2 == true" @click="deleteRelation" color="error">フォロー解除</v-btn>
+          <!-- v-forで配列kotaeの長さ分回してる、keyの指定はしないとエラーで怒られるので:key="item2"て書いてる
+          v-for="item2 in kotae"はitem2にkotaeを入れて、v-forの中でkotaeを認識させてる。これがないと'kotae'undefinedで定義されてないって怒られる、
+          ここでDuplicate keys detected: 'true'. This may cause an update error.出たので:key="item2.trueで消した、これが正しいかどうかはわからない -->
+          <v-col v-for="item2 in kotae" :key="item2.true">
+            <!-- item2（配列kotae）の中身がfalse（フォローしてない人）の時 -->
+            <v-btn v-if="item2 == false" @click="createRelation" color="primary">フォローする</v-btn>
+            <!-- item2（配列kotae）の中身がtrue（フォローしてる人）の時 -->
+            <v-btn v-if="item2 == true" @click="deleteRelation" color="error">フォロー解除</v-btn>
           </v-col>
         </v-list>
         
@@ -244,24 +249,16 @@ const deleteRelationship_query = `
   export default {
     data() {
       return{
-        i: null,
         follows: null,
         // 上に行くボタン用、ここの画面ではスクロールがないので今はtrueにしてます
         buttonActive: true,
         scroll: 0,
         // 判定用
-        user: null,
         judgment: null,
         emailAddress: '',
         currentuser: null,
-        // 判定入れる配列
+        // フォローしてるかしてないかの判定入れる配列、true,falseが入る
         kotae: [],
-        // k: null,
-        // t: null,
-        // true,falseでいる、いない
-        tei: null,
-        // toriaezu
-        bool: false,
       }
     },
     // props:['followees', 'follows'],
@@ -327,90 +324,35 @@ const deleteRelationship_query = `
     this.followees= query.data.followeeIndex.items
     
     //フォローされてる人リスト取得、変数名がクソ
+    // ここusersource再利用しようとしたらだめだったからusersource2を新しく作った
     const usersource2 = this.$store.getters.getUserGraphql
-    // const w = await API.graphql(
-    //   graphqlOperation(a, {
-    //   })
-    // )
-    // this.i = w.data.listRelationships
-    //クエリ飛ばし、変数名がクソ
     const query2 = await API.graphql(
       graphqlOperation(follows_query, {
         followerId : usersource2.items[0].id
       })
     )
-    // this.user = query2.data.emailIndex
     console.log("followsクエリー飛ばしました。")
-    //80行目のfollowsに受け取ったクエリデータ？入れる
+    // followsは自分のことをフォローしてる人（自分がフォローされてる人）リスト
     this.follows= query2.data.followerIndex.items
-    this.user= query2.data.followerIndex.items
-    // this.follows= this.$store.getters.getUserGraphql.items[0].id
-    // じぶんのID
+    // じぶんのID取得
     this.currentuser = usersource2.items[0].id
-    // nagasadousuru
-    console.log("はじめます")
-    for(var k = 0; k< this.user.length; k++){
+
+    // フォローしてるかしてないかの判定
+    // 自分のことをフォローしてる人（自分がフォローされてる人）の人数分forする
+    for(var k = 0; k< this.follows.length; k++){
+      // followeesは自分がフォローしてる人のリスト
       for(var t = 0; t < this.followees.length; t++){
-        if(this.followees[k].follower.id == this.user[t].followee.id){
-          console.log("いた")
-          this.tei = true
-          this.kotae[k] = this.tei
+        // フォローしてる人の中にフォローされてる人がいたらkotaeにtrueを入れてbreakする
+        if(this.followees[t].follower.id == this.follows[k].followee.id){
+          this.kotae[k] = true
           break;
         }else{
-          console.log("いない")
-          this.tei = false
-          this.kotae[k] = this.tei
+          // フォローしてる人の中にフォローされてる人がいなかったらfalse入れる
+          this.kotae[k] = false
         }
       }
     }
-    // this.follows = this.follows.concat(this.kotae)
-    // 判定
-    // const followJudg = await API.graphql(
-    //     graphqlOperation(follows_query, {
-    //       filter: {followeeId: {eq: this.user.items[0].followee.id}},
-    //       followeeId: this.currentuser
-    //     })
-    //   )
-    //   // console.log(followJudg.data.followeeIndex);
-    //   this.judgment = followJudg.data.followerIndex
   },
-    // 上行くボタン
-    // window.addEventListener('scroll', this.scrollWindow)
-    // //フォローされてる人リスト取得、変数名がクソ
-    // const usersource2 = this.$store.getters.getUserGraphql
-    // //クエリ飛ばし、変数名がクソ
-    // const query2 = await API.graphql(
-    //   graphqlOperation(follows_query, {
-    //     followerId : usersource2.items[0].id
-    //   })
-    // )
-    // // this.user = query2.data.emailIndex
-    // console.log("followsクエリー飛ばしました。")
-    // //80行目のfollowsに受け取ったクエリデータ？入れる
-    // this.follows= query2.data.followerIndex
-    // this.user= query2.data.followerIndex
-    // // this.follows= this.$store.getters.getUserGraphql.items[0].id
-    // // じぶんのID
-    // this.currentuser = usersource2.items[0].id
-    // // 判定
-    // const followJudg = await API.graphql(
-    //     graphqlOperation(follows_query, {
-    //       filter: {followerId: {eq: this.user.items[0].id}},
-    //       followeeId: this.currentuser
-    //     })
-    //   )
-    //   // console.log(followJudg.data.followeeIndex);
-    //   this.judgment = followJudg.data.followerIndex
-    // //フォローされてる人リスト取得、変数名がクソ
-    // const usersource2 = this.$store.getters.getUserGraphql
-    // //クエリ飛ばし、変数名がクソ
-    // const query2 = await API.graphql(
-    //   graphqlOperation(follows_query, {followerId : usersource2.items[0].id})
-    // )
-    // console.log("followsクエリー飛ばしました。")
-    // //80行目のfollowsに受け取ったクエリデータ？入れる
-    // this.follows= query2.data.followerIndex.items
-  
   }
 </script>
 

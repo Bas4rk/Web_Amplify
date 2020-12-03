@@ -4,10 +4,8 @@ import Home from '../views/Home.vue'
 import createTweet from '../views/CreateTweet.vue'
 import createTraining from '../views/CreateTraining.vue'
 import createCooking from '../views/CreateCooking.vue'
-// import Search from '../views/Search.vue'
-import Search2 from '../views/Search2.vue'
+import Search from '../views/Search.vue'
 import Calendar from '../views/Calendar.vue'
-import Calendar2 from '../views/Calendar2.vue'
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
 // import FolloweeList from '../views/FolloweeList.vue'
@@ -86,7 +84,7 @@ const router = new Router({
       // 検索ページ
       path: '/search',
       name: 'search',
-      component: Search2,
+      component: Search,
       meta: { requiresAuth: true }
     },
     {
@@ -94,13 +92,6 @@ const router = new Router({
       path: '/calendar',
       name: 'calendar',
       component: Calendar,
-      meta: { requiresAuth: true }
-    },
-    {
-      // カレンダーページ2
-      path: '/calendar2',
-      name: 'calendar2',
-      component: Calendar2,
       meta: { requiresAuth: true }
     },
     {

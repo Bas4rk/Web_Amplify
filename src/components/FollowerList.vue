@@ -115,7 +115,7 @@ const deleteRelationship_query = /* GraphQL */ `
   export default {
     data() {
       return{
-        followees: null,
+       followees: null, 
         // 上に行くボタン用、ここの画面ではスクロールがないので今はtrueにしてます
         buttonActive: true,
         scroll: 0,
