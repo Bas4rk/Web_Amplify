@@ -12,7 +12,7 @@
     <v-layout justify-center>
 
       <!-- class="title"で文字の大きさを変えてます、ここ"display-1"でもいいかも -->
-      <div class="title">設定・その他</div>
+      <div class="title">通知の設定</div>
     </v-layout>
 
     <!-- v-rowにjustify="center"すると左右中央、上下中央はalign-content="center" -->
@@ -27,20 +27,13 @@
             <!-- ↓後できれいにする -->
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
             <!-- 遷移はまだない -->
-            <v-btn block to="/SettingPremium">プレミアムサービスを登録する</v-btn><br>
-            <v-btn block to="/SettingAccount">アカウント管理</v-btn><br>
-            <v-btn block to="/SettingNotification">通知の設定</v-btn><br>
-            <v-btn block to="/SettingHelp">お困りの方はこちら</v-btn><br>
-            <v-btn block to="/SettingPersonal">個人情報に関するお問い合わせ</v-btn><br>
-            <v-btn block to="/SettingContact">お問い合わせ履歴</v-btn><br>
-            <v-btn block to="/SettingService">利用規約</v-btn><br>
+            <v-btn block>通知の設定</v-btn><br>
+            <v-btn block>いいね</v-btn><br>
+            <v-btn block>コメント</v-btn><br>
+            <v-btn block>新着フォロワー</v-btn><br>
+            <v-btn block>ダイレクトメッセージ</v-btn><br>
 
-            <!-- 横線です -->
-            <v-divider></v-divider>
-
-            <!-- スイッチボタン -->
-            <v-switch :label="`Dark Theme`" v-model="theme" ></v-switch>
-            <!-- <div>{{setTheme}}</div> -->
+            
 
             
           </v-list>
