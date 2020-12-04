@@ -8,8 +8,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    CognitoUser: null,
-    GraphqlUser: null,
+    UserName: null,
+    UserEmail: null,
+    UserId: null,
     Wholeposts: null
   },
   getters: {
@@ -17,9 +18,17 @@ export default new Vuex.Store({
     //   return state.CognitoUser.signInUserSession.idToken.payload.email
     //   // return state.user
     // },
-    getUserGraphql(state) {
+    getUserName(state) {
       // return state.user.signInUserSession.idToken.payload.email
-      return state.GraphqlUser
+      return state.UserName
+    },
+    getUserEmail(state) {
+      // return state.user.signInUserSession.idToken.payload.email
+      return state.UserEmail
+    },
+    getUserId(state) {
+      // return state.user.signInUserSession.idToken.payload.email
+      return state.UserId
     }
   },
   mutations: {
@@ -27,9 +36,15 @@ export default new Vuex.Store({
     // setUserCognito(state, user) {
     //   state.CognitoUser = user
     // },
-    setUserGraphql(state, user) {
-      state.GraphqlUser = user
-    }
+    setUserName(state, name) {
+      state.UserName = name
+    },
+    setUserEmail(state, email) {
+      state.UserEmail = email
+    },
+    setUserId(state, id) {
+      state.UserId = id
+    },
 
     // async setUserGraphql(state,username,nickname) {
       

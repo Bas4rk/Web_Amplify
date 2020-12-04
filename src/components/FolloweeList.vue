@@ -256,7 +256,6 @@ const deleteRelationship_query = `
         // 判定用
         judgment: null,
         emailAddress: '',
-        currentuser: null,
         // フォローしてるかしてないかの判定入れる配列、true,falseが入る
         kotae: [],
       }
@@ -316,27 +315,24 @@ const deleteRelationship_query = `
     },
   },
   mounted: async function(){
-    const usersorce= this.$store.getters.getUserGraphql
+    // const usersorce= this.$store.getters.getUserGraphql
     const query = await API.graphql(
-      graphqlOperation(followees_query, {followeeId : usersorce.items[0].id})
+      graphqlOperation(followees_query, {followeeId : this.$store.getters.getUserId})
     )
     console.log("followeesクエリー飛ばしました。")
     this.followees= query.data.followeeIndex.items
     
     //フォローされてる人リスト取得、変数名がクソ
     // ここusersource再利用しようとしたらだめだったからusersource2を新しく作った
-    const usersource2 = this.$store.getters.getUserGraphql
+    // const usersource2 = this.$store.getters.getUserGraphql
     const query2 = await API.graphql(
       graphqlOperation(follows_query, {
-        followerId : usersource2.items[0].id
+        followerId : this.$store.getters.getUserId
       })
     )
     console.log("followsクエリー飛ばしました。")
     // followsは自分のことをフォローしてる人（自分がフォローされてる人）リスト
     this.follows= query2.data.followerIndex.items
-    // じぶんのID取得
-    this.currentuser = usersource2.items[0].id
-
     // フォローしてるかしてないかの判定
     // 自分のことをフォローしてる人（自分がフォローされてる人）の人数分forする
     for(var k = 0; k< this.follows.length; k++){

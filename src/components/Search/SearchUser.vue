@@ -139,7 +139,7 @@ export default {
       this.user = Graphqluser.data.emailIndex
       console.log("ユーザ検索でクエリー飛ばしてます");
 
-      this.currentuser= this.$store.getters.getUserGraphql.items[0].id
+      this.currentuser= this.$store.getters.getUserId
 
       const followJudg = await API.graphql(
         graphqlOperation(_query, {

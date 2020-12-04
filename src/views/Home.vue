@@ -490,9 +490,9 @@ export default {
 
     //きたないのできれいにする。
     if(this.dev){
-      const usersorce = this.$store.getters.getUserGraphql
+      // const usersorce = this.$store.getters.getUserGraphql
       const query = await API.graphql(
-        graphqlOperation(_query2, {id : usersorce.items[0].id})
+        graphqlOperation(_query2, {id : this.$store.getters.getUserId})
       )
       console.log("タイムラインクエリー飛ばしました。")
       this.user = query.data.getUser

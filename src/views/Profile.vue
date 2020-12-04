@@ -257,13 +257,11 @@ export default {
   },
   computed: {
     // プロフィール表示、Navigation.vueのやつ貰った
-    getUserEmail(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].emailAddress
-    },
     getUserName(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].name
+      return  this.$store.getters.getUserName
+    },
+    getUserEmail(){
+      return  this.$store.getters.getUserEmail
     }
   },
   methods: {
@@ -314,9 +312,9 @@ export default {
     window.addEventListener('scroll', this.scrollWindow)
 
     if(this.dev){
-      const usersorce = this.$store.getters.getUserGraphql
+      // const usersorce = this.$store.getters.getUserGraphql
       const query = await API.graphql(
-        graphqlOperation(_query2, {id : usersorce.items[0].id})
+        graphqlOperation(_query2, {id : this.$store.getters.getUserId})
       )
       console.log("タイムラインクエリー飛ばしました。")
       this.user = query.data.getUser
