@@ -5,13 +5,12 @@
 #   user_id: String!
 # }
 
-# [fix]idは自分で入力できるようにする
 type User 
     @model
     @key(name: "emailAddressIndex", fields: ["emailAddress"], queryField: "emailIndex")
     @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
-    id: ID! 
+    id: ID!
     name: String!
     emailAddress: String!
     createdAt: AWSDateTime
@@ -25,16 +24,13 @@ type User
     comments: [Comment] @connection(keyName: "userId",fields: ["id"])
 }
 
-    #[fix] followeeId: ID! 
-    # followerId: ID!
-    # 使わない気がする
 type Relationship
     @model
     @key(name: "followee", fields: ["followeeId"], queryField: "followeeIndex")
     @key(name: "follower", fields: ["followerId"], queryField: "followerIndex")
     @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
-    followeeId: ID! 
+    followeeId: ID!
     followerId: ID!
     blockBool: Boolean!
     followee: User @connection(fields: ["followeeId"])

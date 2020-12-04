@@ -6,10 +6,11 @@ import createTraining from '../views/CreateTraining.vue'
 import createCooking from '../views/CreateCooking.vue'
 import Search from '../views/Search.vue'
 import Calendar from '../views/Calendar.vue'
-import Calendar2 from '../views/Calendar2.vue'
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
-//設定関連
+// import FolloweeList from '../views/FolloweeList.vue'
+import FolloweeList from '../components/FolloweeList.vue'
+import FollowerList from '../components/FollowerList.vue'
 import Setting from '../views/Setting.vue'
 import SetPremium from '../views/setting/SettingPremium.vue'
 import SetAccounts from '../views/setting/SettingAccount.vue'
@@ -31,9 +32,13 @@ import UserDelete from '../views/setting/user/AccountDelete.vue'
 import Test from '../views/setting/TestComponents.vue'
 
 import Tweet from '../views/Tweet.vue'
+import Cooking from '../views/Cooking.vue'
+import Training from '../views/Training.vue'
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
 import SignIn from '../views/SignIn.vue'
+import Terms from '../views/Terms.vue'
+// import help from '../views/help.vue'
 
 
 import {AmplifyEventBus} from 'aws-amplify-vue'
@@ -117,13 +122,6 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      // カレンダーページ2
-      path: '/calendar2',
-      name: 'calendar2',
-      component: Calendar2,
-      meta: { requiresAuth: true }
-    },
-    {
       // 通知ページ
       path: '/notice',
       name: 'notice',
@@ -135,6 +133,20 @@ const router = new Router({
       path: '/profile',
       name: 'profile',
       component: Profile,
+      meta: { requiresAuth: true }
+    },
+    {
+      // フォローリストページ
+      path: '/followeelist',
+      name: 'followeelist',
+      component: FolloweeList,
+      meta: { requiresAuth: true }
+    },
+    {
+      // フォロワーリストページ
+      path: '/followerlist',
+      name: 'followerlist',
+      component: FollowerList,
       meta: { requiresAuth: true }
     },
     {
@@ -254,6 +266,27 @@ const router = new Router({
       path: '/tweet/:id',
       name: 'tweet',
       component: Tweet,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 料理記事ページ
+      path: '/cooking/:id',
+      name: 'cooking',
+      component: Cooking,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 料理記事ページ
+      path: '/training/:id',
+      name: 'training',
+      component: Training,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 利用規約
+      path: '/Terms',
+      name: 'Terms',
+      component: Terms,
       meta: { requiresAuth: true }
     }
   ]

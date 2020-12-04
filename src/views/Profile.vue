@@ -1,94 +1,285 @@
 <template>
   <div class="profile">
     <Navigation></Navigation>
-    <h1>プロフィールページ</h1>
+    <!-- <h1>プロフィールページ</h1> -->
+    <!-- v-layout justify-centerで中央に持ってくる -->
+    <!-- <v-layout justify-center> -->
+
+      <!-- class="title"で文字の大きさを変えてます、ここ"display-1"でもいいかも -->
+      <!-- <div class="title">プロフィールページ</div>
+
+    </v-layout> -->
+    <!-- 横線です -->
+    <!-- <v-divider></v-divider> -->
     <!-- <v-btn dark @click="signUp">疑似ユーザー登録</v-btn> -->
     <!-- <v-btn dark @click="signIn">疑似ユーザーサインイン</v-btn> -->
     <!-- <v-btn dark @click="sample5">sample2</v-btn> -->
     <!-- {{getUserGraphql}}
     {{this.$store.getters.getUserCognito}} -->
     <!-- {{followees}} -->
-    <!-- followeesとfollowsを渡しています。this.いらない？ -->
-    <FolloweeList :followees="this.followees" :follows="follows"></FolloweeList>
-   
+
+    <v-container>
+
+      <!-- アカウントアイコン、なんか位置ずれてる？ -->
+      <v-row justify="center">
+        <v-list-item-avatar size="130" color="grey darken-1">
+          <v-icon size="130">mdi-account</v-icon>
+        </v-list-item-avatar>
+      </v-row>
+
+      <!-- アカウント名 -->
+      <v-row justify="center">
+        {{getUserName}}
+      </v-row>
+
+      <!-- アカウントID -->
+      <v-row justify="center">
+          {{getUserEmail}}
+      </v-row>
+
+      <!-- プロフィール文、位置はここか左にあるボタンとTabの間？ -->
+      <v-row justify="center">
+        ここにプロフィール紹介文
+      </v-row>
+
+      <v-row justify="center">
+        <v-btn large color="primary"  to="/followerlist">フォロー中</v-btn>
+        <v-btn large color="primary"  to="/followeelist">フォロワー</v-btn>
+        <v-btn large color="primary"  to="">プロフィール編集</v-btn>
+        <!-- ブックマークボタン、Prottにあったのでとりあえずつけた -->
+        <v-btn
+          icon
+          to="">
+          <v-icon>mdi-bookmark-outline</v-icon>
+        </v-btn>
+        <!-- <v-col>
+        </v-col> -->
+          <!-- <v-btn large color="primary"  to="/">フォロー</v-btn>
+          <v-btn large color="primary"  to="/">フォロワー</v-btn> -->
+          <!-- <v-btn large color="primary">いいね</v-btn> -->
+      </v-row>
+
+      <!-- 横線です -->
+      <v-divider></v-divider>
+
+      <!-- Tabとその中身入れ替えです、TweetListそのまま使いました -->
+      <v-tabs fixed-tabs v-model="tab">
+        <v-tab href="#tab-1">つぶやき</v-tab>
+        <v-tab href="#tab-2">料理</v-tab>
+        <v-tab href="#tab-3">筋トレ</v-tab>
+        <v-tab href="#tab-4">いいね</v-tab>
+      </v-tabs>
+        
+      <!-- 中身 -->
+      <v-tabs-items v-model="tab">
+        <v-tab-item value="tab-1">
+          <v-divider></v-divider>
+          <TweetList :items="this.wholeposts"></TweetList>
+        </v-tab-item>
+        <v-tab-item value="tab-2">
+          <TweetList :items="this.wholeposts2"></TweetList>  
+        </v-tab-item>
+        <v-tab-item value="tab-3">
+          <TweetList :items="this.wholeposts3"></TweetList>  
+        </v-tab-item>
+      </v-tabs-items>
+
+      <transition name="button">
+      <v-btn
+        v-show="buttonActive"
+        @click="scrollTop"
+        fixed
+        color="primary"
+        dark
+        bottom
+        right
+        fab
+      >
+      <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </transition>
+
+      <!-- <div>
+        自分の投稿
+        {{myposts}}
+      </div>
+      <br>
+      <div>
+        自分の料理投稿
+        {{myposts2}}
+      </div>
+      <br>
+      <div>
+        自分の筋トレ投稿
+        {{myposts3}}
+      </div> -->
+
+    </v-container>
   </div>
 </template>
 
 <script>
+import TweetList from '@/components/TweetList.vue';
 import Navigation from '@/components/Navigation.vue';
-import FolloweeList from '@/components/FolloweeList.vue';
-
 import { API, graphqlOperation } from 'aws-amplify'
+
 // import * as gqlQueries from '../graphql/queries'
 // import * as gqlMutations from '../graphql/mutations'
-
-
 // import store from '../store/index.js'
 
-
-//[add]ここgetUserだったけどFollowerIndexで取ってこれた、mock?でテストして取ってこれたのでそのままコピペしてます
-const follows_query = /* GraphQL */`
-  query followerIndex(
-    $followerId: ID
-  ) {
-    followerIndex(
-      followerId: $followerId
-    ) {
+// [fix]ここのクエリーfilter使ってもう少しよくできないか
+const _query2 = `query GetUser($id: ID!) {
+  getUser(id: $id) {
+    tweetPosts {
       items {
         id
-        followee {
-          id
+        content
+        createdAt
+        user {
           name
           emailAddress
         }
       }
     }
-  }
-`;
-
-//[fix]follweeは「フォローされている人」という意味で、ここに書いてある内容は「フォローしている人」なので名前が逆です。
-const followees_query = /* GraphQL */ `
-
-  query FolloweeIndex(
-    $followeeId: ID
-  ) {
-    followeeIndex(
-      followeeId: $followeeId
-    ) {
+    cookingPosts {
       items {
         id
+        title
+        content
+        calorie
+        createdAt
+        user {
+          name
+          emailAddress
+        }
+      }
+    }
+    traningPosts {
+      items {
+        id
+        title
+        content
+        createdAt
+        user {
+          name
+          emailAddress
+        }
+      }
+    }
+    followees {
+      items {
         follower {
-          id
-          name
-          emailAddress
+          tweetPosts {
+            nextToken
+            items {
+              id
+              content
+              createdAt
+              user {
+                name
+                emailAddress
+              }
+            }
+          }
+          cookingPosts {
+            nextToken
+            items {
+              content
+              calorie
+              createdAt
+              id
+              title
+              user {
+                name
+                emailAddress
+              }
+            }
+          }
+          traningPosts {
+            nextToken
+            items {
+              id
+              content
+              createdAt
+              title
+              user {
+                name
+                emailAddress
+              }
+            }
+          }
         }
       }
     }
   }
+}
 `;
-
-
-
 
 
 export default {
+  name: 'profile',
   data() {
     return{
+      tab: 'tab-1',
+      // 上に行くボタン用
+      buttonActive: false,
+      scroll: 0,
+      user: null,
       followees: null,
       //ここに入れてFollowerList.vueに渡す？
-      follows: null
+      follows: null,
+      myposts: null,
+      // 料理用
+      myposts2: null,
+      // 筋トレ用
+      myposts3: null,
+      followeeposts: [],
+      // 料理用
+      followeeposts2: [],
+      // 筋トレ用
+      followeeposts3: [],
+      wholeposts: [],
+      // 料理用
+      wholeposts2: null,
+      // 筋トレ用
+      wholeposts3: null,
+      //開発用
+      dev: true,
     }
   },
   components: {
-    Navigation,
-    FolloweeList
+    TweetList,
+    Navigation
   },
   computed: {
-    // getUserGraphql(){
-    //   return this.$store.getters.getUserGraphql
-    // }
+    // プロフィール表示、Navigation.vueのやつ貰った
+    getUserEmail(){
+      const user= this.$store.getters.getUserGraphql
+      return  user.items[0].emailAddress
+    },
+    getUserName(){
+      const user= this.$store.getters.getUserGraphql
+      return  user.items[0].name
+    }
   },
   methods: {
+    // behavior: autoだと瞬間移動になる
+    scrollTop: function(){
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    },
+    // buttonActiveにtrueとfalse渡して表示非表示してる、上行くボタンのv-show="buttonActiveてとこのやつ
+    scrollWindow() {
+      const top = 100 // ボタンを表示させたい位置
+      this.scroll = window.scrollY
+      if (top <= this.scroll) {
+        this.buttonActive = true
+      } else {
+        this.buttonActive = false
+      }
+    },
     // async signUp(){
       // const user = await API.graphql(
       //   graphqlOperation(gqlMutations.createUser, {
@@ -115,22 +306,62 @@ export default {
     // }
   },
   mounted : async function(){
-    const usersorce= this.$store.getters.getUserGraphql
-    const query = await API.graphql(
-      graphqlOperation(followees_query, {followeeId : usersorce.items[0].id})
-    )
-    console.log("followeesクエリー飛ばしました。")
-    this.followees= query.data.followeeIndex.items
+    // 上行くボタン
+    window.addEventListener('scroll', this.scrollWindow)
 
-    //フォローされてる人リスト取得、変数名がクソ
-    const usersource2 = this.$store.getters.getUserGraphql
-    //クエリ飛ばし、変数名がクソ
-    const query2 = await API.graphql(
-      graphqlOperation(follows_query, {followerId : usersource2.items[0].id})
-    )
-    console.log("followsクエリー飛ばしました。")
-    //80行目のfollowsに受け取ったクエリデータ？入れる
-    this.follows= query2.data.followerIndex.items
-  }
+    if(this.dev){
+      const usersorce = this.$store.getters.getUserGraphql
+      const query = await API.graphql(
+        graphqlOperation(_query2, {id : usersorce.items[0].id})
+      )
+      console.log("タイムラインクエリー飛ばしました。")
+      this.user = query.data.getUser
+      this.myposts = this.user.tweetPosts.items//自分のツイート
+      this.wholeposts = this.myposts//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
+      // プロフィールページなのでフォローしてる人の投稿入れてません
+      // for(let i = 0; i < this.user.followees.items.length; i++){
+      //   if(this.user.followees.items[i].follower.tweetPosts.items.length > 0){
+      //     this.followeeposts.push(this.user.followees.items[i].follower.tweetPosts.items[0])
+      //   } 
+      // }
+      this.wholeposts= this.myposts.concat(this.followeeposts)
+
+      //料理
+      this.myposts2 = this.user.cookingPosts.items//自分の料理投稿
+      this.wholeposts2 = this.myposts2//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
+      // プロフィールページなのでフォローしてる人の投稿入れてません
+      // for(let i = 0; i < this.user.followees.items.length; i++){
+      //   if(this.user.followees.items[i].follower.cookingPosts.items.length > 0){
+          
+      //     this.followeeposts2.push(this.user.followees.items[i].follower.cookingPosts.items[0])
+      //   }
+      // }
+      this.wholeposts2= this.myposts2.concat(this.followeeposts2)
+
+      //筋トレ
+      this.myposts3 = this.user.traningPosts.items//自分の筋トレ投稿
+      this.wholeposts3 = this.myposts3//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
+      // プロフィールページなのでフォローしてる人の投稿入れてません
+      // for(let i = 0; i < this.user.followees.items.length; i++){
+      //   if(this.user.followees.items[i].follower.traningPosts.items.length > 0){
+      //     this.followeeposts3.push(this.user.followees.items[i].follower.traningPosts.items[0])
+      //   }
+      // }
+      
+      this.wholeposts3= this.myposts3.concat(this.followeeposts3)
+    }
+  },
 }
 </script>
+
+<style scoped>
+/* 上に行くボタン */
+.button-enter-active,
+.button-leave-active {
+  transition: opacity 0.5s;
+}
+.button-enter,
+.button-leave-to {
+  opacity: 0;
+}
+</style>

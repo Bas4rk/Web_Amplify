@@ -74,7 +74,6 @@ function confirmSignUp(username, password, code, nickname) {
     const user = await Auth.signIn(username, password);
     console.log("userは"+user)
     if(user){
-      // [fix]ここ最優先
       const mutation = API.graphql(
         graphqlOperation(gqlMutations.createUser, {
           input: {
@@ -88,29 +87,6 @@ function confirmSignUp(username, password, code, nickname) {
     }else{
       console.log("だめでした。")
     }
-
-
-
-    // tes(username,nickname)
-
-    // const user = await getUser()
-
-    // // [fix]ここ最優先
-    // const user = API.graphql(
-    //   graphqlOperation(gqlMutations.createUser, {
-    //     input: {
-    //       name: nickname,
-    //       emailAddress: username,
-    //       premium: false
-    //     }
-    //   })
-    // )
-    //   console.log(user.data.createUser);
-      // store.commit('setUser', user.data.createUser)
-
-      // store.commit('setUserGraphql',username,nickname)
-    
-    // store.dispatch('setUserGraphql',username,nickname)
     
     return data // 'SUCCESS'
   })
@@ -169,23 +145,5 @@ function signOut() {
       return err;
     });
 }
-
-
-// function tes(username,nickname){
-//   const user = await getUser()
-//   if(user){
-//     // [fix]ここ最優先
-//     const mutation = API.graphql(
-//       graphqlOperation(gqlMutations.createUser, {
-//         input: {
-//           name: nickname,
-//           emailAddress: username,
-//           premium: false
-//         }
-//       })
-//     )
-//     console.log(mutation.data.createUser);
-//   }
-// }
 
 export {getUser, signUp, confirmSignUp, resendSignUp, signIn, signOut};
