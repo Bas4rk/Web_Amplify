@@ -124,7 +124,7 @@ export default {
       ['mdi-calendar', 'カレンダー','/calendar'],
       ['mdi-bell', '通知','/notice'],
       ['mdi-account', 'プロフィール','/profile'],
-      ['mdi-cog', '設定','/setting']
+      ['mdi-cog', '設定','/setting'],
     ],
     // createSubscription: {},
     messages: 0,

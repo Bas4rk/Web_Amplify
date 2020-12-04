@@ -12,7 +12,25 @@ import Profile from '../views/Profile.vue'
 import FolloweeList from '../components/FolloweeList.vue'
 import FollowerList from '../components/FollowerList.vue'
 import Setting from '../views/Setting.vue'
-import SetPremium from '../views/setting-premium.vue'
+import SetPremium from '../views/setting/SettingPremium.vue'
+import SetAccounts from '../views/setting/SettingAccount.vue'
+import SetNot from '../views/setting/SettingNotification.vue'
+import SetHelp from '../views/setting/SettingHelp.vue'
+import SetPersonal from '../views/setting/SettingPersonal.vue'
+import SetContact from '../views/setting/SettingContact.vue'
+import SetService from '../views/setting/SettingService.vue'
+
+import UserName from '../views/setting/user/UserNameChange.vue'
+import UserID from '../views/setting/user/UserIDChange.vue'
+import UserPhone from '../views/setting/user/PhoneNumberChange.vue'
+import UserMail from '../views/setting/user/MailAdressChange.vue'
+import Passwd from '../views/setting/user/PasswdChange.vue'
+import PasswdNew from '../views/setting/user/PasswdChangeNew.vue'
+import UserSecurity from '../views/setting/user/Security.vue'
+import UserDelete from '../views/setting/user/AccountDelete.vue'
+
+import Test from '../views/setting/TestComponents.vue'
+
 import Tweet from '../views/Tweet.vue'
 import Cooking from '../views/Cooking.vue'
 import Training from '../views/Training.vue'
@@ -36,6 +54,13 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   routes: [
+    {
+      // テストコンポーネント
+      path: '/testcomponents',
+      name: 'testcomponents',
+      component: Test,
+      meta: { requiresAuth: true}
+    },
     {
       path: '/signUp',
       name: 'signUp',
@@ -133,13 +158,111 @@ const router = new Router({
     },
     {
       // プレミアム登録ページ
-      path: '/setting-premium',
-      name: 'setting-premium',
+      path: '/settingpremium',
+      name: 'settingpremium',
       component: SetPremium,
       meta: { requiresAuth: true }
     },
     {
-      // ツイートページ
+      // アカウントページ
+      path: '/settingaccount',
+      name: 'settingaccount',
+      component: SetAccounts,
+      meta: { requiresAuth: true }
+    },
+    {
+      // ユーザ名前変更ページ
+      path: '/usernamechange',
+      name: 'usernamechange',
+      component: UserName,
+      meta: { requiresAuth: true }
+    },
+    {
+      // ユーザネーム変更ページ
+      path: '/useridchange',
+      name: 'useridchange',
+      component: UserID,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 旧パスワード入力ページ
+      path: '/passwdchange',
+      name: 'passwdchange',
+      component: Passwd,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 新パスワード入力ページ
+      path: '/passwdchangenew',
+      name: 'passwdchangenew',
+      component: PasswdNew,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 通知設定ページ
+      path: '/settingnotification',
+      name: 'settingnotification',
+      component: SetNot,
+      meta: { requiresAuth: true }
+    },
+    {
+      // お困りの方はこちらページ
+      path: '/settinghelp',
+      name: 'settinghelp',
+      component: SetHelp,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 個人情報ページ
+      path: '/settingpersonal',
+      name: 'settingpersonal',
+      component: SetPersonal,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 電話番号変更ページ
+      path: '/phonenumberchange',
+      name: 'phonenumberchange',
+      component: UserPhone,
+      meta: { requiresAuth: true }
+    },
+    {
+      // メールアドレス変更ページ
+      path: '/mailadresschange',
+      name: 'mailadresschange',
+      component: UserMail,
+      meta: { requiresAuth: true }
+    },
+    {
+      // セキュリティ設定ページ
+      path: '/security',
+      name: 'security',
+      component: UserSecurity,
+      meta: { requiresAuth: true }
+    },
+    {
+      // アカウント削除ページ
+      path: '/accountdelete',
+      name: 'accountdelete',
+      component: UserDelete,
+      meta: { requiresAuth: true }
+    },
+    {
+      // お問い合わせページ
+      path: '/settingcontact',
+      name: 'settingcontact',
+      component: SetContact,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 利用規約ページ
+      path: '/settingservice',
+      name: 'settingservice',
+      component: SetService,
+      meta: { requiresAuth: true }
+    },
+    {
+      // 設定ページ
       path: '/tweet/:id',
       name: 'tweet',
       component: Tweet,
