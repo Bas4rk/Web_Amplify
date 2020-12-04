@@ -68,7 +68,7 @@
         <v-tab href="#tab-1">つぶやき</v-tab>
         <v-tab href="#tab-2">料理</v-tab>
         <v-tab href="#tab-3">筋トレ</v-tab>
-        <v-tab href="#tab-4">いいね</v-tab>
+        <!-- <v-tab href="#tab-4">いいね</v-tab> -->
       </v-tabs>
         
       <!-- 中身 -->
