@@ -12,37 +12,32 @@
     <v-layout justify-center>
 
       <!-- class="title"で文字の大きさを変えてます、ここ"display-1"でもいいかも -->
-      <div class="title">設定・その他</div>
+      <div class="display-1">PREMIUM</div>
+
     </v-layout>
 
     <!-- v-rowにjustify="center"すると左右中央、上下中央はalign-content="center" -->
       <v-row justify="center">
-
+            <v-col cols="4"><br>
+            <p>プレミアムプラン特典です</p>
+            <p>すべての機能が使用可能になります</p>
+            </v-col>
+      </v-row>
+      <v-row justify="center">
         <!-- v-colはv-rowの子である、cols="5"はグリッドが～とかで、cols2つ並べて割合で表示させられる
         cols="8"とcols="4"で8対4で表示とか（2対1）最大は12 -->
+        
         <v-col cols="5">
-
           <!-- リストです -->
           <v-list>
             <!-- ↓後できれいにする -->
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
-            <!-- 遷移はまだない -->
-            <v-btn block to="/SettingPremium">プレミアムサービスを登録する</v-btn><br>
-            <v-btn block to="/SettingAccount">アカウント管理</v-btn><br>
-            <v-btn block to="/SettingNotification">通知の設定</v-btn><br>
-            <v-btn block to="/SettingHelp">お困りの方はこちら</v-btn><br>
-            <v-btn block to="/SettingPersonal">個人情報に関するお問い合わせ</v-btn><br>
-            <v-btn block to="/SettingContact">お問い合わせ履歴</v-btn><br>
-            <v-btn block to="/SettingService">利用規約</v-btn><br>
-
             <!-- 横線です -->
             <v-divider></v-divider>
-
-            <!-- スイッチボタン -->
-            <v-switch :label="`Dark Theme`" v-model="theme" ></v-switch>
-            <!-- <div>{{setTheme}}</div> -->
-
+            <br><div class="indigo--text">・広告の非表示</div><br>
             
+            <v-col><v-btn color="accent" block>PREMIUMに登録する(月額￥280)</v-btn><br></v-col>
+
           </v-list>
         </v-col>
       </v-row>
