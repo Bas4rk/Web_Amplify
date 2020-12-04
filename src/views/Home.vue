@@ -82,7 +82,7 @@
           <CookingList :items2="this.wholeposts2"></CookingList>  
         </v-tab-item>
         <v-tab-item value="tab-3">
-          <TweetList :items3="this.wholeposts3"></TweetList>  
+          <TrainingList :items3="this.wholeposts3"></TrainingList>  
         </v-tab-item>
       </v-tabs-items>
 
@@ -168,6 +168,8 @@
 <script>
 import TweetList from '@/components/TweetList.vue';
 import CookingList from '@/components/CookingList.vue';
+import TrainingList from '@/components/TrainingList.vue';
+
 
 import Navigation from '@/components/Navigation.vue';
 
@@ -402,6 +404,7 @@ export default {
   components: {
     TweetList,
     CookingList,
+    TrainingList,
     Navigation
   },
   computed: {

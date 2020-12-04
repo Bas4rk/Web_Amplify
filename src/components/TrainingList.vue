@@ -1,5 +1,5 @@
 <template>
-  <div class="CookingList">
+  <div class="TrainingList">
     <v-container
       class="py-8 px-6"
       fluid
@@ -11,12 +11,12 @@
             <v-list>
               <!-- ここから料理投稿表示、日付順ソートで筋トレ投稿とツイート投稿のごちゃまぜ表示は出来てない -->
               <v-col
-                v-for="(item, i) in items2"
+                v-for="(item, i) in items3"
                 :key="i"
                 cols="12"
               >
-                <v-card class="my-1" :to="{name:'cooking',params:{id:item.id,item: item}}">
-                  <!-- [fix]v-menu押しても、リンク飛んでしまう。
+                <v-card class="my-1" :to="{name:'training',params:{id:item.id,item: item}}">
+                    <!-- [fix]v-menu押しても、リンク飛んでしまう。
                     v-menu外に出せば解決するけど、card内にmenu入れた方が見やすい気がする。 -->
                   <v-menu
                     :close-on-click="true"
@@ -44,7 +44,7 @@
                     </v-list>
                   </v-menu>
                   <v-img
-                    :src="require('../assets/料理/料理投稿.png')"
+                    :src="require('../assets/筋トレ/筋トレ.png')"
                     class="white--text align-end"
                     gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                     height="200px"
@@ -54,10 +54,6 @@
                   <v-card-actions>
                     <span>投稿者：{{ item.user.name }}</span>
                     <v-spacer></v-spacer>
-                    <v-btn icon>
-                      <v-icon>mdi-fire</v-icon>
-                    </v-btn>
-                    <span>{{ item.calorie }}kcal</span>
                   </v-card-actions>
                 </v-card>
               </v-col>
@@ -73,11 +69,11 @@
 <script>
 import { API, graphqlOperation } from 'aws-amplify'
 
-const deleteCooking_query = /* GraphQL */`
-  mutation DeleteCooking(
-    $input: DeleteCookingInput!
+const deleteTraning_query = /* GraphQL */`
+  mutation DeleteTraning(
+    $input: DeleteTraningInput!
   ) {
-    deleteCooking(input: $input) {
+    deleteTraning(input: $input) {
       id
     }
   }
@@ -89,7 +85,7 @@ const deleteCooking_query = /* GraphQL */`
 
       }
     },
-    props:['items2'],
+    props:['items3'],
     components: {
     },
     computed: {
@@ -98,16 +94,16 @@ const deleteCooking_query = /* GraphQL */`
       }
     },
     methods: {
-      async deleteCooking(id){
-        const deleteCooking = await API.graphql(
-          graphqlOperation(deleteCooking_query, {
+      async deleteTraning(id){
+        const deleteTraning = await API.graphql(
+          graphqlOperation(deleteTraning_query, {
             input: {
               id: id
             }
           })
         )
-        console.log("投稿を削除しました"+deleteCooking.data.deleteCooking)
-      },
+        console.log("投稿を削除しました"+deleteTraning.data.deleteTraning)
+      }
     },
   }
 </script>
