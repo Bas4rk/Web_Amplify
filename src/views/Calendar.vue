@@ -36,14 +36,16 @@
         ></v-date-picker>
       </v-col>
     </v-row>
+
+    <!-- [fix]ごはんと筋トレ、コンポーネント化する -->
     <v-row justify="center">
       <div class="display-2">今日のごはん</div>
     </v-row>
     <v-divider></v-divider>
 
-    <v-row id="clmenu" align="center">
+    <v-row v-if="todayFoodMenus.length > 0" id="clmenu" align="center" class="my-5">
       <v-col
-        v-for="(card,index) in todayMenu"
+        v-for="(card,index) in todayFoodMenus"
         :key="index"
         :cols=3
         @click.stop="onClickBtn(card)"
@@ -117,7 +119,33 @@
         </v-card>
       </v-dialog>  
     </v-row>
+    <v-row v-else justify="center" class="my-5">
+      <div class="display-2">
+        何も食べてません。
+      </div>
+    </v-row>
 
+
+
+
+    <!-- 筋トレ -->
+    <!-- 後でコンポーネント化する -->
+    <v-row justify="center" class="my-5">
+      <div class="display-2">今日の筋トレ</div>
+    </v-row>
+    <v-divider></v-divider>
+
+    <v-row v-if="todayTrainingMenus" id="clmenu" align="center">
+      <v-treeview
+        open-all
+        :items="todayTrainingMenus.items"
+      ></v-treeview>
+    </v-row>
+    <v-row v-else justify="center" class="my-5">
+      <div class="display-2">
+        トレーニングしていません。
+      </div>
+    </v-row>
   </div>
 </template>
 
@@ -147,6 +175,43 @@ export default {
         { memoDate: "2020-12-02",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 100 },
         { memoDate: "2020-12-02",title: "ハンバーガー",image: require('../assets/料理/ハンバーガー.png'),subtitle: "夜食",calorele: 200 },
         { memoDate: "2020-12-06",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 500 },
+      ],
+      // trainingMemosのフィールドどうするか
+      trainingMemos: [
+        {memoDate: "2020-12-02",
+          items: [
+                  {
+                    id: 1,
+                    name: '有酸素 :',
+                    children: [
+                      { id: 2, name: 'ランニング 10km 20分' },
+                    ],
+                  },
+                  {
+                    id: 3,
+                    name: '胸 :',
+                    children: [
+                      { id: 4, name: 'ベンチプレス 100kg 10回' },
+                      { id: 5, name: 'ベンチプレス 120kg 5回' },
+                    ],
+                  },
+                ] 
+        },
+        {memoDate: "2020-12-05",
+          items: [
+                  {
+                    id: 1,
+                    name: '有酸素 :',
+                    children: [
+                      { id: 2, name: 'ランニング 10km 20分' },
+                    ],
+                  },
+                ] 
+        },
+
+
+        // { memoDate: "2020-12-02",title: "胸",subtitle: "ベンチプレス",value1: "100kg",value2: "10回" },
+        // { memoDate: "2020-12-02",title: "胸",subtitle: "ベンチプレス",value1: "120kg",value2: "5回" },
       ]
     }
   },
@@ -154,12 +219,21 @@ export default {
     functionEvents () {
       return this.month ? this.monthFunctionEvents : this.dateFunctionEvents
     },
-    todayMenu(){
+    todayFoodMenus(){
       const menu = []
       const today = this.picker
       this.foodMemos.forEach(function (value) {
         // console.log(index + '番目 : ' + value);
         if(value.memoDate == today){menu.push(value)}
+      });
+      return menu
+    },
+    todayTrainingMenus(){
+      let menu = null
+      const today = this.picker
+      this.trainingMemos.forEach(function (value) {
+        // console.log(index + '番目 : ' + value);
+        if(value.memoDate == today){ menu= value}
       });
       return menu
     }
@@ -169,16 +243,30 @@ export default {
       // console.log("date:"+date)
       // console.log("parseInt(day, 10):"+parseInt(day, 10))
       const [,, day] = date.split('-')
-      const memoDay = []
+
+      const foodMemoDay = []
       this.foodMemos.forEach(function (value) {
         // console.log(index + '番目 : ' + value);
         const [,, memo] = value.memoDate.split('-')
-        memoDay.push(Number(memo))
+        foodMemoDay.push(Number(memo))
       });
+      // if (foodMemoDay.includes(parseInt(day, 10))) return true
+
+      const trainingMemoDay = []
+      this.trainingMemos.forEach(function (value) {
+        // console.log(index + '番目 : ' + value);
+        const [,, memo] = value.memoDate.split('-')
+        trainingMemoDay.push(Number(memo))
+      });
+      
+      if (foodMemoDay.includes(parseInt(day, 10)) && trainingMemoDay.includes(parseInt(day, 10))){
+        return ['blue', 'red']
+      } else if(foodMemoDay.includes(parseInt(day, 10))){
+        return 'blue'
+      } else if(trainingMemoDay.includes(parseInt(day, 10))){
+        return 'red'
+      }
       //[fix]ここら辺めっちゃ呼び出されてるけど、どうにかならないか？
-      console.log("memoDay:"+memoDay)
-      if (memoDay.includes(parseInt(day, 10))) return true
-      // if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f']
       return false
     },
     monthFunctionEvents (date) {

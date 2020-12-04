@@ -62,7 +62,6 @@
                         <small>{{ item.createdAt }}</small>
                       </div>
                     </v-list-item-subtitle>
-                    <!-- [fix]メアド見てやってるけどidのほうがいい？メアドもプライマリーぽいからいい気がした。idのクエリーとらなくてすむし -->
                     <!-- <v-btn v-if="item.user.emailAddress == currentuser" @click="deleteTweet(item.id)" color="error">投稿削除</v-btn> -->
                   </v-list-item-content>
                 </v-list-item>
@@ -120,7 +119,6 @@
                         <small>{{ item.createdAt }}</small>
                       </div>
                     </v-list-item-subtitle>
-                    <!-- [fix]メアド見てやってるけどidのほうがいい？メアドもプライマリーぽいからいい気がした。idのクエリーとらなくてすむし -->
                     <!-- <v-btn v-if="item.user.emailAddress == currentuser" @click="deleteTweet(item.id)" color="error">投稿削除</v-btn> -->
                   </v-list-item-content>
                 </v-list-item>
@@ -177,7 +175,6 @@
                         <small>{{ item.createdAt }}</small>
                       </div>
                     </v-list-item-subtitle>
-                    <!-- [fix]メアド見てやってるけどidのほうがいい？メアドもプライマリーぽいからいい気がした。idのクエリーとらなくてすむし -->
                     <!-- <v-btn v-if="item.user.emailAddress == currentuser" @click="deleteTweet(item.id)" color="error">投稿削除</v-btn> -->
                   </v-list-item-content>
                 </v-list-item>

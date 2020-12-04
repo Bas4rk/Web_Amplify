@@ -63,7 +63,6 @@
       <!-- 載せた画像表示場所 -->
       <v-row>
 
-        <!-- [fix]画像の元サイズ次第でばかでかくなる時ある、表示サイズ決めてどうにかしたい -->
         <v-col cols="12" sm="6" md="3" justify="left">
           <v-img
             src="../assets/料理/料理.png" 
@@ -225,7 +224,7 @@
           <v-card-title class="headline">投稿完了</v-card-title>
   
           <v-card-text>
-            筋トレ記事を投稿しました。
+            料理記事を投稿しました。
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -257,7 +256,7 @@ export default {
       title: null,
       // カロリー
       calorie: null,
-      dialog: true
+      dialog: false
     }
   },
   components: {
