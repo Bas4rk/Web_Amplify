@@ -12,7 +12,7 @@
     <v-layout justify-center>
 
       <!-- class="title"で文字の大きさを変えてます、ここ"display-1"でもいいかも -->
-      <div class="title">電話番号変更</div>
+      <div class="title">アカウント管理</div>
     </v-layout>
 
     <!-- v-rowにjustify="center"すると左右中央、上下中央はalign-content="center" -->
@@ -27,19 +27,12 @@
             <!-- ↓後できれいにする -->
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
             <!-- 遷移はまだない -->
-            <p>現在</p>
-            <p>000-1111-2222</p>
+            <p>二段階認証</p>
+            <v-btn block >二段階認証</v-btn><br>
+            <p>追加のパスワードリセットの保護</p>
+            <v-btn block >追加のパスワードリセットの保護</v-btn><br>
 
-            新規
-            <v-text-field
-              v-model="message"
-              label="phonenumber"
-              type="number"
-            >
-            <template v-slot:append-outer>
-              <v-btn color="primary">完了</v-btn>
-            </template>
-            </v-text-field>
+
           </v-list>
         </v-col>
       </v-row>

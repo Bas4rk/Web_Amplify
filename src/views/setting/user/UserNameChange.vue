@@ -33,7 +33,7 @@
             新規
             <v-text-field
               v-model="message"
-              label="Username"
+              label="name"
               type="text"
             >
             <template v-slot:append-outer>

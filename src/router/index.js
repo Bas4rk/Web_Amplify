@@ -22,8 +22,11 @@ import SetService from '../views/setting/SettingService.vue'
 import UserName from '../views/setting/user/UserNameChange.vue'
 import UserID from '../views/setting/user/UserIDChange.vue'
 import UserPhone from '../views/setting/user/PhoneNumberChange.vue'
+import UserMail from '../views/setting/user/MailAdressChange.vue'
 import Passwd from '../views/setting/user/PasswdChange.vue'
 import PasswdNew from '../views/setting/user/PasswdChangeNew.vue'
+import UserSecurity from '../views/setting/user/Security.vue'
+import UserDelete from '../views/setting/user/AccountDelete.vue'
 
 import Test from '../views/setting/TestComponents.vue'
 
@@ -209,6 +212,27 @@ const router = new Router({
       path: '/phonenumberchange',
       name: 'phonenumberchange',
       component: UserPhone,
+      meta: { requiresAuth: true }
+    },
+    {
+      // メールアドレス変更ページ
+      path: '/mailadresschange',
+      name: 'mailadresschange',
+      component: UserMail,
+      meta: { requiresAuth: true }
+    },
+    {
+      // セキュリティ設定ページ
+      path: '/security',
+      name: 'security',
+      component: UserSecurity,
+      meta: { requiresAuth: true }
+    },
+    {
+      // アカウント削除ページ
+      path: '/accountdelete',
+      name: 'accountdelete',
+      component: UserDelete,
       meta: { requiresAuth: true }
     },
     {
