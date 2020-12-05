@@ -72,7 +72,8 @@ import Navigation from '@/components/Navigation.vue';
 export default {
   data() {
     return{
-      item: this.$route.params.item
+      item: this.$route.params.item,
+      prevRoute: null,
     }
   },
   components: {
@@ -84,9 +85,14 @@ export default {
   methods: {
     // 戻るボタンメソッドです
     back: function(){
-      this.$router.push('/');
+      this.$router.push(this.prevRoute);
       // historyできてなくね？
     },
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.prevRoute = from.path;
+    });
   },
 }
 </script>
