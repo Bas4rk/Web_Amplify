@@ -68,21 +68,33 @@
         <v-tab href="#tab-1">つぶやき</v-tab>
         <v-tab href="#tab-2">料理</v-tab>
         <v-tab href="#tab-3">筋トレ</v-tab>
-        <v-tab href="#tab-4">いいね</v-tab>
+        <!-- <v-tab href="#tab-4">いいね</v-tab> -->
       </v-tabs>
         
       <!-- 中身 -->
       <v-tabs-items v-model="tab">
         <v-tab-item value="tab-1">
-          <v-divider></v-divider>
+          <!-- <v-divider></v-divider> -->
           <!-- [fix]タブ事にコンポーネント作った方がいいかも -->
-          <TweetList :items="this.wholeposts"></TweetList>
+          <v-row justify="center">
+            <v-col cols="5">
+              <TweetList :items="this.wholeposts"></TweetList>
+            </v-col>
+          </v-row>
         </v-tab-item>
         <v-tab-item value="tab-2">
-          <CookingList :items2="this.wholeposts2"></CookingList>  
+          <v-row justify="center">
+            <v-col cols="5">
+              <CookingList :items2="this.wholeposts2"></CookingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
         <v-tab-item value="tab-3">
-          <TrainingList :items3="this.wholeposts3"></TrainingList>  
+          <v-row justify="center">
+            <v-col cols="5">
+              <TrainingList :items3="this.wholeposts3"></TrainingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
       </v-tabs-items>
 
@@ -490,9 +502,9 @@ export default {
 
     //きたないのできれいにする。
     if(this.dev){
-      const usersorce = this.$store.getters.getUserGraphql
+      // const usersorce = this.$store.getters.getUserGraphql
       const query = await API.graphql(
-        graphqlOperation(_query2, {id : usersorce.items[0].id})
+        graphqlOperation(_query2, {id : this.$store.getters.getUserId})
       )
       console.log("タイムラインクエリー飛ばしました。")
       this.user = query.data.getUser

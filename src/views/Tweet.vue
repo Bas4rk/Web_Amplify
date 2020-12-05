@@ -123,7 +123,7 @@ export default {
   },
   computed: {
     currentuser(){
-      return this.$store.getters.getUserGraphql.items[0].emailAddress
+      return this.$store.getters.getUserEmail
     }
   },
   data() {

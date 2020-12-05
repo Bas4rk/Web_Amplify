@@ -161,9 +161,9 @@ const deleteRelationship_query = /* GraphQL */ `
     // 上行くボタン
     window.addEventListener('scroll', this.scrollWindow)
     
-    const usersorce= this.$store.getters.getUserGraphql
+    // const usersorce= this.$store.getters.getUserGraphql
     const query = await API.graphql(
-      graphqlOperation(followees_query, {followeeId : usersorce.items[0].id})
+      graphqlOperation(followees_query, {followeeId : this.$store.getters.getUserId})
     )
     console.log("followeesクエリー飛ばしました。")
     this.followees= query.data.followeeIndex.items

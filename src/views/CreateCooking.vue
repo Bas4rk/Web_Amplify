@@ -277,7 +277,7 @@ export default {
       const cooking =await API.graphql(
         //[fix]あとでクエリー書き直す?
           graphqlOperation(gqlMutations.createCooking,{
-            input: {userId: this.$store.getters.getUserGraphql.items[0].id,
+            input: {userId: this.$store.getters.getUserId,
             title: this.title,
             content: this.content,
             calorie: this.calorie

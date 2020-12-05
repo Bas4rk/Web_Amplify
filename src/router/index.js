@@ -11,6 +11,7 @@ import Profile from '../views/Profile.vue'
 // import FolloweeList from '../views/FolloweeList.vue'
 import FolloweeList from '../components/FolloweeList.vue'
 import FollowerList from '../components/FollowerList.vue'
+import ProfileEdit from '../components/ProfileEdit.vue'
 import Setting from '../views/Setting.vue'
 import SetPremium from '../views/setting/SettingPremium.vue'
 import SetAccounts from '../views/setting/SettingAccount.vue'
@@ -147,6 +148,13 @@ const router = new Router({
       path: '/followerlist',
       name: 'followerlist',
       component: FollowerList,
+      meta: { requiresAuth: true }
+    },
+    {
+      // プロフィール編集ページ
+      path: '/profileedit',
+      name: 'profileedit',
+      component: ProfileEdit,
       meta: { requiresAuth: true }
     },
     {

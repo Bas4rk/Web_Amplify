@@ -45,13 +45,13 @@
       <v-row justify="center">
         <v-btn large color="primary"  to="/followerlist">フォロー中</v-btn>
         <v-btn large color="primary"  to="/followeelist">フォロワー</v-btn>
-        <v-btn large color="primary"  to="">プロフィール編集</v-btn>
+        <v-btn large color="primary"  to="/profileedit">プロフィール編集</v-btn>
         <!-- ブックマークボタン、Prottにあったのでとりあえずつけた -->
-        <v-btn
+        <!-- <v-btn
           icon
           to="">
           <v-icon>mdi-bookmark-outline</v-icon>
-        </v-btn>
+        </v-btn> -->
         <!-- <v-col>
         </v-col> -->
           <!-- <v-btn large color="primary"  to="/">フォロー</v-btn>
@@ -67,20 +67,33 @@
         <v-tab href="#tab-1">つぶやき</v-tab>
         <v-tab href="#tab-2">料理</v-tab>
         <v-tab href="#tab-3">筋トレ</v-tab>
-        <v-tab href="#tab-4">いいね</v-tab>
+        <!-- <v-tab href="#tab-4">いいね</v-tab> -->
       </v-tabs>
         
       <!-- 中身 -->
       <v-tabs-items v-model="tab">
         <v-tab-item value="tab-1">
-          <v-divider></v-divider>
-          <TweetList :items="this.wholeposts"></TweetList>
+          <!-- <v-divider></v-divider> -->
+          <!-- [fix]タブ事にコンポーネント作った方がいいかも -->
+          <v-row justify="center">
+            <v-col cols="5">
+              <TweetList :items="this.wholeposts"></TweetList>
+            </v-col>
+          </v-row>
         </v-tab-item>
         <v-tab-item value="tab-2">
-          <TweetList :items="this.wholeposts2"></TweetList>  
+          <v-row justify="center">
+            <v-col cols="5">
+              <CookingList :items2="this.wholeposts2"></CookingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
         <v-tab-item value="tab-3">
-          <TweetList :items="this.wholeposts3"></TweetList>  
+          <v-row justify="center">
+            <v-col cols="5">
+              <TrainingList :items3="this.wholeposts3"></TrainingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
       </v-tabs-items>
 
@@ -120,6 +133,8 @@
 
 <script>
 import TweetList from '@/components/TweetList.vue';
+import CookingList from '@/components/CookingList.vue';
+import TrainingList from '@/components/TrainingList.vue';
 import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 
@@ -249,17 +264,17 @@ export default {
   },
   components: {
     TweetList,
-    Navigation
+    Navigation,
+    CookingList,
+    TrainingList,
   },
   computed: {
     // プロフィール表示、Navigation.vueのやつ貰った
-    getUserEmail(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].emailAddress
-    },
     getUserName(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].name
+      return  this.$store.getters.getUserName
+    },
+    getUserEmail(){
+      return  this.$store.getters.getUserEmail
     }
   },
   methods: {
@@ -310,9 +325,9 @@ export default {
     window.addEventListener('scroll', this.scrollWindow)
 
     if(this.dev){
-      const usersorce = this.$store.getters.getUserGraphql
+      // const usersorce = this.$store.getters.getUserGraphql
       const query = await API.graphql(
-        graphqlOperation(_query2, {id : usersorce.items[0].id})
+        graphqlOperation(_query2, {id : this.$store.getters.getUserId})
       )
       console.log("タイムラインクエリー飛ばしました。")
       this.user = query.data.getUser
