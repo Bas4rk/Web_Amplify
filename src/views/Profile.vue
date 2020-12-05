@@ -73,14 +73,27 @@
       <!-- 中身 -->
       <v-tabs-items v-model="tab">
         <v-tab-item value="tab-1">
-          <v-divider></v-divider>
-          <TweetList :items="this.wholeposts"></TweetList>
+          <!-- <v-divider></v-divider> -->
+          <!-- [fix]タブ事にコンポーネント作った方がいいかも -->
+          <v-row justify="center">
+            <v-col cols="5">
+              <TweetList :items="this.wholeposts"></TweetList>
+            </v-col>
+          </v-row>
         </v-tab-item>
         <v-tab-item value="tab-2">
-          <CookingList :items2="this.wholeposts2"></CookingList>  
+          <v-row justify="center">
+            <v-col cols="5">
+              <CookingList :items2="this.wholeposts2"></CookingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
         <v-tab-item value="tab-3">
-          <TrainingList :items3="this.wholeposts3"></TrainingList>  
+          <v-row justify="center">
+            <v-col cols="5">
+              <TrainingList :items3="this.wholeposts3"></TrainingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
       </v-tabs-items>
 
