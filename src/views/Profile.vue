@@ -64,15 +64,15 @@
 
       <!-- Tabとその中身入れ替えです、TweetListそのまま使いました -->
       <v-tabs fixed-tabs v-model="tab">
-        <v-tab href="#tab-1">つぶやき</v-tab>
-        <v-tab href="#tab-2">料理</v-tab>
-        <v-tab href="#tab-3">筋トレ</v-tab>
+        <v-tab href="#tweet">つぶやき</v-tab>
+        <v-tab href="#cooking">料理</v-tab>
+        <v-tab href="#training">筋トレ</v-tab>
         <!-- <v-tab href="#tab-4">いいね</v-tab> -->
       </v-tabs>
         
       <!-- 中身 -->
       <v-tabs-items v-model="tab">
-        <v-tab-item value="tab-1">
+        <v-tab-item value="tweet">
           <!-- <v-divider></v-divider> -->
           <!-- [fix]タブ事にコンポーネント作った方がいいかも -->
           <v-row justify="center">
@@ -81,14 +81,14 @@
             </v-col>
           </v-row>
         </v-tab-item>
-        <v-tab-item value="tab-2">
+        <v-tab-item value="cooking">
           <v-row justify="center">
             <v-col cols="5">
               <CookingList :items2="this.wholeposts2"></CookingList>  
             </v-col>
           </v-row>
         </v-tab-item>
-        <v-tab-item value="tab-3">
+        <v-tab-item value="training">
           <v-row justify="center">
             <v-col cols="5">
               <TrainingList :items3="this.wholeposts3"></TrainingList>  
@@ -235,7 +235,7 @@ export default {
   name: 'profile',
   data() {
     return{
-      tab: 'tab-1',
+      tab: 'tweet',
       // 上に行くボタン用
       buttonActive: false,
       scroll: 0,
@@ -260,6 +260,7 @@ export default {
       wholeposts3: null,
       //開発用
       dev: true,
+      prevRoute: null,
     }
   },
   components: {
@@ -365,6 +366,20 @@ export default {
       
       this.wholeposts3= this.myposts3.concat(this.followeeposts3)
     }
+
+    // 直前に見ていたタブに戻る
+    //[fix]mounted後で整理する。
+    //直前に見ていたタブには戻れるけど、スクロールの位置とかまでは出来てない
+    let route = this.prevRoute
+    console.log("route"+route)
+    let array = ['tweet','cooking','training'];
+    if(!array.includes(route)){route = 'tweet'}
+    this.tab = route
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.prevRoute = from.name;
+    });
   },
 }
 </script>
