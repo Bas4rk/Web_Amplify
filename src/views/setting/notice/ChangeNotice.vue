@@ -12,7 +12,7 @@
     <v-layout justify-center>
 
       <!-- class="title"で文字の大きさを変えてます、ここ"display-1"でもいいかも -->
-      <div class="title">通知の設定</div>
+      <div class="title">通知管理</div>
     </v-layout>
 
     <!-- v-rowにjustify="center"すると左右中央、上下中央はalign-content="center" -->
@@ -27,15 +27,33 @@
             <!-- ↓後できれいにする -->
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
             <!-- 遷移はまだない -->
-            <v-btn block to="/ChangeNotice">通知の設定</v-btn><br>
-            <v-btn block>いいね</v-btn><br>
-            <v-btn block>コメント</v-btn><br>
-            <v-btn block>新着フォロワー</v-btn><br>
-            <v-btn block>ダイレクトメッセージ</v-btn><br>
+            <v-btn block to="/UserNameChange">ユーザ名</v-btn><br>
+            <v-btn block to="/UserIDChange">ユーザID</v-btn><br>
+            <v-btn block to="/PasswdChange">パスワード</v-btn><br>
+            <v-btn block to="/MailAdressChange">メールアドレス</v-btn><br>
+            <v-btn block to="/PhoneNumberChange">電話番号</v-btn><br>
+            <v-btn block to="Security">セキュリティ</v-btn><br>
+            <v-btn block color="red" to="/Accountdelete">アカウント削除</v-btn><br>
 
             
-
             
+            <v-switch v-model="theme" ></v-switch>
+
+            <!-- 横線です -->
+            <v-divider></v-divider>
+
+
+            <!-- サインアウトボタン -->
+            <v-list-item @click="signOut">
+              <v-list-item-icon>
+                <v-icon> mdi-logout</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>サインアウト</v-list-item-title>
+              </v-list-item-content>
+              <!-- <amplify-sign-out /> -->
+            </v-list-item>
+
           </v-list>
         </v-col>
       </v-row>
