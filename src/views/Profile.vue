@@ -42,10 +42,15 @@
         ここにプロフィール紹介文
       </v-row>
 
-      <v-row justify="center">
+      <!-- スペースの有無どうする？ -->
+      <v-row justify="center" class="d-flex justify-space-around mb-6">
+        <!-- <v-spacer></v-spacer> -->
         <v-btn large color="primary"  to="/followerlist">フォロー中</v-btn>
+        <!-- <v-spacer></v-spacer> -->
         <v-btn large color="primary"  to="/followeelist">フォロワー</v-btn>
+        <!-- <v-spacer></v-spacer> -->
         <v-btn large color="primary"  to="/profileedit">プロフィール編集</v-btn>
+        <!-- <v-spacer></v-spacer> -->
         <!-- ブックマークボタン、Prottにあったのでとりあえずつけた -->
         <!-- <v-btn
           icon

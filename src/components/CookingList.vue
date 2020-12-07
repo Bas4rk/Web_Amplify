@@ -9,34 +9,34 @@
           :key="i"
           cols="12"
         >
+        <!-- [fix]v-menu外に出してみた
+          v-menu外に出せば解決するけど、card内にmenu入れた方が見やすい気がする。 -->
+          <v-menu
+            :close-on-click="true"
+            :close-on-content-click="true"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                icon
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-dots-horizontal</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item
+                v-if="item.user.emailAddress == currentuser"
+                @click="deleteCooking(item.id)"
+              > 
+                <v-list-item-icon>
+                  <v-icon>mdi-trash-can</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>投稿削除</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
           <v-card class="my-1" :to="{name:'cooking',params:{id:item.id,item: item}}">
-            <!-- [fix]v-menu押しても、リンク飛んでしまう。
-              v-menu外に出せば解決するけど、card内にmenu入れた方が見やすい気がする。 -->
-            <v-menu
-              :close-on-click="true"
-              :close-on-content-click="true"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  icon
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  <v-icon>mdi-dots-horizontal</v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                  v-if="item.user.emailAddress == currentuser"
-                  @click="deleteCooking(item.id)"
-                > 
-                  <v-list-item-icon>
-                    <v-icon>mdi-trash-can</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-title>投稿削除</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
             <v-img
               :src="require('../assets/料理/料理投稿.png')"
               class="white--text align-end"
