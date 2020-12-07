@@ -20,8 +20,6 @@ import SetPersonal from '../views/setting/SettingPersonal.vue'
 import SetContact from '../views/setting/SettingContact.vue'
 import SetService from '../views/setting/SettingService.vue'
 
-import ChangeNotice from '../views/setting/notice/ChangeNotice.vue'
-
 import UserName from '../views/setting/user/UserNameChange.vue'
 import UserID from '../views/setting/user/UserIDChange.vue'
 import UserPhone from '../views/setting/user/PhoneNumberChange.vue'
@@ -247,13 +245,6 @@ const router = new Router({
       path: '/accountdelete',
       name: 'accountdelete',
       component: UserDelete,
-      meta: { requiresAuth: true }
-    },
-    {
-      // 通知設定ぺージ
-      path: '/changenotice',
-      name: 'changenotice',
-      component: ChangeNotice,
       meta: { requiresAuth: true }
     },
     {

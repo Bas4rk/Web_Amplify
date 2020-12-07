@@ -32,7 +32,7 @@
         </v-col>
 
         <v-col cols="1">
-          <br><v-switch></v-switch>
+          <br><v-switch label="Switch"></v-switch>
           <v-switch></v-switch>
           <v-switch></v-switch>
           <v-switch></v-switch>
