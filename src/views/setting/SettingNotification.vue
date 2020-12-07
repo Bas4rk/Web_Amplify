@@ -20,23 +20,24 @@
 
         <!-- v-colはv-rowの子である、cols="5"はグリッドが～とかで、cols2つ並べて割合で表示させられる
         cols="8"とcols="4"で8対4で表示とか（2対1）最大は12 -->
-        <v-col cols="5">
 
-          <!-- リストです -->
+        <v-col cols="3">
           <v-list>
-            <!-- ↓後できれいにする -->
-            <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
-            <!-- 遷移はまだない -->
-            <v-btn block to="/ChangeNotice">通知の設定</v-btn><br>
-            <v-btn block>いいね</v-btn><br>
-            <v-btn block>コメント</v-btn><br>
-            <v-btn block>新着フォロワー</v-btn><br>
-            <v-btn block>ダイレクトメッセージ</v-btn><br>
-
-            
-
-            
+            <br><br><p>通知</p>
+            <br><p>いいね</p>
+            <br><p>コメント</p>
+            <br><p>新着フォロワー</p>
+            <br><p>ダイレクトメッセージ</p>
           </v-list>
+        </v-col>
+
+        <v-col cols="1">
+          <br><v-switch></v-switch>
+          <v-switch></v-switch>
+          <v-switch></v-switch>
+          <v-switch></v-switch>
+          <v-switch></v-switch>
+        
         </v-col>
       </v-row>
     </v-container>

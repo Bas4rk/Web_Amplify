@@ -15,46 +15,15 @@
       <div class="title">通知管理</div>
     </v-layout>
 
-    <!-- v-rowにjustify="center"すると左右中央、上下中央はalign-content="center" -->
       <v-row justify="center">
+        <v-col cols="1">
+            <br>通知
+          
+        </v-col>
 
-        <!-- v-colはv-rowの子である、cols="5"はグリッドが～とかで、cols2つ並べて割合で表示させられる
-        cols="8"とcols="4"で8対4で表示とか（2対1）最大は12 -->
-        <v-col cols="5">
-
-          <!-- リストです -->
-          <v-list>
-            <!-- ↓後できれいにする -->
-            <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
-            <!-- 遷移はまだない -->
-            <v-btn block to="/UserNameChange">ユーザ名</v-btn><br>
-            <v-btn block to="/UserIDChange">ユーザID</v-btn><br>
-            <v-btn block to="/PasswdChange">パスワード</v-btn><br>
-            <v-btn block to="/MailAdressChange">メールアドレス</v-btn><br>
-            <v-btn block to="/PhoneNumberChange">電話番号</v-btn><br>
-            <v-btn block to="Security">セキュリティ</v-btn><br>
-            <v-btn block color="red" to="/Accountdelete">アカウント削除</v-btn><br>
-
-            
-            
-            <v-switch v-model="theme" ></v-switch>
-
-            <!-- 横線です -->
-            <v-divider></v-divider>
-
-
-            <!-- サインアウトボタン -->
-            <v-list-item @click="signOut">
-              <v-list-item-icon>
-                <v-icon> mdi-logout</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>サインアウト</v-list-item-title>
-              </v-list-item-content>
-              <!-- <amplify-sign-out /> -->
-            </v-list-item>
-
-          </v-list>
+        <v-col cols="1">
+          <v-switch></v-switch>
+        
         </v-col>
       </v-row>
     </v-container>
