@@ -9,9 +9,7 @@
           :key="i"
           cols="12"
         >
-          <v-card class="my-1" :to="{name:'training',params:{id:item.id,item: item}}">
-              <!-- [fix]v-menu押しても、リンク飛んでしまう。
-              v-menu外に出せば解決するけど、card内にmenu入れた方が見やすい気がする。 -->
+          <v-card>
             <v-menu
               :close-on-click="true"
               :close-on-content-click="true"
@@ -28,7 +26,7 @@
               <v-list>
                 <v-list-item
                   v-if="item.user.emailAddress == currentuser"
-                  @click="deleteCooking(item.id)"
+                  @click="deleteTraning(item.id)"
                 > 
                   <v-list-item-icon>
                     <v-icon>mdi-trash-can</v-icon>
@@ -37,18 +35,22 @@
                 </v-list-item>
               </v-list>
             </v-menu>
-            <v-img
-              :src="require('../assets/筋トレ/筋トレ.png')"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="200px"
-            >
-              <v-card-title>{{ item.title}}</v-card-title>
-            </v-img>
-            <v-card-actions>
-              <span>投稿者：{{ item.user.name }}</span>
-              <v-spacer></v-spacer>
-            </v-card-actions>
+            <v-card class="my-1" :to="{name:'training',params:{id:item.id,item: item}}">
+                <!-- [fix]v-menu押しても、リンク飛んでしまう。
+                v-menu外に出せば解決するけど、card内にmenu入れた方が見やすい気がする。 -->
+              <v-img
+                :src="require('../assets/筋トレ/筋トレ.png')"
+                class="white--text align-end"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                height="200px"
+              >
+                <v-card-title>{{ item.title}}</v-card-title>
+              </v-img>
+              <v-card-actions>
+                <span>投稿者：{{ item.user.name }}</span>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
           </v-card>
         </v-col>
       </v-list>
