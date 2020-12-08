@@ -2,6 +2,8 @@
   <div class="home">
     <Navigation></Navigation>
     <!-- ボタンの位置とかアイコンのデザインとか要相談 -->
+    <!-- :open-on-hover="hover"あるとマウスカーソル合わせればボタン出てくる
+    ないとクリックしないと出てこない -->
       <v-card id="create">
         <v-speed-dial
           v-model="fab"
@@ -9,7 +11,6 @@
           :right="right"
           :left="left"
           :direction="direction"
-          :open-on-hover="hover"
           :transition="transition"
         >
           <template v-slot:activator>
@@ -173,7 +174,7 @@
   <div>
     {{relation}}
   </div> -->
-  prevRoute{{prevRoute}}
+  <!-- prevRoute{{prevRoute}} -->
   </div>
 </template>
 

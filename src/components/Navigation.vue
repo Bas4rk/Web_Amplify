@@ -55,7 +55,7 @@
             <v-list-item-title>{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        {{relation}}
+        <!-- {{relation}} -->
       </v-list>
     </v-navigation-drawer>
 

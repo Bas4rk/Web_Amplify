@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <Navigation></Navigation>
-      [通知画面]これから書きます。
+      <!-- [通知画面]これから書きます。 -->
       <!-- バックエンド変更対応してないので、コメントアウトしてます。 -->
-      {{relation}}
-
+      <!-- {{relation}} -->
+<NoticeList></NoticeList>
       <!-- <amplify-connect :query="listTodosQuery"
           :subscription="createTodoSubscription"
           :onSubscriptionMsg="onCreateTodo">
@@ -23,7 +23,7 @@
 
 <script>
 // import { components } from 'aws-amplify-vue';
-// import NoticeList from '@/components/NoticeList.vue';
+import NoticeList from '@/components/NoticeList.vue';
 import Navigation from '@/components/Navigation.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
@@ -42,7 +42,6 @@ const onCreateRelationship = /* GraphQL */ `
   }
       createdAt
       updatedAt
-  }
   }
 `;
 
@@ -80,7 +79,7 @@ export default {
   },
   components: {
     Navigation,
-    // NoticeList,
+    NoticeList,
     // ...components
   },
   computed: {
