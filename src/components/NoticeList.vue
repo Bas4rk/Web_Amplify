@@ -19,10 +19,10 @@
             <v-list>
 
               <!-- v-forでitem配列取る -->
-              <template v-for="item in items">
+              <!-- <template v-for="item in items"> -->
 
                 <!-- ここの:to="{name:'tweet'のtweetでついーと画面に行くようになる（Tweet.vueへ） -->
-                <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}">
+                <v-list-item height="200">
 
                   <!-- プロフィール画像
                   <v-list-item-avatar color="grey darken-1">
@@ -51,12 +51,12 @@
                     <p>～さんと～さんがあなたの投稿をいいねしました</p>
 
                     <!-- 投稿のタイトル -->
-                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                    <!-- <v-list-item-title>{{ item.name }}</v-list-item-title> -->
 
                     <v-list-item-subtitle>
                       
                       <!-- 投稿の内容表示 -->
-                      {{ item.description}}
+                      <!-- {{ item.description}} -->
 
                       <!-- class="right"これで右へ寄せ -->
                       <!-- <div class="right">
@@ -66,25 +66,25 @@
 
                       <div class="right">
                         <!-- いいね、コメント等された日付日時ここ（～時間前、～日前、～週間、～ヶ月前みたいに表示したい、日時とかなくてもいいかも -->
-                        <small>～時間前{{ item.createdAt }}</small>
+                        <!-- <small>～時間前{{ item.createdAt }}</small> -->
                       </div>
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
 
                 <!-- 公式にあった、v-dividerは区切り線、insetあるとアバター画像の下まで線行かない、idは指定しないと「必要だ」って怒られる -->
-                <v-divider
+                <!-- <v-divider
                   :key="`divider-${item.id}`"
                   inset
-                ></v-divider>
-              </template>
+                ></v-divider> -->
+              <!-- </template> -->
             </v-list>
           </v-card>
         </v-col>
       </v-row>
 
 
-      <v-btn large color="primary" @click="scrollTop">上にいく</v-btn>
+      <!-- <v-btn large color="primary" @click="scrollTop">上にいく</v-btn> -->
       
 
     </v-container>

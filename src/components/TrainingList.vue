@@ -9,46 +9,48 @@
           :key="i"
           cols="12"
         >
-        <!-- [fix]v-menu押しても、リンク飛んでしまう。
-          v-menu外に出せば解決するけど、card内にmenu入れた方が見やすい気がする。 -->
-          <v-menu
-            :close-on-click="true"
-            :close-on-content-click="true"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                icon
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon>mdi-dots-horizontal</v-icon>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item
-                v-if="item.user.emailAddress == currentuser"
-                @click="DeleteTraning(item.id)"
-              > 
-                <v-list-item-icon>
-                  <v-icon>mdi-trash-can</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>投稿削除</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <v-card class="my-1" :to="{name:'training',params:{id:item.id,item: item}}">
-            <v-img
-              :src="require('../assets/筋トレ/筋トレ.png')"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="200px"
+          <v-card>
+            <v-menu
+              :close-on-click="true"
+              :close-on-content-click="true"
             >
-              <v-card-title>{{ item.title}}</v-card-title>
-            </v-img>
-            <v-card-actions>
-              <span>投稿者：{{ item.user.name }}</span>
-              <v-spacer></v-spacer>
-            </v-card-actions>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  icon
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-dots-horizontal</v-icon>
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                  v-if="item.user.emailAddress == currentuser"
+                  @click="deleteTraning(item.id)"
+                > 
+                  <v-list-item-icon>
+                    <v-icon>mdi-trash-can</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title>投稿削除</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <v-card class="my-1" :to="{name:'training',params:{id:item.id,item: item}}">
+                <!-- [fix]v-menu押しても、リンク飛んでしまう。
+                v-menu外に出せば解決するけど、card内にmenu入れた方が見やすい気がする。 -->
+              <v-img
+                :src="require('../assets/筋トレ/筋トレ.png')"
+                class="white--text align-end"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                height="200px"
+              >
+                <v-card-title>{{ item.title}}</v-card-title>
+              </v-img>
+              <v-card-actions>
+                <span>投稿者：{{ item.user.name }}</span>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
           </v-card>
         </v-col>
       </v-list>

@@ -56,7 +56,6 @@
             <!-- 投稿記述場所 -->
             <v-col cols="12" sm="6" md="3">
               <v-text-field
-                label="content"
                 placeholder="内容"
                 v-model="content"
               ></v-text-field>
