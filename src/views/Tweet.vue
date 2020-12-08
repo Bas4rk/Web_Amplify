@@ -123,18 +123,19 @@ export default {
   },
   computed: {
     currentuser(){
-      return this.$store.getters.getUserGraphql.items[0].emailAddress
+      return this.$store.getters.getUserEmail
     }
   },
   data() {
     return {
       tweetId: this.$route.params.id,
-      tweetData: this.$route.params.item
+      tweetData: this.$route.params.item,
+      prevRoute: null,
     };
   },
   methods:{
     back: function(){
-      this.$router.push('/');
+      this.$router.push(this.prevRoute);
       // historyできてなくね？
     },
     async deleteTweet(id){
@@ -146,8 +147,13 @@ export default {
         })
       )
       console.log("投稿を削除しました"+deleteTweet.data.deleteTweet)
-      this.$router.push('/');
+      this.$router.push(this.prevRoute);
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.prevRoute = from.path;
+    });
   },
   async mounted() {
     // const tweet = await API.graphql(

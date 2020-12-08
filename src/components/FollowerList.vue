@@ -18,7 +18,7 @@
           mdi-arrow-left
         </v-icon>Back
       </v-btn>
-
+            <!-- {{followees}} -->
       <v-row justify="center">
         <v-col cols="5">
           <v-card>
@@ -84,7 +84,6 @@ import { API, graphqlOperation } from 'aws-amplify'
 
 //[fix]follweeは「フォローされている人」という意味で、ここに書いてある内容は「フォローしている人」なので名前が逆です。
 const followees_query = /* GraphQL */ `
-
   query FolloweeIndex(
     $followeeId: ID
   ) {
@@ -116,7 +115,7 @@ const deleteRelationship_query = /* GraphQL */ `
   export default {
     data() {
       return{
-        followees: null,
+       followees: null, 
         // 上に行くボタン用、ここの画面ではスクロールがないので今はtrueにしてます
         buttonActive: true,
         scroll: 0,
@@ -162,9 +161,9 @@ const deleteRelationship_query = /* GraphQL */ `
     // 上行くボタン
     window.addEventListener('scroll', this.scrollWindow)
     
-    const usersorce= this.$store.getters.getUserGraphql
+    // const usersorce= this.$store.getters.getUserGraphql
     const query = await API.graphql(
-      graphqlOperation(followees_query, {followeeId : usersorce.items[0].id})
+      graphqlOperation(followees_query, {followeeId : this.$store.getters.getUserId})
     )
     console.log("followeesクエリー飛ばしました。")
     this.followees= query.data.followeeIndex.items

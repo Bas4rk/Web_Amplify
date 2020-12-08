@@ -131,13 +131,11 @@ export default {
     relation: []
   }),
   computed: {
-    getUserEmail(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].emailAddress
-    },
     getUserName(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].name
+      return  this.$store.getters.getUserName
+    },
+    getUserEmail(){
+      return  this.$store.getters.getUserEmail
     }
   },
   methods: {
