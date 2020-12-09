@@ -121,6 +121,14 @@
       <v-icon>mdi-chevron-up</v-icon>
       </v-btn>
     </transition>
+    <!-- {{followeeposts3}}<br>{{user.followees.items[0].follower.traningPosts}}
+    <div>
+      {{user.followees.items[0].follower.cookingPosts}}
+    </div> -->
+    <!-- {{a}}
+    {{followeeposts}}
+    <br>
+    {{user.followees.items}} -->
     <!-- <div>
       全体
       {{user}}
@@ -412,6 +420,7 @@ export default {
       wholeposts3: null,
       relation: null,
       prevRoute: null,
+      // a: null,
     }
   },
   components: {
@@ -511,20 +520,20 @@ export default {
       this.user = query.data.getUser
       this.myposts = this.user.tweetPosts.items//自分のツイート
       this.wholeposts = this.myposts//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
-      for(let i = 0; i < this.user.followees.items.length; i++){
-        if(this.user.followees.items[i].follower.tweetPosts.items.length > 0){
-          this.followeeposts.push(this.user.followees.items[i].follower.tweetPosts.items[0])
-        } 
+      if(this.user.followees.items[0].follower.tweetPosts.items.length > 0){
+        for(let i = 0; i < this.user.followees.items[0].follower.tweetPosts.items.length; i++){
+          // this.a = this.user.followees.items.length
+          this.followeeposts.push(this.user.followees.items[0].follower.tweetPosts.items[i])
+        }
       }
       this.wholeposts= this.myposts.concat(this.followeeposts)
 
       //料理
       this.myposts2 = this.user.cookingPosts.items//自分の料理投稿
       this.wholeposts2 = this.myposts2//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
-      for(let i = 0; i < this.user.followees.items.length; i++){
-        if(this.user.followees.items[i].follower.cookingPosts.items.length > 0){
-          
-          this.followeeposts2.push(this.user.followees.items[i].follower.cookingPosts.items[0])
+      if(this.user.followees.items[0].follower.cookingPosts.items.length > 0){
+        for(let i = 0; i < this.user.followees.items[0].follower.cookingPosts.items.length; i++){
+            this.followeeposts2.push(this.user.followees.items[0].follower.cookingPosts.items[i])
         }
       }
       this.wholeposts2= this.myposts2.concat(this.followeeposts2)
@@ -532,12 +541,14 @@ export default {
       //筋トレ
       this.myposts3 = this.user.traningPosts.items//自分の筋トレ投稿
       this.wholeposts3 = this.myposts3//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
-      for(let i = 0; i < this.user.followees.items.length; i++){
-        if(this.user.followees.items[i].follower.traningPosts.items.length > 0){
-          this.followeeposts3.push(this.user.followees.items[i].follower.traningPosts.items[0])
+      if(this.user.followees.items[0].follower.traningPosts.items.length > 0){
+        console.log("if中")
+        // ここfor入らない
+        for(let i = 0; i < this.user.followees.items[0].follower.trainingPosts.items.length; i++){
+          console.log("for中")
+            this.followeeposts3.push(this.user.followees.items[0].follower.traningPosts.items[i])
         }
       }
-      
       this.wholeposts3= this.myposts3.concat(this.followeeposts3)
     }
 
