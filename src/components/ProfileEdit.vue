@@ -158,17 +158,18 @@ import * as gqlMutations from '../graphql/mutations'
       )
       console.log("名前を変更しました" + updateName.data.updateUser)
       // ここもthenとかerrorで変更成功、変更失敗とか分けた方がいい？
+      this.$store.commit('setUserName', this.name)
       this.dialog = true
     },
   },
   mounted : async function(){
     // 自分の情報取得
-    const user= this.$store.getters.getUserGraphql
+    // const user= this.$store.getters.getUserGraphql
     // 現在の自分の名前
-    this.name = user.items[0].name
-    this.name2 = user.items[0].name
+    this.name = this.$store.getters.getUserName
+    this.name2 = this.$store.getters.getUserName
     // 自分のID
-    this.myid = user.items[0].id
+    this.myid = this.$store.getters.getUserId
   }
 }
 </script>

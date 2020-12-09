@@ -109,7 +109,6 @@
         <v-col cols="12" sm="6" md="3">
           <v-text-field
             placeholder="#タグ"
-            v-model="content"
           >
           </v-text-field>
         </v-col>
@@ -226,7 +225,7 @@ export default {
       const traning = await API.graphql(
         //[fix]あとでクエリー書き直す?
           graphqlOperation(gqlMutations.createTraning,{
-            input: {userId: this.$store.getters.getUserGraphql.items[0].id,
+            input: {userId: this.$store.getters.getUserId,
             title: this.title,
             content: this.content
             }

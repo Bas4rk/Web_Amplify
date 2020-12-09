@@ -8,60 +8,37 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    CognitoUser: null,
-    GraphqlUser: null,
-    Wholeposts: null
+    UserName: null,
+    UserEmail: null,
+    UserId: null,
+    Wholeposts: null,
   },
   getters: {
-    // getUserCognito(state) {
-    //   return state.CognitoUser.signInUserSession.idToken.payload.email
-    //   // return state.user
-    // },
-    getUserGraphql(state) {
+    getUserName(state) {
       // return state.user.signInUserSession.idToken.payload.email
-      return state.GraphqlUser
-    }
+      return state.UserName
+    },
+    getUserEmail(state) {
+      // return state.user.signInUserSession.idToken.payload.email
+      return state.UserEmail
+    },
+    getUserId(state) {
+      // return state.user.signInUserSession.idToken.payload.email
+      return state.UserId
+    },
   },
   mutations: {
-    // ユーザー情報保存
-    // setUserCognito(state, user) {
-    //   state.CognitoUser = user
-    // },
-    setUserGraphql(state, user) {
-      state.GraphqlUser = user
-    }
-
-    // async setUserGraphql(state,username,nickname) {
-      
-    //   const user = await API.graphql(
-    //   graphqlOperation(gqlMutations.createUser, {
-    //     input: {
-    //       name: nickname,
-    //       emailAddress: username,
-    //       premium: false
-    //     }
-    //   }))
-    //   console.log(user.data.createUser);
-
-    //   state.user = user.data.createUser
-
-    // },
-
+    setUserName(state, name) {
+      state.UserName = name
+    },
+    setUserEmail(state, email) {
+      state.UserEmail = email
+    },
+    setUserId(state, id) {
+      state.UserId = id
+    },
   },
   actions: {
-    // setUserGraphql: async function(context,username, nickname){
-    //   console.log("入ってます");
-    //   const user = await API.graphql(
-    //     graphqlOperation(gqlMutations.createUser, {
-    //       input: {
-    //         name: nickname,
-    //         emailAddress: username,
-    //         premium: false
-    //       }
-    //     }))
-    //     console.log(user.data.createUser);
-      // context.commit('setUser', user.data.createUser)
-    // }
   },
   modules: {
   }

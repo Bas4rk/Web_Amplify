@@ -34,7 +34,7 @@
                 <v-btn v-if="this.judgment.items.length == 0 && this.currentuser != this.user.items[0].id" @click="createRelation" color="primary">フォローする</v-btn>
 
                 <v-btn v-if="this.judgment.items.length > 0" @click="deleteRelation" color="error">フォロー解除</v-btn>
-{{judgment}}
+<!-- {{judgment}} -->
               </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -139,7 +139,7 @@ export default {
       this.user = Graphqluser.data.emailIndex
       console.log("ユーザ検索でクエリー飛ばしてます");
 
-      this.currentuser= this.$store.getters.getUserGraphql.items[0].id
+      this.currentuser= this.$store.getters.getUserId
 
       const followJudg = await API.graphql(
         graphqlOperation(_query, {

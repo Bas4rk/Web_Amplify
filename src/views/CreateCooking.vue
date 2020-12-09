@@ -133,25 +133,21 @@
         <v-col cols="12" sm="6" md="3">
           <v-text-field
             placeholder="たんぱく質"
-            v-model="content"
             suffix="g"
           >
           </v-text-field>
           <v-text-field
             placeholder="脂質"
-            v-model="content"
             suffix="g"
           >
           </v-text-field>
           <v-text-field
             placeholder="炭水化物"
-            v-model="content"
             suffix="g"
           >
           </v-text-field>
           <v-text-field
             placeholder="食物繊維総量"
-            v-model="content"
             suffix="g"
           >
           </v-text-field>
@@ -277,7 +273,7 @@ export default {
       const cooking =await API.graphql(
         //[fix]あとでクエリー書き直す?
           graphqlOperation(gqlMutations.createCooking,{
-            input: {userId: this.$store.getters.getUserGraphql.items[0].id,
+            input: {userId: this.$store.getters.getUserId,
             title: this.title,
             content: this.content,
             calorie: this.calorie

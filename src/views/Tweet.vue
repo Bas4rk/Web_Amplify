@@ -1,7 +1,7 @@
 <template>
   <div class="Tweet">
     <Navigation></Navigation>
-    <h1>Tweetページ</h1>
+    <!-- <h1>Tweetページ</h1> -->
     <!-- {{tweetData}} -->
     <v-row justify="center">
       <v-col cols="5">
@@ -22,7 +22,7 @@
           <v-divider></v-divider>
           <!-- [fix]v-cardの中にv-cardあるけどいいんだっけ？ -->
           <v-card>
-            <small>{{tweetData.createdAt}}</small>
+            <!-- <small>{{tweetData.createdAt}}</small> -->
             <v-card-title class="mt-8">
                 <v-avatar size="56">
                   <img
@@ -34,7 +34,7 @@
                   {{tweetData.content}}
                 </p>
 
-                <v-menu
+                <!-- <v-menu
                   :close-on-click="true"
                   :close-on-content-click="true"
                 >
@@ -58,7 +58,7 @@
                       <v-list-item-title>投稿削除</v-list-item-title>
                     </v-list-item>
                   </v-list>
-                </v-menu>
+                </v-menu> -->
 
               </v-card-title>
             <!-- <v-card-subtitle class="headline">{{tweetData.description}}</v-card-subtitle> -->
@@ -123,18 +123,19 @@ export default {
   },
   computed: {
     currentuser(){
-      return this.$store.getters.getUserGraphql.items[0].emailAddress
+      return this.$store.getters.getUserEmail
     }
   },
   data() {
     return {
       tweetId: this.$route.params.id,
-      tweetData: this.$route.params.item
+      tweetData: this.$route.params.item,
+      prevRoute: null,
     };
   },
   methods:{
     back: function(){
-      this.$router.push('/');
+      this.$router.push(this.prevRoute);
       // historyできてなくね？
     },
     async deleteTweet(id){
@@ -146,8 +147,13 @@ export default {
         })
       )
       console.log("投稿を削除しました"+deleteTweet.data.deleteTweet)
-      this.$router.push('/');
+      this.$router.push(this.prevRoute);
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.prevRoute = from.path;
+    });
   },
   async mounted() {
     // const tweet = await API.graphql(

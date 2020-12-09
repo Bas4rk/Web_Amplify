@@ -56,7 +56,6 @@
             <!-- 投稿記述場所 -->
             <v-col cols="12" sm="6" md="3">
               <v-text-field
-                label="content"
                 placeholder="内容"
                 v-model="content"
               ></v-text-field>
@@ -129,7 +128,7 @@ export default {
         graphqlOperation(gqlMutations.createTweet, {
           input: {
             content: this.content,
-            userId: this.$store.getters.getUserGraphql.items[0].id
+            userId: this.$store.getters.getUserId
           }
         })
       )

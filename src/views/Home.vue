@@ -2,6 +2,8 @@
   <div class="home">
     <Navigation></Navigation>
     <!-- ボタンの位置とかアイコンのデザインとか要相談 -->
+    <!-- :open-on-hover="hover"あるとマウスカーソル合わせればボタン出てくる
+    ないとクリックしないと出てこない -->
       <v-card id="create">
         <v-speed-dial
           v-model="fab"
@@ -9,7 +11,6 @@
           :right="right"
           :left="left"
           :direction="direction"
-          :open-on-hover="hover"
           :transition="transition"
         >
           <template v-slot:activator>
@@ -65,24 +66,36 @@
 
  <!-- Tabとその中身入れ替えです、TweetListそのまま使いました、Profile.vueと同じです -->
       <v-tabs fixed-tabs v-model="tab">
-        <v-tab href="#tab-1">つぶやき</v-tab>
-        <v-tab href="#tab-2">料理</v-tab>
-        <v-tab href="#tab-3">筋トレ</v-tab>
+        <v-tab href="#tweet">つぶやき</v-tab>
+        <v-tab href="#cooking">料理</v-tab>
+        <v-tab href="#training">筋トレ</v-tab>
         <!-- <v-tab href="#tab-4">いいね</v-tab> -->
       </v-tabs>
         
       <!-- 中身 -->
       <v-tabs-items v-model="tab">
-        <v-tab-item value="tab-1">
-          <v-divider></v-divider>
+        <v-tab-item value="tweet">
+          <!-- <v-divider></v-divider> -->
           <!-- [fix]タブ事にコンポーネント作った方がいいかも -->
-          <TweetList :items="this.wholeposts"></TweetList>
+          <v-row justify="center">
+            <v-col cols="5">
+              <TweetList :items="this.wholeposts"></TweetList>
+            </v-col>
+          </v-row>
         </v-tab-item>
-        <v-tab-item value="tab-2">
-          <CookingList :items2="this.wholeposts2"></CookingList>  
+        <v-tab-item value="cooking">
+          <v-row justify="center">
+            <v-col cols="5">
+              <CookingList :items2="this.wholeposts2"></CookingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
-        <v-tab-item value="tab-3">
-          <TrainingList :items3="this.wholeposts3"></TrainingList>  
+        <v-tab-item value="training">
+          <v-row justify="center">
+            <v-col cols="5">
+              <TrainingList :items3="this.wholeposts3"></TrainingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
       </v-tabs-items>
 
@@ -161,7 +174,7 @@
   <div>
     {{relation}}
   </div> -->
-
+  <!-- prevRoute{{prevRoute}} -->
   </div>
 </template>
 
@@ -350,7 +363,7 @@ export default {
   data() {
     return{
       // tab初期値
-      tab: 'tab-1',
+      tab: 'tweet',
       // 上に行くボタン用
       buttonActive: false,
       scroll: 0,
@@ -359,7 +372,6 @@ export default {
       fab: false,
       fling: false,
       hover: true,
-      tabs: null,
       top: true,
       right: false,
       bottom: false,
@@ -398,7 +410,8 @@ export default {
       wholeposts2: null,
       // 筋トレ用
       wholeposts3: null,
-      relation: null
+      relation: null,
+      prevRoute: null,
     }
   },
   components: {
@@ -490,9 +503,9 @@ export default {
 
     //きたないのできれいにする。
     if(this.dev){
-      const usersorce = this.$store.getters.getUserGraphql
+      // const usersorce = this.$store.getters.getUserGraphql
       const query = await API.graphql(
-        graphqlOperation(_query2, {id : usersorce.items[0].id})
+        graphqlOperation(_query2, {id : this.$store.getters.getUserId})
       )
       console.log("タイムラインクエリー飛ばしました。")
       this.user = query.data.getUser
@@ -530,7 +543,20 @@ export default {
 
     this.subscribe()
 
-  }
+    // 直前に見ていたタブに戻る
+    //[fix]mounted後で整理する。
+    //直前に見ていたタブには戻れるけど、スクロールの位置とかまでは出来てない
+    let route = this.prevRoute
+    console.log("route"+route)
+    let array = ['tweet','cooking','training'];
+    if(!array.includes(route)){route = 'tweet'}
+    this.tab = route
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.prevRoute = from.name;
+    });
+  },
 }
 </script>
 

@@ -42,10 +42,16 @@
         ここにプロフィール紹介文
       </v-row>
 
+      <!-- スペースの有無どうする？ -->
+       <!-- class="d-flex justify-space-around mb-6" -->
       <v-row justify="center">
+        <!-- <v-spacer></v-spacer> -->
         <v-btn large color="primary"  to="/followerlist">フォロー中</v-btn>
+        <!-- <v-spacer></v-spacer> -->
         <v-btn large color="primary"  to="/followeelist">フォロワー</v-btn>
+        <!-- <v-spacer></v-spacer> -->
         <v-btn large color="primary"  to="/profileedit">プロフィール編集</v-btn>
+        <!-- <v-spacer></v-spacer> -->        
         <!-- ブックマークボタン、Prottにあったのでとりあえずつけた -->
         <!-- <v-btn
           icon
@@ -64,23 +70,36 @@
 
       <!-- Tabとその中身入れ替えです、TweetListそのまま使いました -->
       <v-tabs fixed-tabs v-model="tab">
-        <v-tab href="#tab-1">つぶやき</v-tab>
-        <v-tab href="#tab-2">料理</v-tab>
-        <v-tab href="#tab-3">筋トレ</v-tab>
+        <v-tab href="#tweet">つぶやき</v-tab>
+        <v-tab href="#cooking">料理</v-tab>
+        <v-tab href="#training">筋トレ</v-tab>
         <!-- <v-tab href="#tab-4">いいね</v-tab> -->
       </v-tabs>
         
       <!-- 中身 -->
       <v-tabs-items v-model="tab">
-        <v-tab-item value="tab-1">
-          <v-divider></v-divider>
-          <TweetList :items="this.wholeposts"></TweetList>
+        <v-tab-item value="tweet">
+          <!-- <v-divider></v-divider> -->
+          <!-- [fix]タブ事にコンポーネント作った方がいいかも -->
+          <v-row justify="center">
+            <v-col cols="5">
+              <TweetList :items="this.wholeposts"></TweetList>
+            </v-col>
+          </v-row>
         </v-tab-item>
-        <v-tab-item value="tab-2">
-          <CookingList :items2="this.wholeposts2"></CookingList>  
+        <v-tab-item value="cooking">
+          <v-row justify="center">
+            <v-col cols="5">
+              <CookingList :items2="this.wholeposts2"></CookingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
-        <v-tab-item value="tab-3">
-          <TrainingList :items3="this.wholeposts3"></TrainingList>  
+        <v-tab-item value="training">
+          <v-row justify="center">
+            <v-col cols="5">
+              <TrainingList :items3="this.wholeposts3"></TrainingList>  
+            </v-col>
+          </v-row>
         </v-tab-item>
       </v-tabs-items>
 
@@ -222,7 +241,7 @@ export default {
   name: 'profile',
   data() {
     return{
-      tab: 'tab-1',
+      tab: 'tweet',
       // 上に行くボタン用
       buttonActive: false,
       scroll: 0,
@@ -247,6 +266,7 @@ export default {
       wholeposts3: null,
       //開発用
       dev: true,
+      prevRoute: null,
     }
   },
   components: {
@@ -257,13 +277,11 @@ export default {
   },
   computed: {
     // プロフィール表示、Navigation.vueのやつ貰った
-    getUserEmail(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].emailAddress
-    },
     getUserName(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].name
+      return  this.$store.getters.getUserName
+    },
+    getUserEmail(){
+      return  this.$store.getters.getUserEmail
     }
   },
   methods: {
@@ -314,9 +332,9 @@ export default {
     window.addEventListener('scroll', this.scrollWindow)
 
     if(this.dev){
-      const usersorce = this.$store.getters.getUserGraphql
+      // const usersorce = this.$store.getters.getUserGraphql
       const query = await API.graphql(
-        graphqlOperation(_query2, {id : usersorce.items[0].id})
+        graphqlOperation(_query2, {id : this.$store.getters.getUserId})
       )
       console.log("タイムラインクエリー飛ばしました。")
       this.user = query.data.getUser
@@ -354,6 +372,20 @@ export default {
       
       this.wholeposts3= this.myposts3.concat(this.followeeposts3)
     }
+
+    // 直前に見ていたタブに戻る
+    //[fix]mounted後で整理する。
+    //直前に見ていたタブには戻れるけど、スクロールの位置とかまでは出来てない
+    let route = this.prevRoute
+    console.log("route"+route)
+    let array = ['tweet','cooking','training'];
+    if(!array.includes(route)){route = 'tweet'}
+    this.tab = route
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.prevRoute = from.name;
+    });
   },
 }
 </script>

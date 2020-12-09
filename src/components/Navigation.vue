@@ -55,7 +55,7 @@
             <v-list-item-title>{{ text }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        {{relation}}
+        <!-- {{relation}} -->
       </v-list>
     </v-navigation-drawer>
 
@@ -131,13 +131,11 @@ export default {
     relation: []
   }),
   computed: {
-    getUserEmail(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].emailAddress
-    },
     getUserName(){
-      const user= this.$store.getters.getUserGraphql
-      return  user.items[0].name
+      return  this.$store.getters.getUserName
+    },
+    getUserEmail(){
+      return  this.$store.getters.getUserEmail
     }
   },
   methods: {
