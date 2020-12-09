@@ -72,7 +72,7 @@
         </v-col>
       </v-row>
     </v-container>
-    prevRoute{{prevRoute}}
+    <!-- prevRoute{{prevRoute}} -->
     <!-- prevRoute1{{prevRoute1}} -->
   </div>
 </template>
