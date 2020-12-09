@@ -34,9 +34,9 @@
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
             <!-- 横線です -->
             <v-divider></v-divider>
-            <br><div class="indigo--text">・広告の非表示</div><br>
+            <br><div class="indigo--text">今後実装予定です</div><br>
             
-            <v-col><v-btn color="accent" block>PREMIUMに登録する(月額￥280)</v-btn><br></v-col>
+            <!-- <v-col><v-btn color="accent" block>PREMIUMに登録する(月額￥280)</v-btn><br></v-col> -->
 
           </v-list>
         </v-col>
