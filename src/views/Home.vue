@@ -183,6 +183,11 @@
     {{relation}}
   </div> -->
   <!-- prevRoute{{prevRoute}} -->
+  <!-- <div> -->
+      <!-- 全体の筋トレ -->
+      <!-- {{wholeposts3}} -->
+      <!-- {{a}}
+    </div> -->
   </div>
 </template>
 
@@ -420,7 +425,7 @@ export default {
       wholeposts3: null,
       relation: null,
       prevRoute: null,
-      // a: null,
+      a: null,
     }
   },
   components: {
@@ -518,6 +523,7 @@ export default {
       )
       console.log("タイムラインクエリー飛ばしました。")
       this.user = query.data.getUser
+      this.a = query.data.getUser.followees.items[0].follower.traningPosts.items
       this.myposts = this.user.tweetPosts.items//自分のツイート
       this.wholeposts = this.myposts//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
       if(this.user.followees.items[0].follower.tweetPosts.items.length > 0){
@@ -544,7 +550,7 @@ export default {
       if(this.user.followees.items[0].follower.traningPosts.items.length > 0){
         console.log("if中")
         // ここfor入らない
-        for(let i = 0; i < this.user.followees.items[0].follower.trainingPosts.items.length; i++){
+        for(let i = 0; i < this.user.followees.items[0].follower.traningPosts.items.length; i++){
           console.log("for中")
             this.followeeposts3.push(this.user.followees.items[0].follower.traningPosts.items[i])
         }
