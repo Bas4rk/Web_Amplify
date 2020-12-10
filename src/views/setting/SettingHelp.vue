@@ -23,15 +23,6 @@
         <v-col cols="5">
 
           <!-- リストです -->
-          <v-list>
-            <!-- ↓後できれいにする -->
-            <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
-            <!-- 遷移はまだない -->
-            
-
-
-            
-          </v-list>
         </v-col>
       </v-row>
     </v-container>
@@ -72,5 +63,6 @@ export default {
       this.$vuetify.theme.dark = this.theme
     }
   }
+
 }
 </script>
