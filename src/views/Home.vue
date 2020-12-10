@@ -43,19 +43,19 @@
               fab
               dark
               small
-              color="indigo"
-              to="/createTraining"
+              color="red"
+              to="/createCooking"
             >
-              <v-icon>mdi-dumbbell</v-icon>
+              <v-icon>mdi-silverware-fork-knife</v-icon>
             </v-btn>
             <v-btn
               fab
               dark
               small
-              color="red"
-              to="/createCooking"
+              color="indigo"
+              to="/createTraining"
             >
-              <v-icon>mdi-silverware-fork-knife</v-icon>
+              <v-icon>mdi-dumbbell</v-icon>
             </v-btn>
           </v-speed-dial>
         </v-card>
@@ -563,11 +563,15 @@ export default {
     // 直前に見ていたタブに戻る
     //[fix]mounted後で整理する。
     //直前に見ていたタブには戻れるけど、スクロールの位置とかまでは出来てない
-    let route = this.prevRoute
-    console.log("route"+route)
-    let array = ['tweet','cooking','training'];
-    if(!array.includes(route)){route = 'tweet'}
+    let route = 'tweet';
+    let array = ['cooking','training'];
+    for(let i =0;i<array.length;i++){
+      if(this.prevRoute.toLowerCase().includes(array[i])){
+        route = array[i]
+      }
+    }
     this.tab = route
+    
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
