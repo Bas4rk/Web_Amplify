@@ -28,7 +28,7 @@
             <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
             <!-- 遷移はまだない -->
             <p>現在</p>
-            <p>アリス</p>
+            <p>{{getUserName}}</p>
 
             新規
             <v-text-field
@@ -80,6 +80,11 @@ export default {
     theme() {
       this.$vuetify.theme.dark = this.theme
     }
+  },
+  computed:{
+    getUserName(){
+      return  this.$store.getters.getUserName
+    },
   }
 }
 </script>
