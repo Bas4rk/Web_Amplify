@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../views/Home/Home.vue'
 import createTweet from '../views/CreateTweet.vue'
 import createTraining from '../views/CreateTraining.vue'
 import createCooking from '../views/CreateCooking.vue'

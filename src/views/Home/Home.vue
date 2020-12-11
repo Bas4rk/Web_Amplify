@@ -199,10 +199,11 @@ import TrainingList from '@/components/TrainingList.vue';
 
 import Navigation from '@/components/Navigation.vue';
 
-import { API, graphqlOperation } from 'aws-amplify'
+import { API, graphqlOperation } from 'aws-amplify';
 // import * as gqlQueries from '../graphql/queries'
 // import * as gqlMutations from '../graphql/mutations'
 
+import homeQuery from '/HomeQuery.js'
 
 // const _query = `query GetUser($id: ID!) {
 //   getUser(id: $id) {
@@ -211,165 +212,165 @@ import { API, graphqlOperation } from 'aws-amplify'
 // }
 // `
 
-// [fix]ここのクエリーfilter使ってもう少しよくできないか
-const _query2 = `query GetUser($id: ID!) {
-  getUser(id: $id) {
-    tweetPosts {
-      items {
-        id
-        content
-        createdAt
-        user {
-          name
-          emailAddress
-        }
-      }
-    }
-    cookingPosts {
-      items {
-        id
-        title
-        content
-        calorie
-        createdAt
-        user {
-          name
-          emailAddress
-        }
-      }
-    }
-    traningPosts {
-      items {
-        id
-        title
-        content
-        createdAt
-        user {
-          name
-          emailAddress
-        }
-      }
-    }
-    followees {
-      items {
-        follower {
-          tweetPosts {
-            nextToken
-            items {
-              id
-              content
-              createdAt
-              user {
-                name
-                emailAddress
-              }
-            }
-          }
-          cookingPosts {
-            nextToken
-            items {
-              content
-              calorie
-              createdAt
-              id
-              title
-              user {
-                name
-                emailAddress
-              }
-            }
-          }
-          traningPosts {
-            nextToken
-            items {
-              id
-              content
-              createdAt
-              title
-              user {
-                name
-                emailAddress
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`
+// // [fix]ここのクエリーfilter使ってもう少しよくできないか
+// const _query2 = `query GetUser($id: ID!) {
+//   getUser(id: $id) {
+//     tweetPosts {
+//       items {
+//         id
+//         content
+//         createdAt
+//         user {
+//           name
+//           emailAddress
+//         }
+//       }
+//     }
+//     cookingPosts {
+//       items {
+//         id
+//         title
+//         content
+//         calorie
+//         createdAt
+//         user {
+//           name
+//           emailAddress
+//         }
+//       }
+//     }
+//     traningPosts {
+//       items {
+//         id
+//         title
+//         content
+//         createdAt
+//         user {
+//           name
+//           emailAddress
+//         }
+//       }
+//     }
+//     followees {
+//       items {
+//         follower {
+//           tweetPosts {
+//             nextToken
+//             items {
+//               id
+//               content
+//               createdAt
+//               user {
+//                 name
+//                 emailAddress
+//               }
+//             }
+//           }
+//           cookingPosts {
+//             nextToken
+//             items {
+//               content
+//               calorie
+//               createdAt
+//               id
+//               title
+//               user {
+//                 name
+//                 emailAddress
+//               }
+//             }
+//           }
+//           traningPosts {
+//             nextToken
+//             items {
+//               id
+//               content
+//               createdAt
+//               title
+//               user {
+//                 name
+//                 emailAddress
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// `
 
 
-//[fix]これ、フォローしてない人の投稿もタイムラインに映るわ。。
-const onCreateTweet = /* GraphQL */ `
-  subscription OnCreateTweet {
-    onCreateTweet {
-      id
-      content
-      createdAt
-      user {
-        name
-        emailAddress
-      }
-    }
-  }
-`;
+// //[fix]これ、フォローしてない人の投稿もタイムラインに映るわ。。
+// const onCreateTweet = /* GraphQL */ `
+//   subscription OnCreateTweet {
+//     onCreateTweet {
+//       id
+//       content
+//       createdAt
+//       user {
+//         name
+//         emailAddress
+//       }
+//     }
+//   }
+// `;
 
-const onCreateCooking = /* GraphQL */ `
-  subscription OnCreateCooking {
-    onCreateCooking {
-      id
-      title
-      content
-      calorie
-      createdAt
-      user {
-        name
-        emailAddress
-      }
-    }
-  }
-`;
+// const onCreateCooking = /* GraphQL */ `
+//   subscription OnCreateCooking {
+//     onCreateCooking {
+//       id
+//       title
+//       content
+//       calorie
+//       createdAt
+//       user {
+//         name
+//         emailAddress
+//       }
+//     }
+//   }
+// `;
 
-const onCreateTraning = /* GraphQL */ `
-  subscription OnCreateTraning {
-    onCreateTraning {
-      id
-      title
-      content
-      createdAt
-      user {
-        name
-        emailAddress
-      }
-    }
-  }
-`;
+// const onCreateTraning = /* GraphQL */ `
+//   subscription OnCreateTraning {
+//     onCreateTraning {
+//       id
+//       title
+//       content
+//       createdAt
+//       user {
+//         name
+//         emailAddress
+//       }
+//     }
+//   }
+// `;
 
 
-const onDeleteTweet = /* GraphQL */ `
-  subscription OnDeleteTweet {
-    onDeleteTweet {
-      id
-    }
-  }
-`;
+// const onDeleteTweet = /* GraphQL */ `
+//   subscription OnDeleteTweet {
+//     onDeleteTweet {
+//       id
+//     }
+//   }
+// `;
 
-const onDeleteCooking = /* GraphQL */ `
-  subscription OnDeleteCooking {
-    onDeleteCooking {
-      id
-    }
-  }
-`;
+// const onDeleteCooking = /* GraphQL */ `
+//   subscription OnDeleteCooking {
+//     onDeleteCooking {
+//       id
+//     }
+//   }
+// `;
 
-const onDeleteTraning = /* GraphQL */ `
-  subscription OnDeleteTraning {
-    onDeleteTraning {
-      id
-    }
-  }
-`;
+// const onDeleteTraning = /* GraphQL */ `
+//   subscription OnDeleteTraning {
+//     onDeleteTraning {
+//       id
+//     }
+//   }
+// `;
 
 export default {
   name: 'home',
@@ -439,7 +440,7 @@ export default {
   methods: {
     subscribe(){
       // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
-      this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
+      this.createSubscription = API.graphql(graphqlOperation(homeQuery.onCreateTweet)).subscribe({
         next: (eventData) => {
           console.log("evenData:"+eventData)
           const tweet = eventData.value.data.onCreateTweet;
@@ -449,7 +450,7 @@ export default {
       })
 
       // 料理
-      this.createSubscription2 = API.graphql(graphqlOperation(onCreateCooking)).subscribe({
+      this.createSubscription2 = API.graphql(graphqlOperation(homeQuery.onCreateCooking)).subscribe({
         next: (eventData) => {
           const cooking = eventData.value.data.onCreateCooking;
           this.wholeposts2.push(cooking);
@@ -457,14 +458,14 @@ export default {
       })
 
       // 筋トレ
-      this.createSubscription3 = API.graphql(graphqlOperation(onCreateTraning)).subscribe({
+      this.createSubscription3 = API.graphql(graphqlOperation(homeQuery.onCreateTraning)).subscribe({
         next: (eventData) => {
           const traning = eventData.value.data.onCreateTraning;
           this.wholeposts3.push(traning);
         }
       })
 
-      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteTweet)).subscribe({
+      this.deleteSubscription = API.graphql(graphqlOperation(homeQuery.onDeleteTweet)).subscribe({
         next: (eventData) => {
           const tweet = eventData.value.data.onDeleteTweet;
           this.wholeposts = this.wholeposts.filter(post => post.id != tweet.id);
@@ -472,7 +473,7 @@ export default {
       })
 
       // 料理
-      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteCooking)).subscribe({
+      this.deleteSubscription = API.graphql(graphqlOperation(homeQuery.onDeleteCooking)).subscribe({
         next: (eventData) => {
           const cooking = eventData.value.data.onDeleteCooking;
           this.wholeposts2 = this.wholeposts2.filter(post => post.id != cooking.id);
@@ -480,7 +481,7 @@ export default {
       })
 
       // 筋トレ
-      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteTraning)).subscribe({
+      this.deleteSubscription = API.graphql(graphqlOperation(homeQuery.onDeleteTraning)).subscribe({
         next: (eventData) => {
           const traning = eventData.value.data.onDeleteTraning;
           this.wholeposts3 = this.wholeposts3.filter(post => post.id != traning.id);
@@ -519,7 +520,7 @@ export default {
     if(this.dev){
       // const usersorce = this.$store.getters.getUserGraphql
       const query = await API.graphql(
-        graphqlOperation(_query2, {id : this.$store.getters.getUserId})
+        graphqlOperation(homeQuery._query2, {id : this.$store.getters.getUserId})
       )
       console.log("タイムラインクエリー飛ばしました。")
       this.user = query.data.getUser
