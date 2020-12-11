@@ -21,7 +21,6 @@ import SetPersonal from '../views/setting/SettingPersonal.vue'
 import SetContact from '../views/setting/SettingContact.vue'
 import SetService from '../views/setting/SettingService.vue'
 
-import UserName from '../views/setting/user/UserNameChange.vue'
 import UserID from '../views/setting/user/UserIDChange.vue'
 import UserPhone from '../views/setting/user/PhoneNumberChange.vue'
 import UserMail from '../views/setting/user/MailAdressChange.vue'
@@ -179,14 +178,7 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      // ユーザ名前変更ページ
-      path: '/usernamechange',
-      name: 'usernamechange',
-      component: UserName,
-      meta: { requiresAuth: true }
-    },
-    {
-      // ユーザネーム変更ページ
+      // ユーザID変更ページ
       path: '/useridchange',
       name: 'useridchange',
       component: UserID,
