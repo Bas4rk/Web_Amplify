@@ -11,11 +11,22 @@
       <v-row justify="center">
 
         <v-col cols="5">
-             <v-textarea
-              solo
-              name="input-7-4"
-              label="Solo textarea"
-             ></v-textarea>
+          <br>
+          <v-text-field
+            label="email"
+            outlined
+          ></v-text-field>
+          <v-text-field
+            label="name"
+            outlined
+          ></v-text-field>
+          <v-textarea
+            outlined
+            name="input-7-4"
+            label="contents"
+          ></v-textarea>
+
+          <v-btn color="primary">送信</v-btn>
 
             
         </v-col>
