@@ -27,7 +27,6 @@ import UserMail from '../views/setting/user/MailAdressChange.vue'
 import Passwd from '../views/setting/user/PasswdChange.vue'
 import PasswdNew from '../views/setting/user/PasswdChangeNew.vue'
 import UserSecurity from '../views/setting/user/Security.vue'
-import UserDelete from '../views/setting/user/AccountDelete.vue'
 
 import Test from '../views/setting/TestComponents.vue'
 
@@ -238,13 +237,6 @@ const router = new Router({
       path: '/security',
       name: 'security',
       component: UserSecurity,
-      meta: { requiresAuth: true }
-    },
-    {
-      // アカウント削除ページ
-      path: '/accountdelete',
-      name: 'accountdelete',
-      component: UserDelete,
       meta: { requiresAuth: true }
     },
     {
