@@ -14,10 +14,14 @@
 
       <v-row justify="center">
         <v-col cols="5">
-          <v-card-text>
-            本規約第一条
-          </v-card-text>
 
+          <br>
+          サービス提供者
+          <v-divider></v-divider>
+          <br>
+          本規約第一条
+
+         
         </v-col>
       </v-row>
     </v-container>
