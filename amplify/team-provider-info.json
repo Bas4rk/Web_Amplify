@@ -13,12 +13,6 @@
     },
     "categories": {
       "auth": {
-        "amplifysamplef7544157": {
-          "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"921239064095-ngf9te2hr9a7pb0qbtomecvr28ju8u63.apps.googleusercontent.com\",\"client_secret\":\"qmk5kpAph2SKtDEtjwf5xdFQ\"}]"
-        },
-        "amplifysample8c9a67d4": {
-          "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"921239064095-ngf9te2hr9a7pb0qbtomecvr28ju8u63.apps.googleusercontent.com\",\"client_secret\":\"qmk5kpAph2SKtDEtjwf5xdFQ\"}]"
-        },
         "amplifysample630741f5": {}
       }
     }
