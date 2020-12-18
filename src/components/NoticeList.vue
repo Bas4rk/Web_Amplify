@@ -66,7 +66,7 @@
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
-                {{item}}
+
                 <!-- 公式にあった、v-dividerは区切り線、insetあるとアバター画像の下まで線行かない、idは指定しないと「必要だ」って怒られる -->
                  <v-divider
                   :key="`divider-${item.id}`"
