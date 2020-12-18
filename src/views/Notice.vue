@@ -1,56 +1,24 @@
 <template>
   <div class="home">
     <Navigation></Navigation>
-      <!-- [通知画面]これから書きます。 -->
-      <!-- バックエンド変更対応してないので、コメントアウトしてます。 -->
-      <!-- {{relation}} -->
-<NoticeList></NoticeList>
-      <!-- <amplify-connect :query="listTodosQuery"
-          :subscription="createTodoSubscription"
-          :onSubscriptionMsg="onCreateTodo">
-        <template slot-scope="{loading, data, errors}">
-          <div v-if="loading">Loading...</div>
-
-          <div v-else-if="errors.length > 0"></div>
-
-          <div v-else-if="data">
-            <NoticeList :items="data.listTodos.items"></NoticeList>
-          </div>
-        </template>
-      </amplify-connect> -->
+      <NoticeList :items="getMessages"></NoticeList>
   </div>
 </template>
 
 <script>
-// import { components } from 'aws-amplify-vue';
 import NoticeList from '@/components/NoticeList.vue';
 import Navigation from '@/components/Navigation.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
+import store from '../store/index.js'
 
 
 const onCreateRelationship = /* GraphQL */ `
-  subscription OnCreateRelationship {
-    onCreateRelationship {
-      id
-      
-    }
-      follower {
-        id
-        name
-        emailAddress
-  }
-      createdAt
-      updatedAt
-  }
-`;
-
-
-const onDeleteRelationship = /* GraphQL */ `
-  subscription OnDeleteRelationship {
-    onDeleteRelationship {
+  subscription OnCreateRelationship($followerId: ID!) {
+    onCreateRelationship(followerId: $followerId) {
       id
       blockBool
+      followerId
       followee {
         id
         name
@@ -68,59 +36,49 @@ const onDeleteRelationship = /* GraphQL */ `
 `;
 
 
+
 export default {
   name: 'home',
   data(){
     return{
-      createSubscription: {},
-      deleteSubscription: {},
-      relation: []
+      createSubscription: null,
+      messages: null,
     }
   },
   components: {
     Navigation,
     NoticeList,
-    // ...components
   },
   computed: {
-    // listTodosQuery() {
-    //   return this.$Amplify.graphqlOperation(ListTodosQuery);
-    // },
-    // createTodoSubscription() {
-    //   return this.$Amplify.graphqlOperation(OnCreateTodoSubscription);
-    // }
+    getMessages(){
+      return this.$store.getters.getMessages
+    },
+    getUserId(){
+      return this.$store.getters.getUserId
+    }
   },
   methods: {
     subscribe(){
-
-      // this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
-      //   next: (eventData) => {
-      //     console.log(eventData.value.data.onCreateTweet)
-      //     const tweet = eventData.value.data.onCreateTweet;
-      //     this.wholeposts.push(tweet);
-      //   }
-      // })
-
-      // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
-      this.createSubscription = API.graphql(graphqlOperation(onCreateRelationship)).subscribe({
+        this.createSubscription = API.graphql(graphqlOperation(onCreateRelationship,{followerId: this.$store.getters.getUserId})).subscribe({
         next: (eventData) => {
-          console.log("createです")
+          console.log("create")
           console.log(eventData.value.data.onCreateRelationship)
-          this.relation = eventData.value.data.onCreateRelationship;
-          // this.messages++
-          // this.wholeposts.push(tweet);
+          this.$store.commit('setMessage', eventData.value.data.onCreateRelationship)
+          this.$store.commit('setCount', this.$store.getters.getCount+1)
         }
       })
-
-      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteRelationship)).subscribe({
-        next: (eventData) => {
-          console.log("deleteです")
-          // const cooking = eventData.value.data.onDeleteRelationship;
-          console.log(eventData.value.data.onDeleteRelationship)
-          
-        }
-      })
-    }
+    },
+  },
+  beforeRouteEnter (to, from, next) {
+      console.log('component: beforeRouteEnter');
+      store.commit('setCount', 0)
+      next();
+  },
+  beforeRouteLeave (to, from, next) {
+    console.log('component: beforeRouteLeave');
+    store.commit('setCount', 0)
+    this.createSubscription.unsubscribe();
+    next();
   },
   mounted(){
     this.subscribe()

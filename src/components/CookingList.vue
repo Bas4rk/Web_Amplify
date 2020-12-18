@@ -27,7 +27,7 @@
                 <v-list-item
                   v-if="item.user.emailAddress == currentuser"
                   @click="deleteCooking(item.id)"
-                > 
+                >
                   <v-list-item-icon>
                     <v-icon>mdi-trash-can</v-icon>
                   </v-list-item-icon>
