@@ -8,7 +8,7 @@
       <v-col  cols="8">
         <v-row align-content="space-between">
           <v-col cols="12" align="center">
-          <div class="display-4 ">{{picker}}日</div>
+          <div class="display-3 ">{{picker}}日</div>
           </v-col>
           <v-col cols="12" align="center">
           <div class="display-3">体重:60kg</div>
