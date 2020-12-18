@@ -89,7 +89,7 @@ function confirmSignUp(username, password, code, nickname) {
     }else{
       console.log("だめでした。")
     }
-    
+
     return data // 'SUCCESS'
   })
     .catch(err => {
@@ -137,8 +137,11 @@ function signOut() {
     .then(data => {
       AmplifyEventBus.$emit('authState', 'signedOut');
 
-      store.commit('setUserGraphql', null);
-      store.commit('setWholeposts', null)
+      store.commit('setUserName', null);
+      store.commit('setUserEmail', null);
+      store.commit('setUserId', null);
+      // store.commit('setMessage', null);
+      // store.commit('setCount', null);
 
       return data;
     })

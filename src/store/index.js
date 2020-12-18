@@ -12,6 +12,8 @@ export default new Vuex.Store({
     UserEmail: null,
     UserId: null,
     Wholeposts: null,
+    Messages: [],
+    Count: 0,
   },
   getters: {
     getUserName(state) {
@@ -26,6 +28,12 @@ export default new Vuex.Store({
       // return state.user.signInUserSession.idToken.payload.email
       return state.UserId
     },
+    getMessages(state){
+      return state.Messages
+    },
+    getCount(state) {
+      return state.Count
+    },
   },
   mutations: {
     setUserName(state, name) {
@@ -36,6 +44,12 @@ export default new Vuex.Store({
     },
     setUserId(state, id) {
       state.UserId = id
+    },
+    setMessage(state, message) {
+      state.Messages.push(message)
+    },
+    setCount(state, count) {
+      state.Count = count
     },
   },
   actions: {

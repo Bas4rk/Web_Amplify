@@ -50,13 +50,13 @@ import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlQueries from '../../graphql/queries'
 
 
-const _query = `
+const _query = /* GraphQL */ `
   query FolloweeIndex(
-    $followeeId: ID 
+    $followeeId: ID
     $filter: ModelRelationshipFilterInput
   ) {
   followeeIndex(
-    followeeId: $followeeId 
+    followeeId: $followeeId
     filter: $filter
   ) {
     items{
@@ -67,13 +67,14 @@ const _query = `
 `
 
 
-const createRelation_query = `
+const createRelationship = /* GraphQL */ `
   mutation CreateRelationship(
     $input: CreateRelationshipInput!
   ) {
     createRelationship(input: $input) {
       id
       blockBool
+      followerId
       followee {
         id
         name
@@ -91,7 +92,7 @@ const createRelation_query = `
 `
 
 
-const deleteRelationship_query = `
+const deleteRelationship = /* GraphQL */ `
   mutation DeleteRelationship(
     $input: DeleteRelationshipInput!
   ) {
@@ -153,10 +154,10 @@ export default {
     },
     async createRelation(){
       const createRelation = await API.graphql(
-        graphqlOperation(createRelation_query, {
+        graphqlOperation(createRelationship, {
           input: {
-            blockBool: false, 
-            followeeId: this.currentuser, 
+            blockBool: false,
+            followeeId: this.currentuser,
             followerId: this.user.items[0].id
           }
         })
@@ -165,7 +166,7 @@ export default {
     },
     async deleteRelation(){
       const deleteRelation = await API.graphql(
-        graphqlOperation(deleteRelationship_query, {
+        graphqlOperation(deleteRelationship, {
           input: {
             id: this.judgment.items[0].id
           }
