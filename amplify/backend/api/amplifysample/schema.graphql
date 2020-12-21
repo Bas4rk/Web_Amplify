@@ -126,3 +126,61 @@ type Comment
 #   tweetId: ID!
 #   bmDate: Stinrg!
 # }
+
+
+# カレンダー
+
+type Calendar
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(fields:["owner"])
+{
+    owner: ID!
+    memo :[Memo] @connection(keyName: "memo",fields: ["owner"])
+}
+type Memo
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(fields:["date"])
+    @key(name: "memo",fields:["owner"])
+{
+    owner: ID! 
+    date: AWSDate!
+    weight: Float
+    bfp: Float
+    foodMemos: [FoodMemo] @connection(keyName: "food",fields: ["date", "owner"])
+    traningMemos :[TrainingMemo] @connection(keyName: "training",fields: ["date", "owner"])
+}
+type FoodMemo
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(name: "food",fields:["memoDate", "owner"])
+{
+    owner: ID!
+    memoDate: AWSDate!
+    title: String!
+    image: String
+    calorele: Int
+    lipid: Int
+    proteins: Int
+}
+type TrainingMemo
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(name: "training",fields:["memoDate", "owner"])
+{
+    id: ID!
+    owner: ID!
+    memoDate: AWSDate!
+    title: String!
+    contentList: [TrainingContent] @connection(keyName: "trainingContent",fields: ["id"])
+}
+
+type TrainingContent
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(name: "trainingContent",fields:["trainingMemoId"])
+{
+    trainingMemoId:ID!
+    content: String
+}
