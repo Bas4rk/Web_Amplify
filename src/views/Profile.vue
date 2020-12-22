@@ -34,7 +34,7 @@
 
       <!-- アカウントID -->
       <v-row justify="center">
-          {{getUserEmail}}
+        {{getUserEmail}}
       </v-row>
 
       <!-- プロフィール文、位置はここか左にあるボタンとTabの間？ -->

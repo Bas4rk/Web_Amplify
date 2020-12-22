@@ -21,14 +21,12 @@ import SetPersonal from '../views/setting/SettingPersonal.vue'
 import SetContact from '../views/setting/SettingContact.vue'
 import SetService from '../views/setting/SettingService.vue'
 
-import UserName from '../views/setting/user/UserNameChange.vue'
 import UserID from '../views/setting/user/UserIDChange.vue'
 import UserPhone from '../views/setting/user/PhoneNumberChange.vue'
 import UserMail from '../views/setting/user/MailAdressChange.vue'
 import Passwd from '../views/setting/user/PasswdChange.vue'
 import PasswdNew from '../views/setting/user/PasswdChangeNew.vue'
 import UserSecurity from '../views/setting/user/Security.vue'
-import UserDelete from '../views/setting/user/AccountDelete.vue'
 
 import Test from '../views/setting/TestComponents.vue'
 
@@ -179,14 +177,7 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      // ユーザ名前変更ページ
-      path: '/usernamechange',
-      name: 'usernamechange',
-      component: UserName,
-      meta: { requiresAuth: true }
-    },
-    {
-      // ユーザネーム変更ページ
+      // ユーザID変更ページ
       path: '/useridchange',
       name: 'useridchange',
       component: UserID,
@@ -246,13 +237,6 @@ const router = new Router({
       path: '/security',
       name: 'security',
       component: UserSecurity,
-      meta: { requiresAuth: true }
-    },
-    {
-      // アカウント削除ページ
-      path: '/accountdelete',
-      name: 'accountdelete',
-      component: UserDelete,
       meta: { requiresAuth: true }
     },
     {
