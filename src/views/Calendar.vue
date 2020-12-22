@@ -38,7 +38,8 @@
     </v-row>
 
     <!-- [fix]ごはんと筋トレ、コンポーネント化する -->
-    <v-row justify="center">
+    <v-divider></v-divider>
+    <v-row justify="center" class="my-5">
       <div class="display-2">今日のごはん</div>
     </v-row>
     <v-divider></v-divider>
@@ -130,6 +131,7 @@
 
     <!-- 筋トレ -->
     <!-- 後でコンポーネント化する -->
+    <v-divider></v-divider>
     <v-row justify="center" class="my-5">
       <div class="display-2">今日の筋トレ</div>
     </v-row>
