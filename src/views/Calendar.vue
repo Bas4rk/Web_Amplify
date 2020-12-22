@@ -48,6 +48,7 @@
         :key="index"
         :cols=3
         @click.stop="onClickBtn(card)"
+        xs="3" sm="4" md="6" 
       >
         <v-subheader>{{card.subtitle}}</v-subheader>
         <v-card>
