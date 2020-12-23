@@ -12,6 +12,8 @@ type User
 {
     id: ID!
     name: String!
+    iconImage: String
+    headerImage: String
     emailAddress: String!
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
@@ -19,9 +21,11 @@ type User
     followees: [Relationship] @connection(keyName: "followee", fields: ["id"])
     followers: [Relationship] @connection(keyName: "follower", fields: ["id"])
     tweetPosts: [Tweet] @connection(keyName: "userId",fields: ["id"])
-    traningPosts: [Traning] @connection(keyName: "userId",fields: ["id"])
+    trainingPosts: [Training] @connection(keyName: "userId",fields: ["id"]
     cookingPosts: [Cooking] @connection(keyName: "userId",fields: ["id"])
     comments: [Comment] @connection(keyName: "userId",fields: ["id"])
+    favoriteList: [Favorite] @connection(keyName: "userId",fields: ["id"])
+    bookmarkList: [Bookmark] @connection(keyName: "userId",fields: ["id"])
 }
 
 type Relationship
@@ -52,7 +56,7 @@ type Tweet
   comments: [Comment] @connection(keyName: "postId",fields: ["id"])
 }
 
-type Traning 
+type Training
 @model
 @key(name: "userId", fields: ["userId"])
 @auth(rules: [{allow: owner, operations: [create, update, delete]}])
@@ -101,31 +105,31 @@ type Comment
   updatedAt: AWSDateTime
   user: User @connection(fields: ["userId"])
   tweet: Tweet @connection(fields: ["postId"])
-  traning: Traning @connection(fields: ["postId"])
+  training: Training @connection(fields: ["postId"]
   cooking : Cooking  @connection(fields: ["postId"])
 }
 
-# type Favorite 
-# @model
+type Favorite 
+@model
+@key(name: "userId", fields: ["userId"])
+@auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+  id: ID!
+  userId: ID!
+  tweetId: ID!
+  favoDate: AWSDate!
+}
 
-# @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-# {
-#   id: ID!
-#   userId: ID!
-#   tweetId: ID!
-#   favoDate: Stinrg!
-# }
-
-# type Bookmark 
-# @model 
-
-# @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-# {
-#   id: ID!
-#   userId: ID!
-#   tweetId: ID!
-#   bmDate: Stinrg!
-# }
+type Bookmark 
+@model 
+@key(name: "userId", fields: ["userId"])
+@auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+  id: ID!
+  userId: ID!
+  tweetId: ID!
+  bmDate: AWSDate!
+}
 
 
 # カレンダー
@@ -149,7 +153,7 @@ type Memo
     weight: Float
     bfp: Float
     foodMemos: [FoodMemo] @connection(keyName: "food",fields: ["date", "owner"])
-    traningMemos :[TrainingMemo] @connection(keyName: "training",fields: ["date", "owner"])
+    trainingMemos :[TrainingMemo] @connection(keyName: "training",fields: ["date", "owner"])
 }
 type FoodMemo
     @model
