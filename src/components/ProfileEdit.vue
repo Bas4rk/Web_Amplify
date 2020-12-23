@@ -38,15 +38,13 @@
         </v-btn>
       </transition>
     </v-row>
-      
-      <!-- アカウントアイコン -->
-      <v-row justify="center">
+
+      <!-- <v-row justify="center">
         <v-list-item-avatar size="130" color="grey darken-1">
           <v-icon size="130">mdi-account</v-icon>
         </v-list-item-avatar>
       </v-row>
 
-      <!-- 写真変更ボタン -->
       <v-row justify="center">
         <v-btn
           class="ma-2"
@@ -61,7 +59,12 @@
         </v-icon>
           写真を変更
         </v-btn>
-      </v-row>
+      </v-row> -->
+
+      <amplify-photo-picker v-bind:photoPickerConfig="photoPickerConfig"/>
+      <div>現在のプロフィール画像</div>
+      <amplify-s3-image :imagePath="imagePath" />
+
 
       <!-- 横線です -->
       <!-- <v-divider></v-divider> -->
@@ -96,7 +99,6 @@
         </v-card>
       </v-dialog>
     </v-row>
-
     </v-container>
   </div>
   <!-- tweetカードらへんをコンポーネントにする。一番上に飛ぶボタンつくる -->
@@ -104,6 +106,7 @@
 
 <script>
 import Navigation from '@/components/Navigation.vue';
+import store from '../store/index.js'
 // import NewTodo from '@/components/NewTodo.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlMutations from '../graphql/mutations'
@@ -122,6 +125,13 @@ import * as gqlMutations from '../graphql/mutations'
         name2: null,
         // 保存ボタンの表示非表示用
         buttonActive: false,
+        imagePath: `${store.getters.getUserName}/avatar`,
+        photoPickerConfig: {
+          header: 'Upload Profile Pic',
+          accept: 'image/*',
+          path: `${store.getters.getUserName}/`,
+          defaultName: 'avatar'
+        },
       }
     },
     components: {

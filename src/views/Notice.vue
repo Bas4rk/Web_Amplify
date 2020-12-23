@@ -9,6 +9,7 @@
 import NoticeList from '@/components/NoticeList.vue';
 import Navigation from '@/components/Navigation.vue';
 
+
 import { API, graphqlOperation } from 'aws-amplify'
 import store from '../store/index.js'
 
