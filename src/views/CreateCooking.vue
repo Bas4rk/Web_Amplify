@@ -60,12 +60,11 @@
 
       </v-row>
 
-      <!-- 載せた画像表示場所 -->
       <v-row>
 
         <v-col cols="12" sm="6" md="3" justify="left">
           <v-img
-            src="../assets/料理/料理.png" 
+            src="../assets/料理/料理.png"
             max-width="600"
             max-height="600"
           ></v-img>
@@ -75,7 +74,6 @@
 
       <v-row>
 
-        <!-- 写真投稿ボタンです、中身はまだない -->
         <v-col cols="12" sm="6" md="3" justify="left">
           <v-btn
             class="ma-2"
@@ -93,7 +91,7 @@
         </v-col>
 
       </v-row>
-          
+
       <v-row>
 
         <!-- タイトル入力 -->
@@ -102,7 +100,7 @@
             placeholder="タイトル"
             v-model="title"
           >
-          </v-text-field> 
+          </v-text-field>
         </v-col>
 
         <!-- カロリー入力ボタンです、中身はまだない、どうやって入力させる？ -->
@@ -126,7 +124,7 @@
             placeholder="カロリー"
             v-model="calorie"
           >
-          </v-text-field> 
+          </v-text-field>
         </v-col>
 
         <!-- 栄養素入力です -->
@@ -154,7 +152,7 @@
         </v-col>
 
       </v-row>
-          
+
       <!-- 作り方書くところ -->
       <v-row>
 
@@ -218,7 +216,7 @@
       >
         <v-card>
           <v-card-title class="headline">投稿完了</v-card-title>
-  
+
           <v-card-text>
             料理記事を投稿しました。
           </v-card-text>
@@ -252,14 +250,14 @@ export default {
       title: null,
       // カロリー
       calorie: null,
-      dialog: false
+      dialog: false,
     }
   },
   components: {
     Navigation,
   },
   computed: {
-  
+
   },
   methods: {
     // 戻るボタンメソッドです
