@@ -21,18 +21,16 @@
           :disabled="disabled"
           :events="enableEvents ? functionEvents : null"
         ></v-date-picker>
-      </v-col>
-      <v-col cols="12" xs="6" sm="8" md="10" align="center">
+        <v-divider></v-divider>
         <v-row align-content="space-between">
-          <v-col cols="12" align="center">
-          <div class="display-3">体重:60kg</div>
+          <v-col cols="12" xs="12" sm="12" md="4" align="center">
+            <div class="display-1">体重:60kg</div>
           </v-col>
-          <v-col cols="12" align="center">
-          <div class="display-3">体脂肪率:20%</div>
+          <v-col cols="12" xs="12" sm="12" md="8" align="center">
+            <div class="display-1">体脂肪率:20%</div>
           </v-col>
         </v-row>
       </v-col>
-      
     </v-row>
 
     <!-- [fix]ごはんと筋トレ、コンポーネント化する -->
@@ -283,9 +281,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-  .contents {
-    font-size: 1.2em;
-  }
-</style>
