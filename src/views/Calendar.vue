@@ -5,7 +5,7 @@
       {{}}
     </div> -->
     <v-row class="ontents" justify="center">
-      <v-col cols="12" xs="6" sm="8" md="10" align="center">
+      <v-col cols="12" xs="6" sm="10" md="11" align="center">
         <v-date-picker
           v-model="picker"
           locale="jp-ja"
@@ -36,7 +36,7 @@
     <!-- [fix]ごはんと筋トレ、コンポーネント化する -->
     <v-divider></v-divider>
     <v-row justify="center" class="my-5">
-      <div class="display-2">今日のごはん</div>
+      <div class="display-1">今日のごはん</div>
     </v-row>
     <v-divider></v-divider>
 
@@ -118,7 +118,7 @@
       </v-dialog>  
     </v-row>
     <v-row v-else justify="center" class="my-5">
-      <div class="display-2">
+      <div class="display-1">
         何も食べてません。
       </div>
     </v-row>
@@ -130,7 +130,7 @@
     <!-- 後でコンポーネント化する -->
     <v-divider></v-divider>
     <v-row justify="center" class="my-5">
-      <div class="display-2">今日の筋トレ</div>
+      <div class="display-1">今日の筋トレ</div>
     </v-row>
     <v-divider></v-divider>
 
@@ -141,7 +141,7 @@
       ></v-treeview>
     </v-row>
     <v-row v-else justify="center" class="my-5">
-      <div class="display-2">
+      <div class="display-1">
         トレーニングしていません。
       </div>
     </v-row>
