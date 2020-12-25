@@ -13,8 +13,13 @@
           color="grey darken-1"
           size="64"
         >
-        <v-icon size="60">mdi-account</v-icon>
+        <img
+          :src="avatar"
+        >
+        <!-- <v-icon size="60">mdi-account</v-icon> -->
+        <!-- <amplify-s3-image :imagePath="imagePath" /> -->
         </v-avatar>
+
 
         <div>{{getUserName}}</div>
         <div>{{getUserEmail}}</div>
@@ -71,10 +76,13 @@
         </v-btn>
       </template> -->
     </v-app-bar>
+    {{avatar}}
   </div>
 </template>
 
 <script>
+import {Storage} from 'aws-amplify'
+import store from '../store/index.js'
 
 export default {
   data: () => ({
@@ -91,6 +99,8 @@ export default {
       ['mdi-account', 'プロフィール','/profile'],
       ['mdi-cog', '設定','/setting'],
     ],
+    imagePath: `test/avatar`,
+    avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy40UeBc_qdzION5Qr7xvLfzBq8kVyk9unaw&usqp=CAU',
   }),
   computed: {
     getUserName(){
@@ -109,7 +119,8 @@ export default {
   methods: {
 
   },
-  mounted(){
+  async mounted(){
+    this.avatar = await Storage.get(`${store.getters.getUserName}/avatar`)
   }
 }
 </script>
