@@ -21,128 +21,123 @@
           :disabled="disabled"
           :events="enableEvents ? functionEvents : null"
         ></v-date-picker>
-        <v-divider></v-divider>
-        <v-row align-content="space-between">
-          <v-col cols="12" xs="12" sm="12" md="4" align="center">
-            <div class="display-1">体重:60kg</div>
-          </v-col>
-          <v-col cols="12" xs="12" sm="12" md="8" align="center">
-            <div class="display-1">体脂肪率:20%</div>
-          </v-col>
-        </v-row>
+      </v-col>
+    </v-row>
+    <v-row align-content="space-between">
+      <v-col cols="12" xs="12" sm="4" md="4" align="center">
+        <div class="display-1">体重:60kg</div>
+      </v-col>
+      <v-col cols="12" xs="12" sm="8" md="8" align="center">
+        <div class="display-1">体脂肪率:20%</div>
       </v-col>
     </v-row>
 
     <!-- [fix]ごはんと筋トレ、コンポーネント化する -->
     <v-divider></v-divider>
-    <v-row justify="center" class="my-5">
-      <div class="display-1">今日のごはん</div>
-    </v-row>
-    <v-divider></v-divider>
-
-    <v-row v-if="todayFoodMenus.length > 0" id="clmenu" align="center" class="my-5">
-      <v-col
-        v-for="(card,index) in todayFoodMenus"
-        :key="index"
-        :cols=3
-        @click.stop="onClickBtn(card)"
-        xs="3" sm="4" md="6" 
-      >
-        <v-subheader>{{card.subtitle}}</v-subheader>
-        <v-card>
-          <v-img
-            :src="card.image"
-            class="white--text align-end"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="200px"
-          >
-            <v-card-title v-text="card.title"></v-card-title>
-          </v-img>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-
-            <v-btn icon>
-              <v-icon>mdi-fire</v-icon>
-            </v-btn>
-            <span>{{card.calorele}}kcal</span>
-          </v-card-actions>
-        </v-card>
+    <v-row>
+      <v-col cols="12" xs="12" sm="6" md="6" class="my-5">
+        <div class="display-1">・メニュー</div>
       </v-col>
+      <div v-if="todayFoodMenus.length > 0" 
+      id="clmenu">
+        <v-col
+          v-for="(card,index) in todayFoodMenus"
+          :key="index"
+          :cols=3
+          @click.stop="onClickBtn(card)"
+          xs="12" sm="3" md="4" 
+        >
+          <v-subheader>{{card.subtitle}}</v-subheader>
+          <v-card>
+            <v-img
+              :src="card.image"
+              class="white--text align-end"
+              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              height="200px"
+            >
+              <v-card-title v-text="card.title"></v-card-title>
+            </v-img>
 
-      <v-dialog
-        v-model="dialog"
-        v-if="currentCard"
-        max-width="600"
-      >
-        <v-card>
-          <v-img
-            :src= "currentCard.image"
-            class="white--text align-end"
-          >
-          </v-img>
-          <v-card-title>{{currentCard.title}}</v-card-title>
-          <v-divider class="mx-4"></v-divider>
-          <v-card-title>栄養成分</v-card-title>
-          <v-list class="transparent">
-            <v-list-item>
-              <v-list-item-title>エネルギー</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>炭水化物</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>タンパク質</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>脂質</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>なんか</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
-            </v-list-item>
-          </v-list>
+            <v-card-actions>
+              <v-spacer></v-spacer>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn icon>
-              <v-icon>mdi-fire</v-icon>
-            </v-btn>
-            <span>{{currentCard.calorele}}cal</span>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>  
-    </v-row>
-    <v-row v-else justify="center" class="my-5">
-      <div class="display-1">
-        何も食べてません。
+              <v-btn icon>
+                <v-icon>mdi-fire</v-icon>
+              </v-btn>
+              <span>{{card.calorele}}kcal</span>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+
+        <v-dialog
+          v-model="dialog"
+          v-if="currentCard"
+          max-width="600"
+        >
+          <v-card>
+            <v-img
+              :src= "currentCard.image"
+              class="white--text align-end"
+            >
+            </v-img>
+            <v-card-title>{{currentCard.title}}</v-card-title>
+            <v-divider class="mx-4"></v-divider>
+            <v-card-title>栄養成分</v-card-title>
+            <v-list class="transparent">
+              <v-list-item>
+                <v-list-item-title>エネルギー</v-list-item-title>
+                <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>炭水化物</v-list-item-title>
+                <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>タンパク質</v-list-item-title>
+                <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>脂質</v-list-item-title>
+                <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>なんか</v-list-item-title>
+                <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn icon>
+                <v-icon>mdi-fire</v-icon>
+              </v-btn>
+              <span>{{currentCard.calorele}}cal</span>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
-    </v-row>
-
-
-
-
-    <!-- 筋トレ -->
-    <!-- 後でコンポーネント化する -->
-    <v-divider></v-divider>
-    <v-row justify="center" class="my-5">
-      <div class="display-1">今日の筋トレ</div>
-    </v-row>
-    <v-divider></v-divider>
-
-    <v-row v-if="todayTrainingMenus" id="clmenu" align="center">
+      <div v-else class="my-5">
+        <v-col cols="12" xs="12" sm="12" md="12" align="center">
+          <div class="display-1">記録がありません</div>
+        </v-col>
+      </div>
+      <!-- 筋トレ -->
+      <!-- 後でコンポーネント化する -->
+      <v-col cols="12" xs="12" sm="6" md="6" class="my-5">
+        <div class="display-1">・トレーニング</div>
+      </v-col>
+      <div v-if="todayTrainingMenus" id="clmenu" align="center">
       <v-treeview
         open-all
         :items="todayTrainingMenus.items"
       ></v-treeview>
-    </v-row>
-    <v-row v-else justify="center" class="my-5">
-      <div class="display-1">
-        トレーニングしていません。
+      </div>
+      <div v-else class="my-5">
+        <v-col cols="12" xs="12" sm="12" md="12" align="center">
+          <div class="display-1">
+            記録がありません
+          </div>
+        </v-col>
       </div>
     </v-row>
   </div>
