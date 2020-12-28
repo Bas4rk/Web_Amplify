@@ -76,7 +76,7 @@
         </v-btn>
       </template> -->
     </v-app-bar>
-    {{avatar}}
+    <!-- {{avatar}} -->
   </div>
 </template>
 
