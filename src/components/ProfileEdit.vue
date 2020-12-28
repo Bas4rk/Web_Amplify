@@ -125,11 +125,11 @@ import * as gqlMutations from '../graphql/mutations'
         name2: null,
         // 保存ボタンの表示非表示用
         buttonActive: false,
-        imagePath: `${store.getters.getUserName}/avatar`,
+        imagePath: `${store.getters.getUserEmail}/avatar`,
         photoPickerConfig: {
           header: 'Upload Profile Pic',
           accept: 'image/*',
-          path: `${store.getters.getUserName}/`,
+          path: `${store.getters.getUserEmail}/`,
           defaultName: 'avatar'
         },
       }

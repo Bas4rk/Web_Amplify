@@ -30,7 +30,7 @@ query GetUser($id: ID!) {
         }
       }
     }
-    traningPosts {
+    trainingPosts {
       items {
         id
         title
@@ -71,7 +71,7 @@ query GetUser($id: ID!) {
               }
             }
           }
-          traningPosts {
+          trainingPosts {
             nextToken
             items {
               id
