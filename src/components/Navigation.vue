@@ -130,7 +130,8 @@ export default {
 
   },
   async mounted(){
-    this.avatar = await Storage.get(`${store.getters.getUserName}/avatar`)
+    this.avatar = await Storage.get(`${store.getters.getUserEmail}/avatar`)
+    console.log("log:"+store.getters.getUserEmail)
   }
 }
 </script>

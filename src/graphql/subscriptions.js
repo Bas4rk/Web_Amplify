@@ -6,6 +6,9 @@ export const onCreateUser = /* GraphQL */ `
     onCreateUser {
       id
       name
+      iconImage
+      headerImage
+      profile
       emailAddress
       createdAt
       updatedAt
@@ -46,7 +49,7 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
-      traningPosts {
+      trainingPosts {
         items {
           id
           userId
@@ -80,6 +83,30 @@ export const onCreateUser = /* GraphQL */ `
           postId
           image
           content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      favoriteList {
+        items {
+          id
+          userId
+          tweetId
+          favoDate
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      bookmarkList {
+        items {
+          id
+          userId
+          tweetId
+          bmDate
           createdAt
           updatedAt
           owner
@@ -95,6 +122,9 @@ export const onUpdateUser = /* GraphQL */ `
     onUpdateUser {
       id
       name
+      iconImage
+      headerImage
+      profile
       emailAddress
       createdAt
       updatedAt
@@ -135,7 +165,7 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
-      traningPosts {
+      trainingPosts {
         items {
           id
           userId
@@ -169,6 +199,30 @@ export const onUpdateUser = /* GraphQL */ `
           postId
           image
           content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      favoriteList {
+        items {
+          id
+          userId
+          tweetId
+          favoDate
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      bookmarkList {
+        items {
+          id
+          userId
+          tweetId
+          bmDate
           createdAt
           updatedAt
           owner
@@ -184,6 +238,9 @@ export const onDeleteUser = /* GraphQL */ `
     onDeleteUser {
       id
       name
+      iconImage
+      headerImage
+      profile
       emailAddress
       createdAt
       updatedAt
@@ -224,7 +281,7 @@ export const onDeleteUser = /* GraphQL */ `
         }
         nextToken
       }
-      traningPosts {
+      trainingPosts {
         items {
           id
           userId
@@ -258,6 +315,30 @@ export const onDeleteUser = /* GraphQL */ `
           postId
           image
           content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      favoriteList {
+        items {
+          id
+          userId
+          tweetId
+          favoDate
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      bookmarkList {
+        items {
+          id
+          userId
+          tweetId
+          bmDate
           createdAt
           updatedAt
           owner
@@ -278,6 +359,9 @@ export const onCreateRelationship = /* GraphQL */ `
       followee {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -291,13 +375,19 @@ export const onCreateRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -305,6 +395,9 @@ export const onCreateRelationship = /* GraphQL */ `
       follower {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -318,13 +411,19 @@ export const onCreateRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -345,6 +444,9 @@ export const onUpdateRelationship = /* GraphQL */ `
       followee {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -358,13 +460,19 @@ export const onUpdateRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -372,6 +480,9 @@ export const onUpdateRelationship = /* GraphQL */ `
       follower {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -385,13 +496,19 @@ export const onUpdateRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -412,6 +529,9 @@ export const onDeleteRelationship = /* GraphQL */ `
       followee {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -425,13 +545,19 @@ export const onDeleteRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -439,6 +565,9 @@ export const onDeleteRelationship = /* GraphQL */ `
       follower {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -452,13 +581,19 @@ export const onDeleteRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -481,6 +616,9 @@ export const onCreateTweet = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -494,13 +632,19 @@ export const onCreateTweet = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -534,6 +678,9 @@ export const onUpdateTweet = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -547,13 +694,19 @@ export const onUpdateTweet = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -587,6 +740,9 @@ export const onDeleteTweet = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -600,13 +756,19 @@ export const onDeleteTweet = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -628,9 +790,9 @@ export const onDeleteTweet = /* GraphQL */ `
     }
   }
 `;
-export const onCreateTraning = /* GraphQL */ `
-  subscription OnCreateTraning {
-    onCreateTraning {
+export const onCreateTraining = /* GraphQL */ `
+  subscription OnCreateTraining {
+    onCreateTraining {
       id
       userId
       image
@@ -641,6 +803,9 @@ export const onCreateTraning = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -654,13 +819,19 @@ export const onCreateTraning = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -682,9 +853,9 @@ export const onCreateTraning = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateTraning = /* GraphQL */ `
-  subscription OnUpdateTraning {
-    onUpdateTraning {
+export const onUpdateTraining = /* GraphQL */ `
+  subscription OnUpdateTraining {
+    onUpdateTraining {
       id
       userId
       image
@@ -695,6 +866,9 @@ export const onUpdateTraning = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -708,13 +882,19 @@ export const onUpdateTraning = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -736,9 +916,9 @@ export const onUpdateTraning = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteTraning = /* GraphQL */ `
-  subscription OnDeleteTraning {
-    onDeleteTraning {
+export const onDeleteTraining = /* GraphQL */ `
+  subscription OnDeleteTraining {
+    onDeleteTraining {
       id
       userId
       image
@@ -749,6 +929,9 @@ export const onDeleteTraning = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -762,13 +945,19 @@ export const onDeleteTraning = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -804,6 +993,9 @@ export const onCreateCooking = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -817,13 +1009,19 @@ export const onCreateCooking = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -859,6 +1057,9 @@ export const onUpdateCooking = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -872,13 +1073,19 @@ export const onUpdateCooking = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -914,6 +1121,9 @@ export const onDeleteCooking = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -927,13 +1137,19 @@ export const onDeleteCooking = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -968,6 +1184,9 @@ export const onCreateComment = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -981,13 +1200,19 @@ export const onCreateComment = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -1002,6 +1227,9 @@ export const onCreateComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1013,7 +1241,7 @@ export const onCreateComment = /* GraphQL */ `
         }
         owner
       }
-      traning {
+      training {
         id
         userId
         image
@@ -1024,6 +1252,9 @@ export const onCreateComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1047,6 +1278,9 @@ export const onCreateComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1075,6 +1309,9 @@ export const onUpdateComment = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -1088,13 +1325,19 @@ export const onUpdateComment = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -1109,6 +1352,9 @@ export const onUpdateComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1120,7 +1366,7 @@ export const onUpdateComment = /* GraphQL */ `
         }
         owner
       }
-      traning {
+      training {
         id
         userId
         image
@@ -1131,6 +1377,9 @@ export const onUpdateComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1154,6 +1403,9 @@ export const onUpdateComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1182,6 +1434,9 @@ export const onDeleteComment = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -1195,13 +1450,19 @@ export const onDeleteComment = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -1216,6 +1477,9 @@ export const onDeleteComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1227,7 +1491,7 @@ export const onDeleteComment = /* GraphQL */ `
         }
         owner
       }
-      traning {
+      training {
         id
         userId
         image
@@ -1238,6 +1502,9 @@ export const onDeleteComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1261,6 +1528,9 @@ export const onDeleteComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1272,6 +1542,411 @@ export const onDeleteComment = /* GraphQL */ `
         }
         owner
       }
+      owner
+    }
+  }
+`;
+export const onCreateFavorite = /* GraphQL */ `
+  subscription OnCreateFavorite {
+    onCreateFavorite {
+      id
+      userId
+      tweetId
+      favoDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateFavorite = /* GraphQL */ `
+  subscription OnUpdateFavorite {
+    onUpdateFavorite {
+      id
+      userId
+      tweetId
+      favoDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteFavorite = /* GraphQL */ `
+  subscription OnDeleteFavorite {
+    onDeleteFavorite {
+      id
+      userId
+      tweetId
+      favoDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateBookmark = /* GraphQL */ `
+  subscription OnCreateBookmark {
+    onCreateBookmark {
+      id
+      userId
+      tweetId
+      bmDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateBookmark = /* GraphQL */ `
+  subscription OnUpdateBookmark {
+    onUpdateBookmark {
+      id
+      userId
+      tweetId
+      bmDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteBookmark = /* GraphQL */ `
+  subscription OnDeleteBookmark {
+    onDeleteBookmark {
+      id
+      userId
+      tweetId
+      bmDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateCalendar = /* GraphQL */ `
+  subscription OnCreateCalendar($owner: String!) {
+    onCreateCalendar(owner: $owner) {
+      owner
+      memo {
+        items {
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCalendar = /* GraphQL */ `
+  subscription OnUpdateCalendar($owner: String!) {
+    onUpdateCalendar(owner: $owner) {
+      owner
+      memo {
+        items {
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCalendar = /* GraphQL */ `
+  subscription OnDeleteCalendar($owner: String!) {
+    onDeleteCalendar(owner: $owner) {
+      owner
+      memo {
+        items {
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateMemo = /* GraphQL */ `
+  subscription OnCreateMemo($owner: String!) {
+    onCreateMemo(owner: $owner) {
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      trainingMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMemo = /* GraphQL */ `
+  subscription OnUpdateMemo($owner: String!) {
+    onUpdateMemo(owner: $owner) {
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      trainingMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMemo = /* GraphQL */ `
+  subscription OnDeleteMemo($owner: String!) {
+    onDeleteMemo(owner: $owner) {
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      trainingMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateFoodMemo = /* GraphQL */ `
+  subscription OnCreateFoodMemo($owner: String!) {
+    onCreateFoodMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFoodMemo = /* GraphQL */ `
+  subscription OnUpdateFoodMemo($owner: String!) {
+    onUpdateFoodMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFoodMemo = /* GraphQL */ `
+  subscription OnDeleteFoodMemo($owner: String!) {
+    onDeleteFoodMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateTrainingMemo = /* GraphQL */ `
+  subscription OnCreateTrainingMemo($owner: String!) {
+    onCreateTrainingMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      title
+      contentList {
+        items {
+          id
+          trainingMemoId
+          content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTrainingMemo = /* GraphQL */ `
+  subscription OnUpdateTrainingMemo($owner: String!) {
+    onUpdateTrainingMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      title
+      contentList {
+        items {
+          id
+          trainingMemoId
+          content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTrainingMemo = /* GraphQL */ `
+  subscription OnDeleteTrainingMemo($owner: String!) {
+    onDeleteTrainingMemo(owner: $owner) {
+      id
+      owner
+      memoDate
+      title
+      contentList {
+        items {
+          id
+          trainingMemoId
+          content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateTrainingContent = /* GraphQL */ `
+  subscription OnCreateTrainingContent($owner: String!) {
+    onCreateTrainingContent(owner: $owner) {
+      id
+      trainingMemoId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateTrainingContent = /* GraphQL */ `
+  subscription OnUpdateTrainingContent($owner: String!) {
+    onUpdateTrainingContent(owner: $owner) {
+      id
+      trainingMemoId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteTrainingContent = /* GraphQL */ `
+  subscription OnDeleteTrainingContent($owner: String!) {
+    onDeleteTrainingContent(owner: $owner) {
+      id
+      trainingMemoId
+      content
+      createdAt
+      updatedAt
       owner
     }
   }

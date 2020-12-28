@@ -6,6 +6,9 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       name
+      iconImage
+      headerImage
+      profile
       emailAddress
       createdAt
       updatedAt
@@ -46,7 +49,7 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
-      traningPosts {
+      trainingPosts {
         items {
           id
           userId
@@ -86,6 +89,30 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      favoriteList {
+        items {
+          id
+          userId
+          tweetId
+          favoDate
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      bookmarkList {
+        items {
+          id
+          userId
+          tweetId
+          bmDate
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       owner
     }
   }
@@ -100,6 +127,9 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -113,13 +143,19 @@ export const listUsers = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -138,6 +174,9 @@ export const getRelationship = /* GraphQL */ `
       followee {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -151,13 +190,19 @@ export const getRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -165,6 +210,9 @@ export const getRelationship = /* GraphQL */ `
       follower {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -178,13 +226,19 @@ export const getRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -210,6 +264,9 @@ export const listRelationships = /* GraphQL */ `
         followee {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -219,6 +276,9 @@ export const listRelationships = /* GraphQL */ `
         follower {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -245,6 +305,9 @@ export const getTweet = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -258,13 +321,19 @@ export const getTweet = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -303,6 +372,9 @@ export const listTweets = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -318,9 +390,9 @@ export const listTweets = /* GraphQL */ `
     }
   }
 `;
-export const getTraning = /* GraphQL */ `
-  query GetTraning($id: ID!) {
-    getTraning(id: $id) {
+export const getTraining = /* GraphQL */ `
+  query GetTraining($id: ID!) {
+    getTraining(id: $id) {
       id
       userId
       image
@@ -331,6 +403,9 @@ export const getTraning = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -344,13 +419,19 @@ export const getTraning = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -372,13 +453,13 @@ export const getTraning = /* GraphQL */ `
     }
   }
 `;
-export const listTranings = /* GraphQL */ `
-  query ListTranings(
-    $filter: ModelTraningFilterInput
+export const listTrainings = /* GraphQL */ `
+  query ListTrainings(
+    $filter: ModelTrainingFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTranings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listTrainings(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         userId
@@ -390,6 +471,9 @@ export const listTranings = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -419,6 +503,9 @@ export const getCooking = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -432,13 +519,19 @@ export const getCooking = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -479,6 +572,9 @@ export const listCookings = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -507,6 +603,9 @@ export const getComment = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -520,13 +619,19 @@ export const getComment = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -541,6 +646,9 @@ export const getComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -552,7 +660,7 @@ export const getComment = /* GraphQL */ `
         }
         owner
       }
-      traning {
+      training {
         id
         userId
         image
@@ -563,6 +671,9 @@ export const getComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -586,6 +697,9 @@ export const getComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -619,6 +733,9 @@ export const listComments = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -634,7 +751,7 @@ export const listComments = /* GraphQL */ `
           updatedAt
           owner
         }
-        traning {
+        training {
           id
           userId
           image
@@ -661,6 +778,309 @@ export const listComments = /* GraphQL */ `
     }
   }
 `;
+export const getFavorite = /* GraphQL */ `
+  query GetFavorite($id: ID!) {
+    getFavorite(id: $id) {
+      id
+      userId
+      tweetId
+      favoDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listFavorites = /* GraphQL */ `
+  query ListFavorites(
+    $filter: ModelFavoriteFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFavorites(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        tweetId
+        favoDate
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getBookmark = /* GraphQL */ `
+  query GetBookmark($id: ID!) {
+    getBookmark(id: $id) {
+      id
+      userId
+      tweetId
+      bmDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listBookmarks = /* GraphQL */ `
+  query ListBookmarks(
+    $filter: ModelBookmarkFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listBookmarks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        tweetId
+        bmDate
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getCalendar = /* GraphQL */ `
+  query GetCalendar($owner: ID!) {
+    getCalendar(owner: $owner) {
+      owner
+      memo {
+        items {
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCalendars = /* GraphQL */ `
+  query ListCalendars(
+    $owner: ID
+    $filter: ModelCalendarFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listCalendars(
+      owner: $owner
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        owner
+        memo {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMemo = /* GraphQL */ `
+  query GetMemo($date: AWSDate!) {
+    getMemo(date: $date) {
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      trainingMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMemos = /* GraphQL */ `
+  query ListMemos(
+    $date: AWSDate
+    $filter: ModelMemoFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listMemos(
+      date: $date
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        owner
+        date
+        weight
+        bfp
+        foodMemos {
+          nextToken
+        }
+        trainingMemos {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getFoodMemo = /* GraphQL */ `
+  query GetFoodMemo($id: ID!) {
+    getFoodMemo(id: $id) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFoodMemos = /* GraphQL */ `
+  query ListFoodMemos(
+    $filter: ModelFoodMemoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFoodMemos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        owner
+        memoDate
+        title
+        image
+        calorele
+        lipid
+        proteins
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getTrainingMemo = /* GraphQL */ `
+  query GetTrainingMemo($id: ID!) {
+    getTrainingMemo(id: $id) {
+      id
+      owner
+      memoDate
+      title
+      contentList {
+        items {
+          id
+          trainingMemoId
+          content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTrainingMemos = /* GraphQL */ `
+  query ListTrainingMemos(
+    $filter: ModelTrainingMemoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTrainingMemos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        owner
+        memoDate
+        title
+        contentList {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getTrainingContent = /* GraphQL */ `
+  query GetTrainingContent($id: ID!) {
+    getTrainingContent(id: $id) {
+      id
+      trainingMemoId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listTrainingContents = /* GraphQL */ `
+  query ListTrainingContents(
+    $filter: ModelTrainingContentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTrainingContents(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        trainingMemoId
+        content
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const emailIndex = /* GraphQL */ `
   query EmailIndex(
     $emailAddress: String
@@ -679,6 +1099,9 @@ export const emailIndex = /* GraphQL */ `
       items {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -692,13 +1115,19 @@ export const emailIndex = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -730,6 +1159,9 @@ export const followeeIndex = /* GraphQL */ `
         followee {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -739,6 +1171,9 @@ export const followeeIndex = /* GraphQL */ `
         follower {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -776,6 +1211,9 @@ export const followerIndex = /* GraphQL */ `
         followee {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -785,6 +1223,9 @@ export const followerIndex = /* GraphQL */ `
         follower {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt

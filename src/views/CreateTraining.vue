@@ -65,14 +65,14 @@
 
         <v-col cols="12" sm="6" md="3" justify="left">
           <v-img
-            src="../assets/筋トレ/筋トレ.png" 
+            src="../assets/筋トレ/筋トレ.png"
             max-width="600"
             max-height="600"
           ></v-img>
         </v-col>
-          
+
       </v-row>
-              
+
       <v-row>
 
         <!-- 写真投稿ボタンです、中身はまだない -->
@@ -93,9 +93,9 @@
         </v-col>
 
       </v-row>
-          
+
       <v-row>
-            
+
         <!-- タイトル入力 -->
         <v-col cols="12" sm="6" md="3">
           <v-text-field
@@ -114,7 +114,7 @@
         </v-col>
 
       </v-row>
-          
+
       <!-- 作り方書くところ -->
       <v-row>
 
@@ -179,7 +179,7 @@
       >
         <v-card>
           <v-card-title class="headline">投稿完了</v-card-title>
-  
+
           <v-card-text>
             筋トレ記事を投稿しました。
           </v-card-text>
@@ -211,7 +211,7 @@ export default {
     Navigation,
   },
   computed: {
-  
+
   },
   methods: {
     // 戻るボタンメソッドです
@@ -224,7 +224,7 @@ export default {
     async createTraning(){
       const traning = await API.graphql(
         //[fix]あとでクエリー書き直す?
-          graphqlOperation(gqlMutations.createTraning,{
+          graphqlOperation(gqlMutations.createTraining,{
             input: {userId: this.$store.getters.getUserId,
             title: this.title,
             content: this.content
