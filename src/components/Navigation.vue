@@ -21,7 +21,7 @@
         <v-avatar
           class="mb-4"
           color="grey darken-1"
-          size="64"
+          size="127"
         >
         <img
           :src="avatar"
@@ -124,6 +124,10 @@ export default {
     },
     getCount(){
       return this.$store.getters.getCount
+    },
+    // store使ってリクエスト回数減らしたい
+    getAvatar(){
+      return this.$store.getters.getAvatar
     }
   },
   methods: {
@@ -131,7 +135,7 @@ export default {
   },
   async mounted(){
     this.avatar = await Storage.get(`${store.getters.getUserEmail}/avatar`)
-    console.log("log:"+store.getters.getUserEmail)
+    // console.log("log:"+store.getters.getUserEmail)
   }
 }
 </script>

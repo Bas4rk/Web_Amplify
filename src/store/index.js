@@ -11,6 +11,7 @@ export default new Vuex.Store({
     UserName: null,
     UserEmail: null,
     UserId: null,
+    UserAvatar: null,
     Wholeposts: null,
     Messages: [],
     Count: 0,
@@ -28,6 +29,10 @@ export default new Vuex.Store({
       // return state.user.signInUserSession.idToken.payload.email
       return state.UserId
     },
+    getUserAvatar(state) {
+      // return state.user.signInUserSession.idToken.payload.email
+      return state.UserAvatar
+    },
     getMessages(state){
       return state.Messages
     },
@@ -44,6 +49,9 @@ export default new Vuex.Store({
     },
     setUserId(state, id) {
       state.UserId = id
+    },
+    setUserAvatar(state, avatar) {
+      state.UserAvatar = avatar
     },
     setMessage(state, message) {
       state.Messages.push(message)

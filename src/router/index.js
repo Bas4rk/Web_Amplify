@@ -44,6 +44,9 @@ import Terms from '../views/Terms.vue'
 
 import {AmplifyEventBus} from 'aws-amplify-vue'
 import {getUser} from '@/utils/auth.js'
+// import store from '../store'
+// import {Storage} from 'aws-amplify'
+
 
 Vue.use(Router)
 
@@ -308,7 +311,7 @@ const router = new Router({
 // })
 
 // [fix1]でコメントアウトしたけど、router.beforeResolveとやってることかぶってると思う。
-  
+
 AmplifyEventBus.$on('authState', async (state) => {
   const pushPathes = {
     signedOut: () => {
@@ -331,7 +334,7 @@ AmplifyEventBus.$on('authState', async (state) => {
     pushPathes[state]()
   }
 })
-  
+
 router.beforeResolve(async (to, from, next) => {
   const user = await getUser()
   if (!user) {
