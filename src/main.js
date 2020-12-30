@@ -12,7 +12,7 @@ import VueCroppie from  'vue-croppie';
 import 'croppie/croppie.css'
 Amplify.configure(awsconfig)
 
-Vue.use(VueCroppie, AmplifyPlugin, AmplifyModules)
+Vue.use(VueCroppie,AmplifyPlugin, AmplifyModules)
 
 Vue.config.productionTip = false
 

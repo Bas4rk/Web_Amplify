@@ -41,13 +41,13 @@
       <v-row>
         <v-col cols="12" sm="6" md="3" justify="left">
           <v-img
-            src="../assets/料理/料理投稿.png" 
+            :src="image"
             max-width="600"
             max-height="600"
           ></v-img>
         </v-col>
       </v-row>
-          
+
       <v-row>
         <v-col cols="12" sm="6" md="3">
           <span>料理名：{{item.title}}</span><br>
@@ -64,7 +64,7 @@
           <span>脂質 10g</span><br>
         </v-col>
       </v-row>
-          
+
       <v-row>
         <v-col cols="12" sm="6" md="3">
           <div>料理の作り方</div>
@@ -80,12 +80,14 @@
 
 <script>
 import Navigation from '@/components/Navigation.vue';
+import {Storage} from 'aws-amplify'
 
 export default {
   data() {
     return{
       item: this.$route.params.item,
       prevRoute: null,
+      image: null
     }
   },
   components: {
@@ -105,5 +107,8 @@ export default {
       vm.prevRoute = from.path;
     });
   },
+  async mounted(){
+    this.image = await Storage.get(this.item.image)
+  }
 }
 </script>

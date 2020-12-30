@@ -9,6 +9,7 @@
           :key="i"
           cols="12"
         >
+        <br>
           <v-card>
             <v-menu
               :close-on-click="true"
@@ -39,7 +40,7 @@
               <!-- [fix]v-menu押しても、リンク飛んでしまう。
                 v-menu外に出せば解決するけど、card内にmenu入れた方が見やすい気がする。 -->
               <v-img
-                :src="require('../assets/料理/料理投稿.png')"
+                :src="getImage(i)"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="200px"
@@ -59,12 +60,15 @@
         </v-col>
       </v-list>
     </v-card>
+    <!-- {{list}} -->
   </div>
   <!-- tweetカードらへんをコンポーネントにする。一番上に飛ぶボタンつくる -->
 </template>
 
 <script>
 import { API, graphqlOperation } from 'aws-amplify'
+import {Storage} from 'aws-amplify'
+
 
 const deleteCooking_query = /* GraphQL */`
   mutation DeleteCooking(
@@ -79,7 +83,7 @@ const deleteCooking_query = /* GraphQL */`
   export default {
     data () {
       return {
-
+        list: ''
       }
     },
     props:['items2'],
@@ -88,7 +92,7 @@ const deleteCooking_query = /* GraphQL */`
     computed: {
       currentuser(){
         return this.$store.getters.getUserEmail
-      }
+      },
     },
     methods: {
       async deleteCooking(id){
@@ -101,7 +105,19 @@ const deleteCooking_query = /* GraphQL */`
         )
         console.log("投稿を削除しました"+deleteCooking.data.deleteCooking)
       },
+      getImage(i){
+        return  this.list[i]
+      },
     },
+    async mounted(){
+      let image;
+      let imageList = [];
+      for(let i = 0; i < this.items2.length; i++){
+        image = await Storage.get(this.items2[i].image)
+        imageList.push(image)
+      }
+      this.list = imageList;
+    }
   }
 </script>
 

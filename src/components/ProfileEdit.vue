@@ -109,6 +109,7 @@
       </v-dialog>
     </v-row>
     </v-container>
+    <!-- {{this.cropped}} -->
   </div>
   <!-- tweetカードらへんをコンポーネントにする。一番上に飛ぶボタンつくる -->
 </template>
@@ -137,13 +138,6 @@ export default {
       name2: null,
       // 保存ボタンの表示非表示用
       buttonActive: false,
-      imagePath: `${store.getters.getUserEmail}/avatar`,
-      photoPickerConfig: {
-        header: 'Upload Profile Pic',
-        accept: 'image/*',
-        path: `${store.getters.getUserEmail}/`,
-        defaultName: 'avatar'
-      },
       croppiePreview: '',
       cropped: null,
       imageDialog: false,
@@ -232,6 +226,9 @@ export default {
       )
       .then (result => console.log(result)) // {key: "test.txt"}
       .catch(err => console.log(err));
+
+      let avatar = await Storage.get(`${store.getters.getUserEmail}/avatar`)
+      store.commit('setUserAvatar',avatar)
       this.imageDialog = true;
     }
   },
