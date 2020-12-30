@@ -98,6 +98,7 @@ import Navigation from '@/components/Navigation.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
 import * as graphql from '../graphql/graphql.js'
+import * as subscriptions from '../graphql/subscriptions.js'
 
 export default {
   name: 'home',
@@ -129,6 +130,9 @@ export default {
       trainingPosts: null,
       //直前のパス
       prevRoute: null,
+      //
+      createSubscription: null,
+      deleteSubscription: null,
     }
   },
   components: {
@@ -156,6 +160,24 @@ export default {
       } else {
         this.buttonActive = false
       }
+    },
+    subscribe(){
+      // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
+      this.createSubscription = API.graphql(graphqlOperation(subscriptions.onCreateTweet)).subscribe({
+        next: (eventData) => {
+          console.log("evenData:"+eventData)
+          const tweet = eventData.value.data.onCreateTweet;
+          this.wholeposts.push(tweet);
+          this.relation = eventData
+        }
+      })
+
+      this.deleteSubscription = API.graphql(graphqlOperation(subscriptions.onDeleteTweet)).subscribe({
+        next: (eventData) => {
+          const tweet = eventData.value.data.onDeleteTweet;
+          this.wholeposts = this.wholeposts.filter(post => post.id != tweet.id);
+        }
+      })
     },
   },
   mounted : async function(){
