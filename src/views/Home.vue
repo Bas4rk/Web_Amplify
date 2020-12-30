@@ -128,7 +128,7 @@ export default {
       cookingPosts: null,
       trainingPosts: null,
       //直前のパス
-      prevRoute: null,
+      prevRoute: 'tweet',
     }
   },
   components: {
