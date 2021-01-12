@@ -11,6 +11,7 @@ query GetUser($id: ID!) {
         id
         content
         createdAt
+        image
         user {
           name
           emailAddress
@@ -24,18 +25,20 @@ query GetUser($id: ID!) {
         content
         calorie
         createdAt
+        image
         user {
           name
           emailAddress
         }
       }
     }
-    traningPosts {
+    trainingPosts {
       items {
         id
         title
         content
         createdAt
+        image
         user {
           name
           emailAddress
@@ -51,6 +54,7 @@ query GetUser($id: ID!) {
               id
               content
               createdAt
+              image
               user {
                 name
                 emailAddress
@@ -65,19 +69,21 @@ query GetUser($id: ID!) {
               createdAt
               id
               title
+              image
               user {
                 name
                 emailAddress
               }
             }
           }
-          traningPosts {
+          trainingPosts {
             nextToken
             items {
               id
               content
               createdAt
               title
+              image
               user {
                 name
                 emailAddress

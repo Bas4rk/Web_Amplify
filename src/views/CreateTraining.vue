@@ -52,50 +52,35 @@
             class="ma-2"
             color="primary"
             dark
-            @click="createTraning"
+            @click="createTraining"
           >
             投稿
           </v-btn>
         </v-col>
-
       </v-row>
 
-      <!-- 載せた画像表示場所 -->
       <v-row>
+        <v-img
+          v-if="uploadImageUrl"
+          :src="uploadImageUrl"
+          max-width="600"
+          max-height="600">
+        </v-img>
+      </v-row>
 
-        <v-col cols="12" sm="6" md="3" justify="left">
-          <v-img
-            src="../assets/筋トレ/筋トレ.png" 
-            max-width="600"
-            max-height="600"
-          ></v-img>
+      <v-row>
+        <v-col cols="5">
+        <v-file-input
+          accept="image/*"
+          label="筋トレの写真を載せる"
+          @change="onImgPicked"
+        ></v-file-input>
         </v-col>
-          
       </v-row>
-              
-      <v-row>
+      <!-- {{this.uploadImageUrl}}
+      {{this.image}} -->
 
-        <!-- 写真投稿ボタンです、中身はまだない -->
-        <v-col cols="12" sm="6" md="3" justify="left">
-          <v-btn
-            class="ma-2"
-            color="primary"
-            dark
-          >
-          <v-icon
-            dark
-            left
-          >
-            mdi-camera
-          </v-icon>
-            写真を載せる
-          </v-btn>
-        </v-col>
-
-      </v-row>
-          
       <v-row>
-            
         <!-- タイトル入力 -->
         <v-col cols="12" sm="6" md="3">
           <v-text-field
@@ -108,13 +93,13 @@
         <!--タグ入力です、Prottにあったから作った、でもDynamoDBに？タグの項目ない -->
         <v-col cols="12" sm="6" md="3">
           <v-text-field
-            placeholder="#タグ"
+            placeholder="#タグ（必須でない）"
           >
           </v-text-field>
         </v-col>
 
       </v-row>
-          
+
       <!-- 作り方書くところ -->
       <v-row>
 
@@ -179,7 +164,7 @@
       >
         <v-card>
           <v-card-title class="headline">投稿完了</v-card-title>
-  
+
           <v-card-text>
             筋トレ記事を投稿しました。
           </v-card-text>
@@ -196,6 +181,8 @@
 import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlMutations from '../graphql/mutations'
+import store from '../store/index.js'
+import {Storage} from 'aws-amplify'
 
 export default {
   data() {
@@ -204,14 +191,16 @@ export default {
       content: null,
       // タイトル
       title: null,
-      dialog: false
+      dialog: false,
+      uploadImageUrl: '',
+      image: null,
     }
   },
   components: {
     Navigation,
   },
   computed: {
-  
+
   },
   methods: {
     // 戻るボタンメソッドです
@@ -221,20 +210,44 @@ export default {
     },
 
     // 投稿作成です、「タグ」の項目なかったからとりあえず無視してます
-    async createTraning(){
-      const traning = await API.graphql(
+    async createTraining(){
+      const training = await API.graphql(
         //[fix]あとでクエリー書き直す?
-          graphqlOperation(gqlMutations.createTraning,{
+          graphqlOperation(gqlMutations.createTraining,{
             input: {userId: this.$store.getters.getUserId,
             title: this.title,
-            content: this.content
+            content: this.content,
+            image: `${store.getters.getUserEmail}/Training/${this.title}`
             }
           })
       )
-      console.log(traning.data.createTraning);
+      console.log(training.data.createTraining);
+
+      await Storage.put(
+        `${store.getters.getUserEmail}/Training/${this.title}`, // ファイル名
+        this.image // アップロードするファイル
+      )
+      .then (result => console.log(result)) // {key: "test.txt"}
+      .catch(err => console.log(err));
       // createTweetにそのまま書いてるけど、thenとかerrorで投稿成功、投稿失敗とか分けた方がいいと思った。
       this.dialog = true;
-    }
+    },
+    onImgPicked(file) {
+      if (file !== undefined && file !== null) {
+        if (file.name.lastIndexOf('.') <= 0) {
+          return
+        }
+        var blob = new Blob([file], {type: "image/png"});
+        this.image = blob
+        const fr = new FileReader()
+        fr.readAsDataURL(file)
+        fr.addEventListener('load', () => {
+          this.uploadImageUrl = fr.result
+        })
+      } else {
+        this.uploadImageUrl = ''
+      }
+    },
   },
 }
 </script>

@@ -27,7 +27,7 @@
                 <v-list-item
                   v-if="item.user.emailAddress == currentuser"
                   @click="deleteTraning(item.id)"
-                > 
+                >
                   <v-list-item-icon>
                     <v-icon>mdi-trash-can</v-icon>
                   </v-list-item-icon>
@@ -39,7 +39,7 @@
                 <!-- [fix]v-menu押しても、リンク飛んでしまう。
                 v-menu外に出せば解決するけど、card内にmenu入れた方が見やすい気がする。 -->
               <v-img
-                :src="require('../assets/筋トレ/筋トレ.png')"
+                :src="getImage(i)"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="200px"
@@ -61,6 +61,8 @@
 
 <script>
 import { API, graphqlOperation } from 'aws-amplify'
+import {Storage} from 'aws-amplify'
+
 
 const deleteTraning_query = /* GraphQL */`
   mutation DeleteTraning(
@@ -75,7 +77,7 @@ const deleteTraning_query = /* GraphQL */`
   export default {
     data () {
       return {
-
+        list: ''
       }
     },
     props:['items3'],
@@ -96,8 +98,20 @@ const deleteTraning_query = /* GraphQL */`
           })
         )
         console.log("投稿を削除しました"+deleteTraning.data.deleteTraning)
-      }
+      },
+      getImage(i){
+        return  this.list[i]
+      },
     },
+    async mounted(){
+      let image;
+      let imageList = [];
+      for(let i = 0; i < this.items3.length; i++){
+        image = await Storage.get(this.items3[i].image)
+        imageList.push(image)
+      }
+      this.list = imageList;
+    }
   }
 </script>
 

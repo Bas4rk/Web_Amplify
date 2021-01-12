@@ -11,10 +11,10 @@
         <v-avatar
           class="mb-4"
           color="grey darken-1"
-          size="64"
+          size="127"
         >
         <img
-          :src="avatar"
+          :src="getAvatar"
         >
         <!-- <v-icon size="60">mdi-account</v-icon> -->
         <!-- <amplify-s3-image :imagePath="imagePath" /> -->
@@ -87,7 +87,7 @@ import store from '../store/index.js'
 export default {
   data: () => ({
     // 左のハンバーガーメニュー表示用
-    drawer: false,
+    drawer: true,
     // 上のアプリケーションバー表示用
     // drawer2: true,
     // userEmail: 'null',
@@ -100,7 +100,7 @@ export default {
       ['mdi-cog', '設定','/setting'],
     ],
     imagePath: `test/avatar`,
-    avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy40UeBc_qdzION5Qr7xvLfzBq8kVyk9unaw&usqp=CAU',
+    // avatar: null,
   }),
   computed: {
     getUserName(){
@@ -114,13 +114,21 @@ export default {
     },
     getCount(){
       return this.$store.getters.getCount
-    }
+    },
+    getAvatar(){
+      return this.$store.getters.getUserAvatar
+    },
   },
   methods: {
 
   },
   async mounted(){
-    this.avatar = await Storage.get(`${store.getters.getUserName}/avatar`)
+    let avatar = store.getters.getUserAvatar
+    if(!avatar){
+      // console.log("入った")
+      avatar = await Storage.get(`${store.getters.getUserEmail}/avatar`)
+      store.commit('setUserAvatar',avatar)
+    }
   }
 }
 </script>

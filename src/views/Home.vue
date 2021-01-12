@@ -57,14 +57,14 @@
       <v-tab-item value="cooking">
         <v-row justify="center">
           <v-col cols="5">
-            <CookingList :items2="cookingPosts"></CookingList>  
+            <CookingList :items2="cookingPosts"></CookingList>
           </v-col>
         </v-row>
       </v-tab-item>
       <v-tab-item value="training">
         <v-row justify="center">
           <v-col cols="5">
-            <TrainingList :items3="traningPosts"></TrainingList>  
+            <TrainingList :items3="trainingPosts"></TrainingList>
           </v-col>
         </v-row>
       </v-tab-item>
@@ -126,9 +126,9 @@ export default {
       //ポストリスト
       tweetPosts: null,
       cookingPosts: null,
-      traningPosts: null,
+      trainingPosts: null,
       //直前のパス
-      prevRoute: null,
+      prevRoute: 'tweet',
     }
   },
   components: {
@@ -183,12 +183,12 @@ export default {
         this.cookingPosts.push(getUser.followees.items[i].follower.cookingPosts.items[j])
       }
     }
-    
+
     //筋トレリスト
-    this.traningPosts = getUser.traningPosts.items
+    this.trainingPosts = getUser.trainingPosts.items
     for(let i = 0; i < getUser.followees.items.length; i++){
-      for(let j = 0; j < getUser.followees.items[i].follower.traningPosts.items.length; j++){
-        this.traningPosts.push(getUser.followees.items[i].follower.traningPosts.items[j])
+      for(let j = 0; j < getUser.followees.items[i].follower.trainingPosts.items.length; j++){
+        this.trainingPosts.push(getUser.followees.items[i].follower.trainingPosts.items[j])
       }
     }
 

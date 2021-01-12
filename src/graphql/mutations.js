@@ -9,6 +9,9 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       name
+      iconImage
+      headerImage
+      profile
       emailAddress
       createdAt
       updatedAt
@@ -49,7 +52,7 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
-      traningPosts {
+      trainingPosts {
         items {
           id
           userId
@@ -83,6 +86,30 @@ export const createUser = /* GraphQL */ `
           postId
           image
           content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      favoriteList {
+        items {
+          id
+          userId
+          tweetId
+          favoDate
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      bookmarkList {
+        items {
+          id
+          userId
+          tweetId
+          bmDate
           createdAt
           updatedAt
           owner
@@ -101,6 +128,9 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       name
+      iconImage
+      headerImage
+      profile
       emailAddress
       createdAt
       updatedAt
@@ -141,7 +171,7 @@ export const updateUser = /* GraphQL */ `
         }
         nextToken
       }
-      traningPosts {
+      trainingPosts {
         items {
           id
           userId
@@ -175,6 +205,30 @@ export const updateUser = /* GraphQL */ `
           postId
           image
           content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      favoriteList {
+        items {
+          id
+          userId
+          tweetId
+          favoDate
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      bookmarkList {
+        items {
+          id
+          userId
+          tweetId
+          bmDate
           createdAt
           updatedAt
           owner
@@ -193,6 +247,9 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       name
+      iconImage
+      headerImage
+      profile
       emailAddress
       createdAt
       updatedAt
@@ -233,7 +290,7 @@ export const deleteUser = /* GraphQL */ `
         }
         nextToken
       }
-      traningPosts {
+      trainingPosts {
         items {
           id
           userId
@@ -267,6 +324,30 @@ export const deleteUser = /* GraphQL */ `
           postId
           image
           content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      favoriteList {
+        items {
+          id
+          userId
+          tweetId
+          favoDate
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      bookmarkList {
+        items {
+          id
+          userId
+          tweetId
+          bmDate
           createdAt
           updatedAt
           owner
@@ -290,6 +371,9 @@ export const createRelationship = /* GraphQL */ `
       followee {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -303,13 +387,19 @@ export const createRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -317,6 +407,9 @@ export const createRelationship = /* GraphQL */ `
       follower {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -330,13 +423,19 @@ export const createRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -360,6 +459,9 @@ export const updateRelationship = /* GraphQL */ `
       followee {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -373,13 +475,19 @@ export const updateRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -387,6 +495,9 @@ export const updateRelationship = /* GraphQL */ `
       follower {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -400,13 +511,19 @@ export const updateRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -430,6 +547,9 @@ export const deleteRelationship = /* GraphQL */ `
       followee {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -443,13 +563,19 @@ export const deleteRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -457,6 +583,9 @@ export const deleteRelationship = /* GraphQL */ `
       follower {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -470,13 +599,19 @@ export const deleteRelationship = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -502,6 +637,9 @@ export const createTweet = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -515,13 +653,19 @@ export const createTweet = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -558,6 +702,9 @@ export const updateTweet = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -571,13 +718,19 @@ export const updateTweet = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -614,6 +767,9 @@ export const deleteTweet = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -627,13 +783,19 @@ export const deleteTweet = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -655,12 +817,12 @@ export const deleteTweet = /* GraphQL */ `
     }
   }
 `;
-export const createTraning = /* GraphQL */ `
-  mutation CreateTraning(
-    $input: CreateTraningInput!
-    $condition: ModelTraningConditionInput
+export const createTraining = /* GraphQL */ `
+  mutation CreateTraining(
+    $input: CreateTrainingInput!
+    $condition: ModelTrainingConditionInput
   ) {
-    createTraning(input: $input, condition: $condition) {
+    createTraining(input: $input, condition: $condition) {
       id
       userId
       image
@@ -671,6 +833,9 @@ export const createTraning = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -684,13 +849,19 @@ export const createTraning = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -712,12 +883,12 @@ export const createTraning = /* GraphQL */ `
     }
   }
 `;
-export const updateTraning = /* GraphQL */ `
-  mutation UpdateTraning(
-    $input: UpdateTraningInput!
-    $condition: ModelTraningConditionInput
+export const updateTraining = /* GraphQL */ `
+  mutation UpdateTraining(
+    $input: UpdateTrainingInput!
+    $condition: ModelTrainingConditionInput
   ) {
-    updateTraning(input: $input, condition: $condition) {
+    updateTraining(input: $input, condition: $condition) {
       id
       userId
       image
@@ -728,6 +899,9 @@ export const updateTraning = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -741,13 +915,19 @@ export const updateTraning = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -769,12 +949,12 @@ export const updateTraning = /* GraphQL */ `
     }
   }
 `;
-export const deleteTraning = /* GraphQL */ `
-  mutation DeleteTraning(
-    $input: DeleteTraningInput!
-    $condition: ModelTraningConditionInput
+export const deleteTraining = /* GraphQL */ `
+  mutation DeleteTraining(
+    $input: DeleteTrainingInput!
+    $condition: ModelTrainingConditionInput
   ) {
-    deleteTraning(input: $input, condition: $condition) {
+    deleteTraining(input: $input, condition: $condition) {
       id
       userId
       image
@@ -785,6 +965,9 @@ export const deleteTraning = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -798,13 +981,19 @@ export const deleteTraning = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -843,6 +1032,9 @@ export const createCooking = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -856,13 +1048,19 @@ export const createCooking = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -901,6 +1099,9 @@ export const updateCooking = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -914,13 +1115,19 @@ export const updateCooking = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -959,6 +1166,9 @@ export const deleteCooking = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -972,13 +1182,19 @@ export const deleteCooking = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -1016,6 +1232,9 @@ export const createComment = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -1029,13 +1248,19 @@ export const createComment = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -1050,6 +1275,9 @@ export const createComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1061,7 +1289,7 @@ export const createComment = /* GraphQL */ `
         }
         owner
       }
-      traning {
+      training {
         id
         userId
         image
@@ -1072,6 +1300,9 @@ export const createComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1095,6 +1326,9 @@ export const createComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1126,6 +1360,9 @@ export const updateComment = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -1139,13 +1376,19 @@ export const updateComment = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -1160,6 +1403,9 @@ export const updateComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1171,7 +1417,7 @@ export const updateComment = /* GraphQL */ `
         }
         owner
       }
-      traning {
+      training {
         id
         userId
         image
@@ -1182,6 +1428,9 @@ export const updateComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1205,6 +1454,9 @@ export const updateComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1236,6 +1488,9 @@ export const deleteComment = /* GraphQL */ `
       user {
         id
         name
+        iconImage
+        headerImage
+        profile
         emailAddress
         createdAt
         updatedAt
@@ -1249,13 +1504,19 @@ export const deleteComment = /* GraphQL */ `
         tweetPosts {
           nextToken
         }
-        traningPosts {
+        trainingPosts {
           nextToken
         }
         cookingPosts {
           nextToken
         }
         comments {
+          nextToken
+        }
+        favoriteList {
+          nextToken
+        }
+        bookmarkList {
           nextToken
         }
         owner
@@ -1270,6 +1531,9 @@ export const deleteComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1281,7 +1545,7 @@ export const deleteComment = /* GraphQL */ `
         }
         owner
       }
-      traning {
+      training {
         id
         userId
         image
@@ -1292,6 +1556,9 @@ export const deleteComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1315,6 +1582,9 @@ export const deleteComment = /* GraphQL */ `
         user {
           id
           name
+          iconImage
+          headerImage
+          profile
           emailAddress
           createdAt
           updatedAt
@@ -1326,6 +1596,474 @@ export const deleteComment = /* GraphQL */ `
         }
         owner
       }
+      owner
+    }
+  }
+`;
+export const createFavorite = /* GraphQL */ `
+  mutation CreateFavorite(
+    $input: CreateFavoriteInput!
+    $condition: ModelFavoriteConditionInput
+  ) {
+    createFavorite(input: $input, condition: $condition) {
+      id
+      userId
+      tweetId
+      favoDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateFavorite = /* GraphQL */ `
+  mutation UpdateFavorite(
+    $input: UpdateFavoriteInput!
+    $condition: ModelFavoriteConditionInput
+  ) {
+    updateFavorite(input: $input, condition: $condition) {
+      id
+      userId
+      tweetId
+      favoDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteFavorite = /* GraphQL */ `
+  mutation DeleteFavorite(
+    $input: DeleteFavoriteInput!
+    $condition: ModelFavoriteConditionInput
+  ) {
+    deleteFavorite(input: $input, condition: $condition) {
+      id
+      userId
+      tweetId
+      favoDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createBookmark = /* GraphQL */ `
+  mutation CreateBookmark(
+    $input: CreateBookmarkInput!
+    $condition: ModelBookmarkConditionInput
+  ) {
+    createBookmark(input: $input, condition: $condition) {
+      id
+      userId
+      tweetId
+      bmDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateBookmark = /* GraphQL */ `
+  mutation UpdateBookmark(
+    $input: UpdateBookmarkInput!
+    $condition: ModelBookmarkConditionInput
+  ) {
+    updateBookmark(input: $input, condition: $condition) {
+      id
+      userId
+      tweetId
+      bmDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteBookmark = /* GraphQL */ `
+  mutation DeleteBookmark(
+    $input: DeleteBookmarkInput!
+    $condition: ModelBookmarkConditionInput
+  ) {
+    deleteBookmark(input: $input, condition: $condition) {
+      id
+      userId
+      tweetId
+      bmDate
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createCalendar = /* GraphQL */ `
+  mutation CreateCalendar(
+    $input: CreateCalendarInput!
+    $condition: ModelCalendarConditionInput
+  ) {
+    createCalendar(input: $input, condition: $condition) {
+      owner
+      memo {
+        items {
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCalendar = /* GraphQL */ `
+  mutation UpdateCalendar(
+    $input: UpdateCalendarInput!
+    $condition: ModelCalendarConditionInput
+  ) {
+    updateCalendar(input: $input, condition: $condition) {
+      owner
+      memo {
+        items {
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteCalendar = /* GraphQL */ `
+  mutation DeleteCalendar(
+    $input: DeleteCalendarInput!
+    $condition: ModelCalendarConditionInput
+  ) {
+    deleteCalendar(input: $input, condition: $condition) {
+      owner
+      memo {
+        items {
+          owner
+          date
+          weight
+          bfp
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createMemo = /* GraphQL */ `
+  mutation CreateMemo(
+    $input: CreateMemoInput!
+    $condition: ModelMemoConditionInput
+  ) {
+    createMemo(input: $input, condition: $condition) {
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      trainingMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMemo = /* GraphQL */ `
+  mutation UpdateMemo(
+    $input: UpdateMemoInput!
+    $condition: ModelMemoConditionInput
+  ) {
+    updateMemo(input: $input, condition: $condition) {
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      trainingMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMemo = /* GraphQL */ `
+  mutation DeleteMemo(
+    $input: DeleteMemoInput!
+    $condition: ModelMemoConditionInput
+  ) {
+    deleteMemo(input: $input, condition: $condition) {
+      owner
+      date
+      weight
+      bfp
+      foodMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          image
+          calorele
+          lipid
+          proteins
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      trainingMemos {
+        items {
+          id
+          owner
+          memoDate
+          title
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createFoodMemo = /* GraphQL */ `
+  mutation CreateFoodMemo(
+    $input: CreateFoodMemoInput!
+    $condition: ModelFoodMemoConditionInput
+  ) {
+    createFoodMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFoodMemo = /* GraphQL */ `
+  mutation UpdateFoodMemo(
+    $input: UpdateFoodMemoInput!
+    $condition: ModelFoodMemoConditionInput
+  ) {
+    updateFoodMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFoodMemo = /* GraphQL */ `
+  mutation DeleteFoodMemo(
+    $input: DeleteFoodMemoInput!
+    $condition: ModelFoodMemoConditionInput
+  ) {
+    deleteFoodMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      title
+      image
+      calorele
+      lipid
+      proteins
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createTrainingMemo = /* GraphQL */ `
+  mutation CreateTrainingMemo(
+    $input: CreateTrainingMemoInput!
+    $condition: ModelTrainingMemoConditionInput
+  ) {
+    createTrainingMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      title
+      contentList {
+        items {
+          id
+          trainingMemoId
+          content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTrainingMemo = /* GraphQL */ `
+  mutation UpdateTrainingMemo(
+    $input: UpdateTrainingMemoInput!
+    $condition: ModelTrainingMemoConditionInput
+  ) {
+    updateTrainingMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      title
+      contentList {
+        items {
+          id
+          trainingMemoId
+          content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTrainingMemo = /* GraphQL */ `
+  mutation DeleteTrainingMemo(
+    $input: DeleteTrainingMemoInput!
+    $condition: ModelTrainingMemoConditionInput
+  ) {
+    deleteTrainingMemo(input: $input, condition: $condition) {
+      id
+      owner
+      memoDate
+      title
+      contentList {
+        items {
+          id
+          trainingMemoId
+          content
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createTrainingContent = /* GraphQL */ `
+  mutation CreateTrainingContent(
+    $input: CreateTrainingContentInput!
+    $condition: ModelTrainingContentConditionInput
+  ) {
+    createTrainingContent(input: $input, condition: $condition) {
+      id
+      trainingMemoId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateTrainingContent = /* GraphQL */ `
+  mutation UpdateTrainingContent(
+    $input: UpdateTrainingContentInput!
+    $condition: ModelTrainingContentConditionInput
+  ) {
+    updateTrainingContent(input: $input, condition: $condition) {
+      id
+      trainingMemoId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteTrainingContent = /* GraphQL */ `
+  mutation DeleteTrainingContent(
+    $input: DeleteTrainingContentInput!
+    $condition: ModelTrainingContentConditionInput
+  ) {
+    deleteTrainingContent(input: $input, condition: $condition) {
+      id
+      trainingMemoId
+      content
+      createdAt
+      updatedAt
       owner
     }
   }

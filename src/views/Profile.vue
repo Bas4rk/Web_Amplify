@@ -51,7 +51,7 @@
         <v-btn large color="primary"  to="/followeelist">フォロワー</v-btn>
         <!-- <v-spacer></v-spacer> -->
         <v-btn large color="primary"  to="/profileedit">プロフィール編集</v-btn>
-        <!-- <v-spacer></v-spacer> -->        
+        <!-- <v-spacer></v-spacer> -->
         <!-- ブックマークボタン、Prottにあったのでとりあえずつけた -->
         <!-- <v-btn
           icon
@@ -75,7 +75,7 @@
         <v-tab href="#training">筋トレ</v-tab>
         <!-- <v-tab href="#tab-4">いいね</v-tab> -->
       </v-tabs>
-        
+
       <!-- 中身 -->
       <v-tabs-items v-model="tab">
         <v-tab-item value="tweet">
@@ -90,14 +90,14 @@
         <v-tab-item value="cooking">
           <v-row justify="center">
             <v-col cols="5">
-              <CookingList :items2="this.wholeposts2"></CookingList>  
+              <CookingList :items2="this.wholeposts2"></CookingList>
             </v-col>
           </v-row>
         </v-tab-item>
         <v-tab-item value="training">
           <v-row justify="center">
             <v-col cols="5">
-              <TrainingList :items3="this.wholeposts3"></TrainingList>  
+              <TrainingList :items3="this.wholeposts3"></TrainingList>
             </v-col>
           </v-row>
         </v-tab-item>
@@ -175,7 +175,7 @@ const _query2 = `query GetUser($id: ID!) {
         }
       }
     }
-    traningPosts {
+    trainingPosts {
       items {
         id
         title
@@ -216,7 +216,7 @@ const _query2 = `query GetUser($id: ID!) {
               }
             }
           }
-          traningPosts {
+          trainingPosts {
             nextToken
             items {
               id
@@ -344,7 +344,7 @@ export default {
       // for(let i = 0; i < this.user.followees.items.length; i++){
       //   if(this.user.followees.items[i].follower.tweetPosts.items.length > 0){
       //     this.followeeposts.push(this.user.followees.items[i].follower.tweetPosts.items[0])
-      //   } 
+      //   }
       // }
       this.wholeposts= this.myposts.concat(this.followeeposts)
 
@@ -354,22 +354,22 @@ export default {
       // プロフィールページなのでフォローしてる人の投稿入れてません
       // for(let i = 0; i < this.user.followees.items.length; i++){
       //   if(this.user.followees.items[i].follower.cookingPosts.items.length > 0){
-          
+
       //     this.followeeposts2.push(this.user.followees.items[i].follower.cookingPosts.items[0])
       //   }
       // }
       this.wholeposts2= this.myposts2.concat(this.followeeposts2)
 
       //筋トレ
-      this.myposts3 = this.user.traningPosts.items//自分の筋トレ投稿
+      this.myposts3 = this.user.trainingPosts.items//自分の筋トレ投稿
       this.wholeposts3 = this.myposts3//直接postsにプッシュするとおかしくなる?(pushは参照元まで変えてる?)
       // プロフィールページなのでフォローしてる人の投稿入れてません
       // for(let i = 0; i < this.user.followees.items.length; i++){
-      //   if(this.user.followees.items[i].follower.traningPosts.items.length > 0){
-      //     this.followeeposts3.push(this.user.followees.items[i].follower.traningPosts.items[0])
+      //   if(this.user.followees.items[i].follower.trainingPosts.items.length > 0){
+      //     this.followeeposts3.push(this.user.followees.items[i].follower.trainingPosts.items[0])
       //   }
       // }
-      
+
       this.wholeposts3= this.myposts3.concat(this.followeeposts3)
     }
 

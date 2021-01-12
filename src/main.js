@@ -8,9 +8,11 @@ import Amplify, * as AmplifyModules from 'aws-amplify'
 import { AmplifyPlugin } from 'aws-amplify-vue'
 import awsconfig from './aws-exports'
 import vuetify from './plugins/vuetify';
+import VueCroppie from  'vue-croppie';
+import 'croppie/croppie.css'
 Amplify.configure(awsconfig)
 
-Vue.use(AmplifyPlugin, AmplifyModules)
+Vue.use(VueCroppie,AmplifyPlugin, AmplifyModules)
 
 Vue.config.productionTip = false
 

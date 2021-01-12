@@ -1,17 +1,13 @@
-# type Todo @model {
-#   id: ID!
-#   name: String!
-#   description: String
-#   user_id: String!
-# }
-
-type User 
+type User
     @model
     @key(name: "emailAddressIndex", fields: ["emailAddress"], queryField: "emailIndex")
     @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
     id: ID!
     name: String!
+    iconImage: String
+    headerImage: String
+    profile: String
     emailAddress: String!
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
@@ -19,9 +15,11 @@ type User
     followees: [Relationship] @connection(keyName: "followee", fields: ["id"])
     followers: [Relationship] @connection(keyName: "follower", fields: ["id"])
     tweetPosts: [Tweet] @connection(keyName: "userId",fields: ["id"])
-    traningPosts: [Traning] @connection(keyName: "userId",fields: ["id"])
+    trainingPosts: [Training] @connection(keyName: "userId",fields: ["id"])
     cookingPosts: [Cooking] @connection(keyName: "userId",fields: ["id"])
     comments: [Comment] @connection(keyName: "userId",fields: ["id"])
+    favoriteList: [Favorite] @connection(keyName: "userId",fields: ["id"])
+    bookmarkList: [Bookmark] @connection(keyName: "userId",fields: ["id"])
 }
 
 type Relationship
@@ -39,7 +37,7 @@ type Relationship
 
 type Tweet
 @model
-@key(name: "userId", fields: ["userId"])
+@key(name: "userId", fields: ["userId","createdAt"])
 @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
   id: ID!
@@ -52,9 +50,9 @@ type Tweet
   comments: [Comment] @connection(keyName: "postId",fields: ["id"])
 }
 
-type Traning 
+type Training
 @model
-@key(name: "userId", fields: ["userId"])
+@key(name: "userId", fields: ["userId","createdAt"])
 @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
   id: ID!
@@ -68,9 +66,9 @@ type Traning
   comments: [Comment] @connection(keyName: "postId",fields: ["id"])
 }
 
-type Cooking 
+type Cooking
 @model
-@key(name: "userId", fields: ["userId"])
+@key(name: "userId", fields: ["userId","createdAt"])
 @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
   id: ID!
@@ -86,10 +84,10 @@ type Cooking
 }
 
 
-type Comment 
+type Comment
 @model
 @key(name: "postId", fields: ["postId"])
-@key(name: "userId", fields: ["userId"])
+@key(name: "userId", fields: ["userId","createdAt"])
 @auth(rules: [{allow: owner, operations: [create, update, delete]}])
 {
   id: ID!
@@ -101,28 +99,86 @@ type Comment
   updatedAt: AWSDateTime
   user: User @connection(fields: ["userId"])
   tweet: Tweet @connection(fields: ["postId"])
-  traning: Traning @connection(fields: ["postId"])
+  training: Training @connection(fields: ["postId"])
   cooking : Cooking  @connection(fields: ["postId"])
 }
 
-# type Favorite 
-# @model
+type Favorite
+@model
+@key(name: "userId", fields: ["userId"])
+@auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+  id: ID!
+  userId: ID!
+  tweetId: ID!
+  favoDate: AWSDate!
+}
 
-# @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-# {
-#   id: ID!
-#   userId: ID!
-#   tweetId: ID!
-#   favoDate: Stinrg!
-# }
+type Bookmark
+@model
+@key(name: "userId", fields: ["userId"])
+@auth(rules: [{allow: owner, operations: [create, update, delete]}])
+{
+  id: ID!
+  userId: ID!
+  tweetId: ID!
+  bmDate: AWSDate!
+}
 
-# type Bookmark 
-# @model 
 
-# @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-# {
-#   id: ID!
-#   userId: ID!
-#   tweetId: ID!
-#   bmDate: Stinrg!
-# }
+# カレンダー
+
+type Calendar
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(fields:["owner"])
+{
+    owner: ID!
+    memo :[Memo] @connection(keyName: "memo",fields: ["owner"])
+}
+type Memo
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(fields:["date"])
+    @key(name: "memo",fields:["owner"])
+{
+    owner: ID!
+    date: AWSDate!
+    weight: Float
+    bfp: Float
+    foodMemos: [FoodMemo] @connection(keyName: "food",fields: ["date", "owner"])
+    trainingMemos :[TrainingMemo] @connection(keyName: "training",fields: ["date", "owner"])
+}
+type FoodMemo
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(name: "food",fields:["memoDate", "owner"])
+{
+    owner: ID!
+    memoDate: AWSDate!
+    title: String!
+    image: String
+    calorele: Int
+    lipid: Int
+    proteins: Int
+}
+type TrainingMemo
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(name: "training",fields:["memoDate", "owner"])
+{
+    id: ID!
+    owner: ID!
+    memoDate: AWSDate!
+    title: String!
+    contentList: [TrainingContent] @connection(keyName: "trainingContent",fields: ["id"])
+}
+
+type TrainingContent
+    @model
+    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
+    @key(name: "trainingContent",fields:["trainingMemoId"])
+{
+    trainingMemoId:ID!
+    content: String
+}
