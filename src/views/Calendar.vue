@@ -4,34 +4,69 @@
     <!-- <div>
       {{}}
     </div> -->
-    <v-row class="ontents" justify="center">
-      <v-col cols="12" xs="6" sm="10" md="11" align="center">
-        <v-date-picker
-          v-model="picker"
-          locale="jp-ja"
-          :day-format="date => new Date(date).getDate()"
-          :landscape="landscape"
-          :reactive="reactive"
-          :flat="flat"
-          :full-width="fullWidth"
-          :show-current="showCurrent"
-          :type="month ? 'month' : 'date'"
-          :multiple="multiple"
-          :readonly="readonly"
-          :disabled="disabled"
-          :events="enableEvents ? functionEvents : null"
-        ></v-date-picker>
-      </v-col>
-    </v-row>
-    <v-row align-content="space-between">
-      <v-col cols="12" xs="12" sm="4" md="4" align="center">
-        <div class="display-1">体重:60kg</div>
-      </v-col>
-      <v-col cols="12" xs="12" sm="8" md="8" align="center">
-        <div class="display-1">体脂肪率:20%</div>
-      </v-col>
-    </v-row>
-
+    <div>
+    <v-sheet
+      tile
+      height="54"
+      class="d-flex"
+    >
+      <v-btn
+        icon
+        class="ma-2"
+        @click="$refs.calendar.prev()"
+      >
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+      <v-select
+        v-model="type"
+        :items="types"
+        dense
+        outlined
+        hide-details
+        class="ma-2"
+        label="type"
+      ></v-select>
+      <v-select
+        v-model="mode"
+        :items="modes"
+        dense
+        outlined
+        hide-details
+        label="event-overlap-mode"
+        class="ma-2"
+      ></v-select>
+      <v-select
+        v-model="weekday"
+        :items="weekdays"
+        dense
+        outlined
+        hide-details
+        label="weekdays"
+        class="ma-2"
+      ></v-select>
+      <v-spacer></v-spacer>
+      <v-btn
+        icon
+        class="ma-2"
+        @click="$refs.calendar.next()"
+      >
+        <v-icon>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-sheet>
+    <v-sheet height="600">
+      <v-calendar
+        ref="calendar"
+        v-model="value"
+        :weekdays="weekday"
+        :type="type"
+        :events="events"
+        :event-overlap-mode="mode"
+        :event-overlap-threshold="30"
+        :event-color="getEventColor"
+        @change="getEvents"
+      ></v-calendar>
+    </v-sheet>
+  </div>
     <!-- [fix]ごはんと筋トレ、コンポーネント化する -->
     <v-divider></v-divider>
     <v-row>
