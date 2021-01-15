@@ -74,14 +74,13 @@
           </v-card>
 
           <!-- commentList開始 -->
-          {{commentList}}
-            <!-- <v-list>
+            <v-list>
               <template v-for="item in commentList">
                 
                 <v-menu
                     :close-on-click="true"
                     :close-on-content-click="true"
-                    :key="`option-${item.postId}`"
+                    :key="`option-${item.id}`"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -129,7 +128,7 @@
                   inset
                 ></v-divider>
               </template>
-            </v-list> -->
+            </v-list>
             <!-- commentList開始 -->
         </v-card>
       </v-col>
@@ -184,8 +183,8 @@ export default {
       tweetId:        this.$route.params.item.id,
       tweetContent:   this.$route.params.item.content,
       tweetUserName:  this.$route.params.item.user.name,
-      commentList:    this.$route.params.item.comments,
-      prevRoute: null
+      commentList:    this.$route.params.item.comments.items,
+      prevRoute:      null
     };
   },
   methods:{
