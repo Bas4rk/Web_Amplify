@@ -6,7 +6,7 @@
     </div> -->
     <v-row align-content="space-between">
       <div>
-        <v-col cols="12" xs="4" sm="10" md="10" align="center">
+        <v-col cols="12" xs="12" sm="12" md="12" align="center">
           <v-sheet
             tile
             height="54"
@@ -71,24 +71,19 @@
           </v-sheet>
         </v-col>
       </div>
-      <v-col cols="12" xs="12" sm="12" md="12" align="center">
-        <div class="display-3">体重:60kg</div>
+    </v-row>
+    <v-row align-content="space-between">
+      <v-col cols="12" xs="4" sm="4" md="4" align="center">
+        <div class="display-2">体重:60kg</div>
       </v-col>
-      <v-col cols="12" xs="12" sm="12" md="12" align="center">
-        <div class="display-3">体脂肪率:20%</div>
+      <v-col cols="12" xs="8" sm="8" md="8" align="center">
+        <div class="display-2">体脂肪率:20%</div>
       </v-col>
     </v-row>
-
-    <!-- [fix]ごはんと筋トレ、コンポーネント化する -->
-    
-    <br><v-divider></v-divider>
-    <!-- [fix]ごはんと筋トレ、コンポーネント化する -->
-    <v-divider></v-divider>
-    <v-row>
+    <v-row align-content="space-between">
       <v-col cols="12" xs="12" sm="6" md="6" class="my-5">
         <div class="display-1">・メニュー</div>
       </v-col>
-      
       <div class="my-5">
         <v-col cols="12" xs="12" sm="12" md="12" align="center">
           <div class="display-1">記録がありません</div>
@@ -103,7 +98,7 @@
       <div class="my-5">
         <v-col cols="12" xs="12" sm="12" md="12" align="center">
           <div class="display-1">
-            記録がありません
+            <v-btn block to="/Training">記録がありません</v-btn><br>
           </div>
         </v-col>
       </div>
@@ -132,7 +127,7 @@ export default {
     value: '',
     events: [],
     colors: ['blue', 'indigo'],
-    names: ['筋トレ', '食事'],
+    names: ['筋トレ', '食トレ'],
   }),
   methods: {
     getEvents ({ start, end }) {
