@@ -126,7 +126,7 @@ export default {
     ],
     value: '',
     events: [],
-    colors: ['blue', 'indigo'],
+    colors: ['blue', 'red'],
     names: ['筋トレ', '食トレ'],
   }),
   methods: {
