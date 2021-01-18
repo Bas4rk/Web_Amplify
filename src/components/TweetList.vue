@@ -32,7 +32,7 @@
               </v-list>
             </v-menu>
 
-          <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id,item: item}}">
+          <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{item: item}}">
             <v-list-item-avatar color="grey darken-1">
               <v-icon size="30">mdi-account</v-icon>
             </v-list-item-avatar>

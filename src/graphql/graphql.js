@@ -12,6 +12,18 @@ query GetUser($id: ID!) {
         content
         createdAt
         image
+        comments {
+          items {
+            content
+            image
+            id
+            createdAt
+            user {
+              name
+              emailAddress
+            }
+          }
+        }
         user {
           name
           emailAddress
