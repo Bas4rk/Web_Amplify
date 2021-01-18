@@ -18,12 +18,13 @@ function getUser() {
             emailAddress: user.signInUserSession.idToken.payload.email // cognitoでとったuserのemailを使ってクエリー飛ばしてる。
           })
         )
-        console.log("Graphqluser.data.emailIndexの長さ"+Graphqluser.data.emailIndex.items.length);
+        // console.log("Graphqluser.data.emailIndexの長さ"+Graphqluser.data.emailIndex.items.length);
 
         if(Graphqluser.data.emailIndex.items.length > 0){
           store.commit('setUserName', Graphqluser.data.emailIndex.items[0].name)
           store.commit('setUserEmail', Graphqluser.data.emailIndex.items[0].emailAddress)
           store.commit('setUserId', Graphqluser.data.emailIndex.items[0].id)
+          // console.log("getuser入った")
         }else if(Graphqluser.data.emailIndex.items.length == 0){
           console.log("新規作成する")
         }

@@ -156,7 +156,6 @@ export default {
       trainingPosts: null,
       //直前のパス
       prevRoute: 'tweet',
-      //
       createSubscription: null,
       deleteSubscription: null,
     }

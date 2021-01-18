@@ -57,40 +57,28 @@
             投稿
           </v-btn>
         </v-col>
-
       </v-row>
 
       <v-row>
-
-        <v-col cols="12" sm="6" md="3" justify="left">
-          <v-img
-            src="../assets/料理/料理.png"
-            max-width="600"
-            max-height="600"
-          ></v-img>
-        </v-col>
-
+        <v-img
+          v-if="uploadImageUrl"
+          :src="uploadImageUrl"
+          max-width="600"
+          max-height="600">
+        </v-img>
       </v-row>
 
       <v-row>
-
-        <v-col cols="12" sm="6" md="3" justify="left">
-          <v-btn
-            class="ma-2"
-            color="primary"
-            dark
-          >
-          <v-icon
-            dark
-            left
-          >
-            mdi-camera
-          </v-icon>
-            料理の写真を載せる
-          </v-btn>
+        <v-col cols="5">
+        <v-file-input
+          accept="image/*"
+          label="料理の写真を載せる"
+          @change="onImgPicked"
+        ></v-file-input>
         </v-col>
-
       </v-row>
+      <!-- {{this.uploadImageUrl}}
+      {{this.image}} -->
 
       <v-row>
 
@@ -128,7 +116,7 @@
         </v-col>
 
         <!-- 栄養素入力です -->
-        <v-col cols="12" sm="6" md="3">
+        <!-- <v-col cols="12" sm="6" md="3">
           <v-text-field
             placeholder="たんぱく質"
             suffix="g"
@@ -149,7 +137,7 @@
             suffix="g"
           >
           </v-text-field>
-        </v-col>
+        </v-col> -->
 
       </v-row>
 
@@ -233,6 +221,8 @@
 import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlMutations from '../graphql/mutations'
+import store from '../store/index.js'
+import {Storage} from 'aws-amplify'
 
 // const createCooking_mutation = /* GraphQL */`
 // mutation createCooking {
@@ -251,6 +241,8 @@ export default {
       // カロリー
       calorie: null,
       dialog: false,
+      uploadImageUrl: '',
+      image: null,
     }
   },
   components: {
@@ -274,14 +266,38 @@ export default {
             input: {userId: this.$store.getters.getUserId,
             title: this.title,
             content: this.content,
-            calorie: this.calorie
+            calorie: this.calorie,
+            image: `${store.getters.getUserEmail}/Cooking/${this.title}`
             }
           })
       )
       console.log(cooking.data.createCooking);
+
+      await Storage.put(
+        `${store.getters.getUserEmail}/Cooking/${this.title}`, // ファイル名
+        this.image // アップロードするファイル
+      )
+      .then (result => console.log(result)) // {key: "test.txt"}
+      .catch(err => console.log(err));
       // createTweetにそのまま書いてるけど、thenとかerrorで投稿成功、投稿失敗とか分けた方がいいと思った。
       this.dialog = true;
-    }
+    },
+    onImgPicked(file) {
+      if (file !== undefined && file !== null) {
+        if (file.name.lastIndexOf('.') <= 0) {
+          return
+        }
+        var blob = new Blob([file], {type: "image/png"});
+        this.image = blob
+        const fr = new FileReader()
+        fr.readAsDataURL(file)
+        fr.addEventListener('load', () => {
+          this.uploadImageUrl = fr.result
+        })
+      } else {
+        this.uploadImageUrl = ''
+      }
+    },
   },
 }
 </script>
