@@ -86,7 +86,7 @@
       </v-col>
       <div class="my-5">
         <v-col cols="12" xs="12" sm="12" md="12" align="center">
-          <a class="display-1" href="Training">記録がありません</a>
+          <a class="display-1" href="Menu">記録がありません</a>
         </v-col>
       </div>
       <!-- 筋トレ -->
