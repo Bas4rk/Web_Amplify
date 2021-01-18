@@ -1,5 +1,8 @@
 <template>
   <div class="TweetList">
+    <!-- {{items}} -->
+    <br>
+    <!-- {{list}} -->
     <v-card>
       <!-- <v-subheader>{{ card }}</v-subheader> -->
       <v-subheader>投稿一覧</v-subheader>
@@ -31,10 +34,12 @@
                 </v-list-item>
               </v-list>
             </v-menu>
-
-          <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{item: item}}">
-            <v-list-item-avatar color="grey darken-1">
-              <v-icon size="30">mdi-account</v-icon>
+          <!-- {{item}} -->
+          <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id,item: item}}">
+            <v-list-item-avatar color="grey darken-1" size="80">
+              <img
+                :src="getAvatar(item.user.iconImage)"
+              >
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ item.content }}</v-list-item-title>
@@ -68,6 +73,8 @@
 // import NewTodo from '@/components/NewTodo.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
+import {Storage} from 'aws-amplify'
+
 
 const deleteTweet_query = /* GraphQL */`
   mutation DeleteTweet(
@@ -83,10 +90,10 @@ const deleteTweet_query = /* GraphQL */`
     data () {
       return {
         // currentuser: null
+        list: ''
       }
     },
-    // itemsはツイート、items2は料理投稿、items3は筋トレ投稿、Home.vueから受けてます
-    props:['items','items2','items3'],
+    props:['items'],
     components: {
     },
     computed: {
@@ -105,7 +112,30 @@ const deleteTweet_query = /* GraphQL */`
         )
         console.log("投稿を削除しました"+deleteTweet.data.deleteTweet)
       },
+      getAvatar(user){
+        return this.list[user]
+      }
     },
+    async mounted(){
+      let image;
+      let imageList = {};
+      console.log("items"+this.items)
+      //闇
+      setTimeout(async () => {
+      console.log("items2"+this.items)
+        for(let i = 0; i < this.items.length; i++){
+          console.log("imageList[this.items[i].user.iconImage] > 0"+imageList[this.items[i].user.iconImage] > 0)
+          if(!(imageList[this.items[i].user.iconImage] > 0)){
+            image = await Storage.get(this.items[i].user.iconImage)
+            imageList[this.items[i].user.iconImage] = image
+          }
+        }
+        this.list = imageList;
+      }, 500);
+      // this.list = imageList;
+      console.log("items3"+this.items)
+
+    }
   }
 </script>
 
