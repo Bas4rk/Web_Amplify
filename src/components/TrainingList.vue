@@ -26,7 +26,7 @@
               <v-list>
                 <v-list-item
                   v-if="item.user.emailAddress == currentuser"
-                  @click="deleteTraning(item.id)"
+                  @click="deleteTraining(item.id)"
                 >
                   <v-list-item-icon>
                     <v-icon>mdi-trash-can</v-icon>
@@ -64,11 +64,11 @@ import { API, graphqlOperation } from 'aws-amplify'
 import {Storage} from 'aws-amplify'
 
 
-const deleteTraning_query = /* GraphQL */`
-  mutation DeleteTraning(
-    $input: DeleteTraningInput!
+const deleteTraining_query = /* GraphQL */`
+  mutation DeleteTraining(
+    $input: DeleteTrainingInput!
   ) {
-    deleteTraning(input: $input) {
+    deleteTraining(input: $input) {
       id
     }
   }
@@ -89,15 +89,15 @@ const deleteTraning_query = /* GraphQL */`
       }
     },
     methods: {
-      async deleteTraning(id){
-        const deleteTraning = await API.graphql(
-          graphqlOperation(deleteTraning_query, {
+      async deleteTraining(id){
+        const deleteTraining = await API.graphql(
+          graphqlOperation(deleteTraining_query, {
             input: {
               id: id
             }
           })
         )
-        console.log("投稿を削除しました"+deleteTraning.data.deleteTraning)
+        console.log("投稿を削除しました"+deleteTraining.data.deleteTraining)
       },
       getImage(i){
         return  this.list[i]

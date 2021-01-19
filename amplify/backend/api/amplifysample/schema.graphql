@@ -130,31 +130,31 @@ type Bookmark
 
 type Calendar
     @model
-    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
-    @key(fields:["owner"])
+    @key(fields:["userId"])
+    @auth(rules: [{allow: owner, operations: [create, read, update, delete]}])
 {
-    owner: ID!
-    memo :[Memo] @connection(keyName: "memo",fields: ["owner"])
+    userId: ID!
+    memo :[Memo] @connection(keyName: "memo",fields: ["userId"])
 }
 type Memo
     @model
-    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
     @key(fields:["date"])
-    @key(name: "memo",fields:["owner"])
+    @key(name: "memo",fields:["userId"])
+    @auth(rules: [{allow: owner, operations: [create, read, update, delete]}])
 {
-    owner: ID!
+    userId: ID!
     date: AWSDate!
     weight: Float
     bfp: Float
-    foodMemos: [FoodMemo] @connection(keyName: "food",fields: ["date", "owner"])
-    trainingMemos :[TrainingMemo] @connection(keyName: "training",fields: ["date", "owner"])
+    foodMemos: [FoodMemo] @connection(keyName: "food",fields: ["date", "userId"])
+    trainingMemos :[TrainingMemo] @connection(keyName: "training",fields: ["date", "userId"])
 }
 type FoodMemo
     @model
-    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
-    @key(name: "food",fields:["memoDate", "owner"])
+    @key(name: "food",fields:["memoDate", "userId"])
+    @auth(rules: [{allow: owner, operations: [create, read, update, delete]}])
 {
-    owner: ID!
+    userId: ID!
     memoDate: AWSDate!
     title: String!
     image: String
@@ -164,11 +164,11 @@ type FoodMemo
 }
 type TrainingMemo
     @model
-    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
-    @key(name: "training",fields:["memoDate", "owner"])
+    @key(name: "training",fields:["memoDate", "userId"])
+    @auth(rules: [{allow: owner, operations: [create, read, update, delete]}])
 {
     id: ID!
-    owner: ID!
+    userId: ID!
     memoDate: AWSDate!
     title: String!
     contentList: [TrainingContent] @connection(keyName: "trainingContent",fields: ["id"])
@@ -176,8 +176,8 @@ type TrainingMemo
 
 type TrainingContent
     @model
-    @auth(rules: [{allow: owner, operations: [read, create, update, delete]}])
     @key(name: "trainingContent",fields:["trainingMemoId"])
+    @auth(rules: [{allow: owner, operations: [create, read, update, delete]}])
 {
     trainingMemoId:ID!
     content: String

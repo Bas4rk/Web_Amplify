@@ -146,6 +146,33 @@ import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import * as graphql from '../graphql/graphql.js'
 import * as gqlMutations from '../graphql/mutations'
+// import * as subscriptions from '../graphql/subscriptions.js'
+
+const onCreateTweet = /* GraphQL */ `
+  # フォローしてない人も取ってきてしまうのでこうしたい
+  # subscription onCreateTweet($followerId: ID!) {
+  subscription onCreateTweet($followerId: ID!) {
+    #  ここもこうしたい
+    # onCreateTweet(followerId: $followerId){
+    onCreateTweet(followerId: $followerId) {
+      id
+      createdAt
+      content
+    }
+  }
+`;
+
+const onDeleteTweet = /* GraphQL */ `
+  # subscription onDeleteTweet($followerId: ID!) {
+  subscription onDeleteTweet($followerId: ID!) {
+    # onDeleteTweet(followerId: $followerId) {
+    onDeleteTweet(followerId: $followerId) {
+      id
+      createdAt
+      content
+    }
+  }
+`;
 
 export default {
   name: 'home',
@@ -181,6 +208,8 @@ export default {
       currentItem: null,
       content: '',
       dialog: false,
+      createSubscription: null,
+      deleteSubscription: null,
     }
   },
   components: {
@@ -227,7 +256,25 @@ export default {
   onClickBtn(item) {
     this.currentItem = item
     this.dialog = true
-  }
+  },
+  subscribe(){
+    // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
+    this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
+      next: (eventData) => {
+        console.log("evenData:"+eventData)
+        const tweet = eventData.value.data.onCreateTweet;
+        this.wholeposts.push(tweet);
+        this.relation = eventData
+      }
+    })
+
+    this.deleteSubscription = API.graphql(graphqlOperation(onDeleteTweet)).subscribe({
+      next: (eventData) => {
+        const tweet = eventData.value.data.onDeleteTweet;
+        this.wholeposts = this.wholeposts.filter(post => post.id != tweet.id);
+      }
+    })
+  },
   },
   mounted : async function(){
     // 上行くボタン

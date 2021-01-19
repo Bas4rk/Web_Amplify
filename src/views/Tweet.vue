@@ -61,7 +61,9 @@
             </v-card-text> -->
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn icon color="pink">
+              <v-btn 
+              icon color="pink"
+              @click="createFavorite">
                 <v-icon>mdi-heart</v-icon>
               </v-btn>
               <v-spacer></v-spacer>
@@ -144,6 +146,7 @@
 import Navigation from '@/components/Navigation.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
+import * as gqlMutations from '../graphql/mutations'
 
 const deleteTweet_query = /* GraphQL */`
   mutation DeleteTweet(
@@ -191,6 +194,19 @@ export default {
     back: function(){
       this.$router.push(this.prevRoute);
       // historyできてなくね？
+    },
+    async createFavorite(){
+      const favorite = await API.graphql(
+        graphqlOperation(gqlMutations.createFavorite, {
+          input: {
+            userId: this.$store.getters.getUserId,
+            tweetId: this.tweetId,
+            // この日付スキーマ変更
+            favoDate: "2021-01-08"
+          }
+        })
+      )
+      console.log(favorite.data.createFavorite);
     },
     async deleteTweet(id){
       const deleteTweet = await API.graphql(
