@@ -121,7 +121,7 @@
     </v-row>
     <v-row v-else justify="center" class="my-5">
       <div class="display-2">
-        何も食べてません。
+        何も食べてません
       </div>
     </v-row>
 
@@ -143,7 +143,7 @@
     </v-row>
     <v-row v-else justify="center" class="my-5">
       <div class="display-2">
-        トレーニングしていません。
+        トレーニングしていません
       </div>
     </v-row>
   </div>

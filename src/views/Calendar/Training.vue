@@ -6,7 +6,7 @@
       fluid
     > 
     <v-layout justify-center>
-      <div class="title">トレーニング内容</div>
+      <div class="title">【トレーニング内容】</div>
     </v-layout>
       <v-row justify="center">
         <v-col cols="5">
