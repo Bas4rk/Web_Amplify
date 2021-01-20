@@ -9,7 +9,7 @@
           <h1>Sign Up</h1>
           <v-form v-model="valid" ref="form" lazy-validation>
             <v-text-field v-model="email" :rules="emailRules" label="Email Address" required/>
-            <v-text-field
+            <!--<v-text-field
               v-model="password"
               :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[passwordRules.required, passwordRules.min]"
@@ -19,7 +19,7 @@
               hint="At least 8 characters"
               counter
               @click:append="passwordVisible = !passwordVisible"
-              required/>
+              required/>-->
             <v-btn :disabled="!valid" @click="submit">登録する</v-btn>
           </v-form>
         </v-col>
@@ -42,8 +42,8 @@ export default {
     return {
       valid: false,
       email: '',
-      password: '',
-      passwordVisible: false,
+      /*password: '',
+      passwordVisible: false,*/
     }
   },
   computed: {
@@ -53,19 +53,19 @@ export default {
         v => /.+@.+/.test(v) || 'E-mail must be valid'
       ]
     },
-    passwordRules() {
+    /*passwordRules() {
       return {
         required: value => !!value || 'Required.',
         min: v => v.length >= 8 || 'Min 8 characters',
         emailMatch: () => ('The email and password you entered don\'t match'),
       }
-    },
+    },*/
   },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(`SIGN UP email: ${this.email}, password: ${this.password}, email: ${this.email}`);
-        signUp(this.email, this.password);
+        console.log(`SIGN UP email: ${this.email},`/* password: ${this.password},*//*` email: ${this.email}`*/);
+        signUp(this.email/*, this.password*/);
       }
     },
     signIn(){
