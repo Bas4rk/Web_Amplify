@@ -197,7 +197,6 @@ export default {
       readonly: false,
       disabled: false,
       enableEvents: true,
-
       dialog: false,
       currentCard: null,
       foodMemos: [
@@ -237,8 +236,6 @@ export default {
                   },
                 ] 
         },
-
-
         // { memoDate: "2020-12-02",title: "胸",subtitle: "ベンチプレス",value1: "100kg",value2: "10回" },
         // { memoDate: "2020-12-02",title: "胸",subtitle: "ベンチプレス",value1: "120kg",value2: "5回" },
       ]
@@ -272,7 +269,6 @@ export default {
       // console.log("date:"+date)
       // console.log("parseInt(day, 10):"+parseInt(day, 10))
       const [,, day] = date.split('-')
-
       const foodMemoDay = []
       this.foodMemos.forEach(function (value) {
         // console.log(index + '番目 : ' + value);
@@ -280,7 +276,6 @@ export default {
         foodMemoDay.push(Number(memo))
       });
       // if (foodMemoDay.includes(parseInt(day, 10))) return true
-
       const trainingMemoDay = []
       this.trainingMemos.forEach(function (value) {
         // console.log(index + '番目 : ' + value);

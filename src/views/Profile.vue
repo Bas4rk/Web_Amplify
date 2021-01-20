@@ -16,15 +16,27 @@
     <!-- <v-btn dark @click="sample5">sample2</v-btn> -->
     <!-- {{getUserGraphql}}
     {{this.$store.getters.getUserCognito}} -->
-    <!-- {{followees}} -->
-
     <v-container>
 
       <!-- アカウントアイコン、なんか位置ずれてる？ -->
-      <v-row justify="center">
+      <!-- <v-row justify="center">
         <v-list-item-avatar size="130" color="grey darken-1">
           <v-icon size="130">mdi-account</v-icon>
         </v-list-item-avatar>
+      </v-row> -->
+
+      <v-row justify="center">
+        <v-avatar
+            class="mb-4"
+            color="grey darken-1"
+            size="127"
+          >
+          <img
+            :src="getAvatar"
+          >
+          <!-- <v-icon size="60">mdi-account</v-icon> -->
+          <!-- <amplify-s3-image :imagePath="imagePath" /> -->
+        </v-avatar>
       </v-row>
 
       <!-- アカウント名 -->
@@ -169,6 +181,7 @@ const _query2 = `query GetUser($id: ID!) {
         content
         calorie
         createdAt
+        image
         user {
           name
           emailAddress
@@ -181,6 +194,7 @@ const _query2 = `query GetUser($id: ID!) {
         title
         content
         createdAt
+        image
         user {
           name
           emailAddress
@@ -196,6 +210,7 @@ const _query2 = `query GetUser($id: ID!) {
               id
               content
               createdAt
+              image
               user {
                 name
                 emailAddress
@@ -210,6 +225,7 @@ const _query2 = `query GetUser($id: ID!) {
               createdAt
               id
               title
+              image
               user {
                 name
                 emailAddress
@@ -223,6 +239,7 @@ const _query2 = `query GetUser($id: ID!) {
               content
               createdAt
               title
+              image
               user {
                 name
                 emailAddress
@@ -282,7 +299,10 @@ export default {
     },
     getUserEmail(){
       return  this.$store.getters.getUserEmail
-    }
+    },
+    getAvatar(){
+      return this.$store.getters.getUserAvatar
+    },
   },
   methods: {
     // behavior: autoだと瞬間移動になる
