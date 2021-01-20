@@ -6,6 +6,10 @@ import createTraining from '../views/CreateTraining.vue'
 import createCooking from '../views/CreateCooking.vue'
 import Search from '../views/Search.vue'
 import Calendar from '../views/Calendar.vue'
+
+import TrainingPage from '../views/Calendar/Training.vue'
+import MenuPage from '../views/Calendar/Menu.vue'
+
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
 // import FolloweeList from '../views/FolloweeList.vue'
@@ -121,6 +125,20 @@ const router = new Router({
       path: '/calendar',
       name: 'calendar',
       component: Calendar,
+      meta: { requiresAuth: true }
+    },
+    {
+      // カレンダートレーニングページ
+      path: '/training',
+      name: 'training',
+      component: TrainingPage,
+      meta: { requiresAuth: true }
+    },
+    {
+      // カレンダー献立ページ
+      path: '/menu',
+      name: 'menu',
+      component: MenuPage,
       meta: { requiresAuth: true }
     },
     {
