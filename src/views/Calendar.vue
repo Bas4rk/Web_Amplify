@@ -4,6 +4,112 @@
     <!-- <div>
       {{}}
     </div> -->
+    <v-container>
+      {{memoPosts2}}
+      <br><br>
+      {{memoPosts}}
+
+          <v-row>
+            <v-col cols="12" sm="6" md="3" justify="left">
+            </v-col>
+            <v-col cols="12" sm="6" md="3" justify="left">
+            </v-col>
+            <v-col cols="12" sm="6" md="3" justify="left">
+            </v-col>
+
+            <v-col cols="12" sm="6" md="3" justify="right">
+
+              <!-- 投稿ボタン -->
+              <v-btn
+                class="ma-2"
+                color="primary"
+                dark
+                @click="createFoodMemo"
+              >
+                献立記録
+              </v-btn>
+            </v-col>
+
+          </v-row>
+
+          <v-row>
+
+            <!-- 投稿記述場所 -->
+            <v-col cols="12" sm="6" md="3">
+              <v-text-field
+                placeholder="タイトル"
+                v-model="foodtitle"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="3">
+              <v-text-field
+                placeholder="カロリー"
+                v-model="foodcalorele"
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" sm="6" md="3">
+              <v-text-field
+                placeholder="脂質"
+                v-model="foodlipid"
+              ></v-text-field>
+            </v-col>
+
+            <v-col cols="12" sm="6" md="3">
+              <v-text-field
+                placeholder="たんぱく質"
+                v-model="foodproteins"
+              ></v-text-field>
+            </v-col>
+
+
+          </v-row>
+
+          <v-row>
+
+            <v-col cols="12" sm="6" md="3" justify="left">
+            </v-col>
+            
+
+            <v-col cols="12" sm="6" md="3" justify="right">
+
+              <!-- 投稿ボタン -->
+              <v-btn
+                class="ma-2"
+                color="primary"
+                dark
+                @click="createTrainingMemo"
+              >
+                筋トレ記録
+              </v-btn>
+            </v-col>
+
+          </v-row>
+
+          <v-row>
+
+            <!-- 投稿記述場所 -->
+            <v-col cols="12" sm="6" md="3">
+              <v-text-field
+                placeholder="タイトル"
+                v-model="trainingtitle"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="3">
+              <v-text-field
+                placeholder="内容"
+                v-model="trainingcontent"
+              ></v-text-field>
+            </v-col>
+                <!-- <v-col>
+                  <v-text-field
+                    label="description"
+                    placeholder="説明"
+                    v-model="description"
+                  ></v-text-field>
+                </v-col> -->
+          </v-row>
+        </v-container>
     <v-row>
       <v-col  cols="8">
         <v-row align-content="space-between">
@@ -50,7 +156,7 @@
         :cols=3
         @click.stop="onClickBtn(card)"
       >
-        <v-subheader>{{card.subtitle}}</v-subheader>
+        <v-subheader>{{card.title}}</v-subheader>
         <v-card>
           <v-img
             :src="card.image"
@@ -87,26 +193,16 @@
           <v-divider class="mx-4"></v-divider>
           <v-card-title>栄養成分</v-card-title>
           <v-list class="transparent">
-            <v-list-item>
-              <v-list-item-title>エネルギー</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>炭水化物</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
-            </v-list-item>
+            
             <v-list-item>
               <v-list-item-title>タンパク質</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              <v-list-item-subtitle>{{currentCard.proteins}}kcal</v-list-item-subtitle>
             </v-list-item>
             <v-list-item>
               <v-list-item-title>脂質</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              <v-list-item-subtitle>{{currentCard.lipid}}kcal</v-list-item-subtitle>
             </v-list-item>
-            <v-list-item>
-              <v-list-item-title>なんか</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
-            </v-list-item>
+            
           </v-list>
 
           <v-card-actions>
@@ -134,8 +230,15 @@
       <div class="display-2">今日の筋トレ</div>
     </v-row>
     <v-divider></v-divider>
-
     <v-row v-if="todayTrainingMenus" id="clmenu" align="center">
+      <!-- <v-col
+        v-for="(card,index) in todayTrainingMenus"
+        :key="index"
+        :cols=3
+      >
+        {{card.title}}<br>
+        {{card.contentList.items[0].content}}
+      </v-col> -->
       <v-treeview
         open-all
         :items="todayTrainingMenus.items"
@@ -150,7 +253,57 @@
 </template>
 
 <script>
+
+const query1 = /* GraphQL */ `
+query MyQuery {
+  listMemos {
+    items {
+      createdAt
+      date
+      bfp
+      weight
+      userId
+      updatedAt
+      foodMemos {
+        items {
+          id
+          calorele
+          createdAt
+          owner
+          lipid
+          memoDate
+          title
+          proteins
+          userId
+        }
+      }
+      trainingMemos {
+        items {
+          id
+          memoDate
+          title
+          userId
+          contentList {
+            items {
+              id
+              createdAt
+              content
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
+
 import Navigation from '@/components/Navigation.vue';
+import { API, graphqlOperation } from 'aws-amplify'
+import * as gqlMutations from '../graphql/mutations'
+// import * as graphql from '../graphql/queries.js'
+
+
 export default {
   components: {
     Navigation
@@ -168,7 +321,6 @@ export default {
       readonly: false,
       disabled: false,
       enableEvents: true,
-
       dialog: false,
       currentCard: null,
       foodMemos: [
@@ -176,6 +328,7 @@ export default {
         { memoDate: "2020-12-02",title: "ハンバーガー",image: require('../assets/料理/ハンバーガー.png'),subtitle: "夜食",calorele: 200 },
         { memoDate: "2020-12-06",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 500 },
       ],
+      trainingMemos2: [],
       // trainingMemosのフィールドどうするか
       trainingMemos: [
         {memoDate: "2020-12-02",
@@ -208,11 +361,32 @@ export default {
                   },
                 ] 
         },
-
-
         // { memoDate: "2020-12-02",title: "胸",subtitle: "ベンチプレス",value1: "100kg",value2: "10回" },
         // { memoDate: "2020-12-02",title: "胸",subtitle: "ベンチプレス",value1: "120kg",value2: "5回" },
-      ]
+      ],
+      //献立カロリー
+      foodcalorele: '',
+      // 献立タイトル
+      foodtitle: '',
+      // 献立脂質
+      foodlipid: '',
+      // 献立タンパク質
+      foodproteins: '',
+      //筋トレ内容
+      trainingcontent: '',
+      // 筋トレタイトル
+      trainingtitle: '',
+      // memoDate: '2020-12-02'
+      //クエリのBeginsWithで使う「2021-01」まで
+      querypicker: new Date().toISOString().substr(0, 7),
+      //１か月分のデータ入る
+      memoPosts: [],
+      // 内容記録時のid保存用
+      tId: null,
+      // 内容記録時のid保存用
+      fId: null,
+      memoPosts2: [],
+      memoPosts3: []
     }
   },
   computed: {
@@ -222,28 +396,161 @@ export default {
     todayFoodMenus(){
       const menu = []
       const today = this.picker
-      this.foodMemos.forEach(function (value) {
+      // ここらへん沼、1日分しか表示できてなかったから複数日表示できるようにしたい
+      for(let i = 0; i < this.memoPosts.length; i++){
         // console.log(index + '番目 : ' + value);
-        if(value.memoDate == today){menu.push(value)}
-      });
+        if(this.memoPosts[0].memoDate == today){
+            menu.push(this.memoPosts[i])
+          }
+      }
       return menu
     },
     todayTrainingMenus(){
-      let menu = null
+      let menu = []
       const today = this.picker
-      this.trainingMemos.forEach(function (value) {
+      this.trainingMemos2.forEach(function (value) {
         // console.log(index + '番目 : ' + value);
-        if(value.memoDate == today){ menu= value}
+        if(value.memoDate == today){
+           menu= value
+          // menu.push(value)
+           }
       });
       return menu
     }
   },
+  mounted : async function(){
+    //ポストリスト処理
+    const query = await API.graphql(
+      graphqlOperation(query1)
+    )
+    let getMemo = query.data.listMemos
+    let getMemo2 = query.data.listMemos
+    console.log(query.data)
+    //ここに1月分のデータとってくる
+    this.memoPosts3 = getMemo
+
+    for(let i = 0; i < this.memoPosts3.items.length; i++){
+      console.log("adas")
+      this.memoPosts.push(getMemo.items[i].foodMemos.items)
+      // this.memoPosts2 = getMemo2.items[i].trainingMemos.items
+    }
+    // this.memoPosts = getMemo.items[0].foodMemos.items
+    this.memoPosts2 = getMemo2.items[0].trainingMemos.items
+
+    this.trainingMemos2 =  [
+        {memoDate: this.memoPosts2[0].memoDate,
+          items: [
+                  {
+                    name: this.memoPosts2[0].title,
+                    children: [
+                      {name: this.memoPosts2[0].contentList.items[0].content },
+                    ],
+                  },
+                  {
+                    name: this.memoPosts2[1].title,
+                    children: [
+                      { name: this.memoPosts2[1].contentList.items[0].content },
+                      // { name: 'ベンチプレス 120kg 5回' },
+                    ],
+                  },
+                ] 
+        },
+        {memoDate: "2020-12-05",
+          items: [
+                  {
+                    id: 1,
+                    name: '有酸素 :',
+                    children: [
+                      { id: 2, name: 'ランニング 10km 20分' },
+                    ],
+                  },
+                ] 
+        },
+      ]
+      console.log("aaaaa",this.trainingMemos2)
+
+  },
+  
   methods: {
+    async createFoodMemo(){
+      //メモを作る前にすでにメモがあるかどうか判定する
+
+      if(this.memoPosts3.items.date != this.picker){
+        //メモがないならメモを作る
+        const creatememo = await API.graphql(
+          graphqlOperation(gqlMutations.createMemo, {
+            input: {
+              userId: this.$store.getters.getUserId,
+              date: this.picker
+            }
+          })
+        )
+        console.log(creatememo.data.createMemo);
+      }
+
+      //料理メモを作る
+      const foodmemo = await API.graphql(
+        graphqlOperation(gqlMutations.createFoodMemo, {
+          input: {
+            userId: this.$store.getters.getUserId,
+            title: this.foodtitle,
+            memoDate: this.picker,
+            calorele: this.foodcalorele,
+            proteins: this.foodproteins,
+            lipid: this.foodlipid
+          }
+        })
+      )
+      console.log(foodmemo.data.createFoodMemo);
+    },
+
+    async createTrainingMemo(){
+      //メモを作る前にすでにメモがあるかどうか判定する
+      if(this.memoPosts3.items.date != this.picker){
+        //メモがないならメモを作る
+        const creatememo = await API.graphql(
+          graphqlOperation(gqlMutations.createMemo, {
+            input: {
+              userId: this.$store.getters.getUserId,
+              date: this.picker
+            }
+          })
+        )
+        console.log(creatememo.data.createMemo);
+      }
+
+      //トレーニングメモを作る
+      const trainingmemo = await API.graphql(
+        graphqlOperation(gqlMutations.createTrainingMemo, {
+          input: {
+            userId: this.$store.getters.getUserId,
+            title: this.trainingtitle,
+            memoDate: this.picker,
+          }
+        }
+        )
+      )
+      // 内容記録時にidほしいのでtIdにいれる、trainingmemo.data.createTrainingMemo.idだとだめだったから別の変数に入れてる
+      this.tId = trainingmemo;
+      console.log(this.tId.data.createTrainingMemo);
+      // console.log(trainingmemo.data.createTrainingMemo);
+
+      //トレーニング内容記録
+      const trainingcontent = await API.graphql(
+        graphqlOperation(gqlMutations.createTrainingContent, {
+          input: {
+            trainingMemoId: this.tId.data.createTrainingMemo.id,
+            content: this.trainingcontent
+          }
+        })
+      )
+      console.log(trainingcontent.data.createTrainingContent);
+    },
+
     dateFunctionEvents (date) {
       // console.log("date:"+date)
       // console.log("parseInt(day, 10):"+parseInt(day, 10))
       const [,, day] = date.split('-')
-
       const foodMemoDay = []
       this.foodMemos.forEach(function (value) {
         // console.log(index + '番目 : ' + value);
@@ -251,7 +558,6 @@ export default {
         foodMemoDay.push(Number(memo))
       });
       // if (foodMemoDay.includes(parseInt(day, 10))) return true
-
       const trainingMemoDay = []
       this.trainingMemos.forEach(function (value) {
         // console.log(index + '番目 : ' + value);
