@@ -45,11 +45,11 @@ function getUser() {
 }
 
 //パスワード入力欄を削除したい
-function signUp(email/*, password*/) {
+function signUp(email, password) {
   const username = email
   return Auth.signUp({
     username,
-    //password,
+    password,
     attributes: {
       email: username,
     },
