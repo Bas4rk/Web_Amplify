@@ -3,6 +3,7 @@
     <Navigation></Navigation>
     <!-- <h1>Tweetページ</h1> -->
     <!-- {{tweetData}} -->
+    {{this.$route.params.item}}
     <v-row justify="center">
       <v-col cols="5">
         <v-card> 
@@ -76,7 +77,7 @@
           </v-card>
 
           <!-- commentList開始 -->
-            <v-list>
+            <!-- <v-list>
               <template v-for="item in commentList">
                 
                 <v-menu
@@ -130,7 +131,7 @@
                   inset
                 ></v-divider>
               </template>
-            </v-list>
+            </v-list> -->
             <!-- commentList開始 -->
         </v-card>
       </v-col>
@@ -191,7 +192,7 @@ export default {
       tweetContent:   this.$route.params.item.content,
       tweetUserName:  this.$route.params.item.user.name,
       tweetUserIcon:  '',
-      commentList:    this.$route.params.item.comments.items,
+      // commentList:    this.$route.params.item.comments.items,
       prevRoute:      null
     };
   },
