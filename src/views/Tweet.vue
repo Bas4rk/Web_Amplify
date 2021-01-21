@@ -5,6 +5,51 @@
     <!-- {{tweetData}} -->
     <v-row justify="center">
       <v-col cols="5">
+        <v-dialog
+          v-model="dialog"
+          max-width="1000"
+        >
+          <v-card>  <!-- TweetComment -->
+            <v-form>
+              <v-container>
+                <v-row>
+                  <!-- 下書きボタンです、中身はまだない -->
+                  <v-col cols="12" sm="6" md="3" justify="right">
+                    <v-btn
+                      class="ma-2"
+                      color="primary"
+                      dark
+                    >
+                      下書き
+                    </v-btn>
+
+                    <!-- 投稿ボタン -->
+                    <v-btn
+                      class="ma-2"
+                      color="primary"
+                      dark
+                      @click="createComment"
+                    >
+                      投稿
+                    </v-btn>
+                  </v-col>
+
+                </v-row>
+
+                <v-row>
+
+                  <!-- 投稿記述場所 -->
+                  <v-col cols="12" sm="6" md="3">
+                    <v-text-field
+                      placeholder="内容"
+                      v-model="content"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </v-card>
+        </v-dialog>
         <v-card> 
           <v-btn class="ma-2" color="primary" dark @click="back"> <!-- 戻るボタン -->
             <v-icon dark left>
@@ -63,13 +108,22 @@
               <v-spacer></v-spacer>
               <v-btn 
               icon color="pink"
-              @click="createFavorite">
-                <v-icon>mdi-heart</v-icon>
+              @click="commentDialogOn">
+                <v-icon>mdi-comment</v-icon>
               </v-btn>
+
               <v-spacer></v-spacer>
               <v-btn icon color="green">
                 <v-icon>mdi-cached</v-icon>
               </v-btn>
+
+              <v-spacer></v-spacer>
+              <v-btn 
+              icon color="pink"
+              @click="createFavorite">
+                <v-icon>mdi-heart</v-icon>
+              </v-btn>
+
               <v-spacer></v-spacer>
               <small>{{tweetUserName}}</small>
             </v-card-actions>
@@ -182,12 +236,14 @@ export default {
   },
   data() {
     return {
+
       tweetData:      this.$route.params.item,
       tweetId:        this.$route.params.item.id,
       tweetContent:   this.$route.params.item.content,
       tweetUserName:  this.$route.params.item.user.name,
       commentList:    this.$route.params.item.comments.items,
-      prevRoute:      null
+      prevRoute:      null,
+      dialog:         false
     };
   },
   methods:{
@@ -199,14 +255,30 @@ export default {
       const favorite = await API.graphql(
         graphqlOperation(gqlMutations.createFavorite, {
           input: {
-            userId: this.$store.getters.getUserId,
-            tweetId: this.tweetId,
+            userId:   this.$store.getters.getUserId,
+            tweetId:  this.tweetId,
             // この日付スキーマ変更
             favoDate: "2021-01-08"
           }
         })
       )
       console.log(favorite.data.createFavorite);
+    },
+    async createComment(){
+      const comment = await API.graphql(
+        graphqlOperation(gqlMutations.createComment,{
+          input: {
+            userId:   this.$store.getters.getUserId,
+            postId:   this.tweetId,
+            content:  this.content
+          }
+        })
+      )
+      console.log(comment.data.createComment);
+      this.dialog = false;
+    },
+    commentDialogOn(){
+      this.dialog = true;
     },
     async deleteTweet(id){
       const deleteTweet = await API.graphql(
@@ -229,6 +301,11 @@ export default {
     });
   },
   async mounted() {
+    if (params === undefined || params === null) {
+      var url = location.href;
+      var tweetId = str.substr(url.lastIndexOf('/'));
+      
+    }
     // const tweet = await API.graphql(
     //   graphqlOperation(gqlQueries.getTodo, {
     //     id: this.$route.params.id

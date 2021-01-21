@@ -600,87 +600,87 @@ export default {
       }
     },
     async createTweet(){
-    const tweet = await API.graphql(
-      //[fix]あとでクエリー書き直す?
-      graphqlOperation(gqlMutations.createTweet, {
-        input: {
-          content: this.content,
-          userId: this.$store.getters.getUserId
+      const tweet = await API.graphql(
+        //[fix]あとでクエリー書き直す?
+        graphqlOperation(gqlMutations.createTweet, {
+          input: {
+            content: this.content,
+            userId: this.$store.getters.getUserId
+          }
+        })
+      )
+      console.log(tweet.data.createTweet);
+      // createTweetにそのまま書いてるけど、thenとかerrorで投稿成功、投稿失敗とか分けた方がいいと思った。
+      this.dialog = false;
+      this.content = '';
+    },
+    onClickBtn(item) {
+      this.currentItem = item.to
+      this.dialog = true
+    },
+    subscribe(){
+      // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
+      this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
+        next: (eventData) => {
+          console.log("evenData:"+eventData)
+          const tweet = eventData.value.data.onCreateTweet;
+          this.wholeposts.push(tweet);
+          this.relation = eventData
         }
       })
-    )
-    console.log(tweet.data.createTweet);
-    // createTweetにそのまま書いてるけど、thenとかerrorで投稿成功、投稿失敗とか分けた方がいいと思った。
-    this.dialog = false;
-    this.content = '';
-  },
-  onClickBtn(item) {
-    this.currentItem = item.to
-    this.dialog = true
-  },
-  subscribe(){
-    // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
-    this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
-      next: (eventData) => {
-        console.log("evenData:"+eventData)
-        const tweet = eventData.value.data.onCreateTweet;
-        this.wholeposts.push(tweet);
-        this.relation = eventData
-      }
-    })
 
-    this.deleteSubscription = API.graphql(graphqlOperation(onDeleteTweet)).subscribe({
-      next: (eventData) => {
-        const tweet = eventData.value.data.onDeleteTweet;
-        this.wholeposts = this.wholeposts.filter(post => post.id != tweet.id);
-      }
-    })
-  },
+      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteTweet)).subscribe({
+        next: (eventData) => {
+          const tweet = eventData.value.data.onDeleteTweet;
+          this.wholeposts = this.wholeposts.filter(post => post.id != tweet.id);
+        }
+      })
+    },
   },
   mounted : async function(){
-    // 上行くボタン
-    window.addEventListener('scroll', this.scrollWindow)
+      // 上行くボタン
+      window.addEventListener('scroll', this.scrollWindow)
 
-    //ポストリスト処理
-    const query = await API.graphql(
-      graphqlOperation(graphql._query2, {id : this.$store.getters.getUserId})
-    )
-    let getUser = query.data.getUser
+      //ポストリスト処理
+      const query = await API.graphql(
+        graphqlOperation(graphql._query2, {id : this.$store.getters.getUserId})
+      )
+      let getUser = query.data.getUser
 
-    //ツイートリスト
-    this.tweetPosts = getUser.tweetPosts.items
-    for(let i = 0; i < getUser.followees.items.length; i++){
-      for(let j = 0; j < getUser.followees.items[i].follower.tweetPosts.items.length; j++){
-        this.tweetPosts.push(getUser.followees.items[i].follower.tweetPosts.items[j])
+      //ツイートリスト
+      this.tweetPosts = getUser.tweetPosts.items
+      for(let i = 0; i < getUser.followees.items.length; i++){
+        for(let j = 0; j < getUser.followees.items[i].follower.tweetPosts.items.length; j++){
+          this.tweetPosts.push(getUser.followees.items[i].follower.tweetPosts.items[j])
+        }
       }
-    }
 
-    //料理リスト
-    this.cookingPosts = getUser.cookingPosts.items
-    for(let i = 0; i < getUser.followees.items.length; i++){
-      for(let j = 0; j < getUser.followees.items[i].follower.cookingPosts.items.length; j++){
-        this.cookingPosts.push(getUser.followees.items[i].follower.cookingPosts.items[j])
+      //料理リスト
+      this.cookingPosts = getUser.cookingPosts.items
+      for(let i = 0; i < getUser.followees.items.length; i++){
+        for(let j = 0; j < getUser.followees.items[i].follower.cookingPosts.items.length; j++){
+          this.cookingPosts.push(getUser.followees.items[i].follower.cookingPosts.items[j])
+        }
       }
-    }
 
-    //筋トレリスト
-    this.trainingPosts = getUser.trainingPosts.items
-    for(let i = 0; i < getUser.followees.items.length; i++){
-      for(let j = 0; j < getUser.followees.items[i].follower.trainingPosts.items.length; j++){
-        this.trainingPosts.push(getUser.followees.items[i].follower.trainingPosts.items[j])
+      //筋トレリスト
+      this.trainingPosts = getUser.trainingPosts.items
+      for(let i = 0; i < getUser.followees.items.length; i++){
+        for(let j = 0; j < getUser.followees.items[i].follower.trainingPosts.items.length; j++){
+          this.trainingPosts.push(getUser.followees.items[i].follower.trainingPosts.items[j])
+        }
       }
-    }
 
-    // 直前に見ていたタブに戻る
-    let route = 'tweet';
-    let array = ['cooking','training'];
-    for(let i =0;i<array.length;i++){
-      if(this.prevRoute.toLowerCase().includes(array[i])){
-        route = array[i]
+      // 直前に見ていたタブに戻る
+      let route = 'tweet';
+      let array = ['cooking','training'];
+      for(let i =0;i<array.length;i++){
+        if(this.prevRoute.toLowerCase().includes(array[i])){
+          route = array[i]
+        }
       }
-    }
-    this.tab = route
-  },
+      this.tab = route
+    },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       vm.prevRoute = from.name;
