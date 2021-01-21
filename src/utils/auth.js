@@ -44,27 +44,28 @@ function getUser() {
   });
 }
 
-function signUp(email, password) {
+//パスワード入力欄を削除したい
+function signUp(email/*, password*/) {
   const username = email
   return Auth.signUp({
     username,
-    password,
+    //password,
     attributes: {
       email: username,
     },
   })
-    .then(data => {
-      AmplifyEventBus.$emit('localUser', data.user);
-      if (data.userConfirmed === false) {
-        AmplifyEventBus.$emit('authState', 'confirmSignUp');
-      } else {
-        AmplifyEventBus.$emit('authState', 'signIn');
-      }
-      return data;
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  .then(data => {
+    AmplifyEventBus.$emit('localUser', data.user);
+    if (data.userConfirmed === false) {
+      AmplifyEventBus.$emit('authState', 'confirmSignUp');
+    } else {
+      AmplifyEventBus.$emit('authState', 'signIn');
+    }
+    return data;
+  })
+  .catch(err => {
+    console.log(err);
+  });
 }
 
 function confirmSignUp(username, password, code, nickname) {
