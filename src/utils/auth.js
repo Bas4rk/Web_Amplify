@@ -44,7 +44,7 @@ function getUser() {
   });
 }
 
-//パスワード入力欄を削除したい
+//SignUpで入力したメールアドレスとパスワードをSignUpConfirmのメールアドレス・パスワードに渡したい
 function signUp(email, password) {
   const username = email
   return Auth.signUp({
@@ -99,6 +99,7 @@ function confirmSignUp(username, password, code, nickname) {
       throw err;
     });
 }
+
 
 function resendSignUp(username) {
   return Auth.resendSignUp(username).then(() => {
