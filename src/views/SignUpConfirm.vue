@@ -9,6 +9,7 @@
           <h1>Confirm</h1>
           <v-form v-model="valid" ref="form" lazy-validation>
             <v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
+            <div>{{getUserEmail}}</div>
             <v-text-field
               v-model="password"
               :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
@@ -65,6 +66,9 @@ export default {
         v => (v && v.length === 6) || 'Code must be 6 digits'
       ]
     },
+    /*getUserEmail(){
+      return  this.$store.getters.getUserEmail
+    },*/
   },
   methods: {
     submit() {
