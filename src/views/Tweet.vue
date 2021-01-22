@@ -201,6 +201,7 @@ import Navigation from '@/components/Navigation.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlMutations from '../graphql/mutations'
+import * as gqlQueries from '../graphql/queries'
 
 const deleteTweet_query = /* GraphQL */`
   mutation DeleteTweet(
@@ -301,17 +302,17 @@ export default {
     });
   },
   async mounted() {
-    if (params === undefined || params === null) {
-      var url = location.href;
-      var tweetId = str.substr(url.lastIndexOf('/'));
-      
-    }
-    // const tweet = await API.graphql(
-    //   graphqlOperation(gqlQueries.getTodo, {
-    //     id: this.$route.params.id
-    //   })
-    // )
-    // this.tweetData= tweet.data.getTodo
+    if (this.$route.params.items === undefined || this.$route.params.items === null) {
+      console.log(this.$route.params);
+      const tweet = await API.graphql(
+        graphqlOperation(gqlQueries.getTweet, {
+          id: this.$route.params
+        })
+      )
+      console.log(tweet);
+      this.$route.params = tweet;
+    }   
+
   }
 }
 </script>
