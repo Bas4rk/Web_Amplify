@@ -132,6 +132,8 @@ export default {
       name: null,
       // 自分のID入れる用
       myid: null,
+      //自分のEmail入れる用
+      myEmail: null,
       // ダイアログ表示用
       dialog: false,
       // 名前に変更があったかどうかの比較用
@@ -221,15 +223,24 @@ export default {
     },
     async upload(){
       await Storage.put(
-        `${store.getters.getUserEmail}/avatar`, // ファイル名
+        `${this.myEmail}/avatar`, // ファイル名
         this.cropped // アップロードするファイル
       )
       .then (result => console.log(result)) // {key: "test.txt"}
       .catch(err => console.log(err));
 
-      let avatar = await Storage.get(`${store.getters.getUserEmail}/avatar`)
+      let avatar = await Storage.get(`${this.myEmail}/avatar`)
       store.commit('setUserAvatar',avatar)
       this.imageDialog = true;
+
+      await API.graphql(
+        graphqlOperation(gqlMutations.updateUser,{
+          input: {
+            id: this.myid,
+            iconImage: `${this.myEmail}/avatar`
+          }
+        })
+      )
     }
   },
   mounted : async function(){
@@ -240,6 +251,7 @@ export default {
     this.name2 = this.$store.getters.getUserName
     // 自分のID
     this.myid = this.$store.getters.getUserId
+    this.myEmail = this.$store.getters.getUserEmail
   }
 }
 </script>
