@@ -3,7 +3,6 @@
     <Navigation></Navigation>
     <!-- <h1>Tweetページ</h1> -->
     <!-- {{tweetData}} -->
-    {{this.$route.params.item}}
     <v-row justify="center">
       <v-col cols="5">
         <v-card> 
