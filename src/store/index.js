@@ -25,6 +25,10 @@ export default new Vuex.Store({
       // return state.user.signInUserSession.idToken.payload.email
       return state.UserEmail
     },
+    //ユーザパスワードストア(保持用)
+    getUserPassword(state) {
+      return state.UserPassword
+    },
     getUserId(state) {
       // return state.user.signInUserSession.idToken.payload.email
       return state.UserId

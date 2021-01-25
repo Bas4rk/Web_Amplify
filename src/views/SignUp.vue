@@ -36,6 +36,7 @@
 
 <script>
 import {signUp} from '@/utils/auth.js'
+import store from '../store/index.js'
 export default {
   name: "SignUp",
   data() {
@@ -63,8 +64,12 @@ export default {
   },
   methods: {
     submit() {
+      let email
+      let password
       if (this.$refs.form.validate()) {
         console.log(`SIGN UP email: ${this.email}, password: ${this.password}, email: ${this.email}`);
+        store.commit('setUserEmail',email)
+        store.commit('setUserPassward',password)
         signUp(this.email, this.password);
       }
     },
