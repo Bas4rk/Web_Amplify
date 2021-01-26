@@ -5,10 +5,14 @@
       {{}}
     </div> -->
     <v-container>
-      {{memoPosts2}}
-      <br><br>
       {{memoPosts}}
-
+      <br><br>
+      {{memoPosts.length}}
+      <!-- {{kakutra}} -->
+      <br><br>
+      {{trainingMemos2}}
+      <br><br>
+      {{trainingMemos}}
           <v-row>
             <v-col cols="12" sm="6" md="3" justify="left">
             </v-col>
@@ -231,18 +235,19 @@
     </v-row>
     <v-divider></v-divider>
     <v-row v-if="todayTrainingMenus" id="clmenu" align="center">
-      <!-- <v-col
+      <v-col
         v-for="(card,index) in todayTrainingMenus"
         :key="index"
         :cols=3
       >
-        {{card.title}}<br>
-        {{card.contentList.items[0].content}}
-      </v-col> -->
-      <v-treeview
+      {{card.items[0].name}}
+      <br>
+      {{card.items[0].children[0].name}}
+      </v-col>
+      <!-- <v-treeview
         open-all
         :items="todayTrainingMenus.items"
-      ></v-treeview>
+      ></v-treeview> -->
     </v-row>
     <v-row v-else justify="center" class="my-5">
       <div class="display-2">
@@ -386,7 +391,7 @@ export default {
       // 内容記録時のid保存用
       fId: null,
       memoPosts2: [],
-      memoPosts3: []
+      memoPosts3: [],
     }
   },
   computed: {
@@ -396,25 +401,47 @@ export default {
     todayFoodMenus(){
       const menu = []
       const today = this.picker
-      // ここらへん沼、1日分しか表示できてなかったから複数日表示できるようにしたい
+      // FoodMenusの長さ分For回してデータを入れる
       for(let i = 0; i < this.memoPosts.length; i++){
-        // console.log(index + '番目 : ' + value);
-        if(this.memoPosts[0].memoDate == today){
-            menu.push(this.memoPosts[i])
+        // {{memoPosts[0]}}とかで確認しつつやったので階層ぐちゃぐちゃです
+        if(this.memoPosts[i][0].memoDate == today){
+          for(let k = 0; k < this.memoPosts[i].length; k++){
+            menu.push(this.memoPosts[i][k])
           }
+        }
       }
       return menu
     },
+
+// v-treeviewをあきらめた
     todayTrainingMenus(){
       let menu = []
       const today = this.picker
-      this.trainingMemos2.forEach(function (value) {
-        // console.log(index + '番目 : ' + value);
-        if(value.memoDate == today){
-           menu= value
-          // menu.push(value)
-           }
-      });
+      for(let i = 0; i < this.memoPosts2.length; i++){
+        if(this.memoPosts2[i][0].memoDate == today){
+          for(let k = 0; k < this.memoPosts2[i].length; k++){
+            menu.push( 
+              {memoDate: this.memoPosts2[i][k].memoDate,
+                items: [
+                        {
+                          name: this.memoPosts2[i][k].title,
+                          children: [
+                            {name: this.memoPosts2[i][k].contentList.items[0].content },
+                          ],
+                        },
+                        // {
+                        //   name: this.memoPosts2[i][k].title,
+                        //   children: [
+                        //     { name: t  his.memoPosts2[i][k].contentList.items[0].content },
+                        //     // { name: 'ベンチプレス 120kg 5回' },
+                        //   ],
+                        // },
+                      ] 
+                },
+              )
+          }
+        }
+      }
       return menu
     }
   },
@@ -432,43 +459,8 @@ export default {
     for(let i = 0; i < this.memoPosts3.items.length; i++){
       console.log("adas")
       this.memoPosts.push(getMemo.items[i].foodMemos.items)
-      // this.memoPosts2 = getMemo2.items[i].trainingMemos.items
+      this.memoPosts2.push(getMemo2.items[i].trainingMemos.items)
     }
-    // this.memoPosts = getMemo.items[0].foodMemos.items
-    this.memoPosts2 = getMemo2.items[0].trainingMemos.items
-
-    this.trainingMemos2 =  [
-        {memoDate: this.memoPosts2[0].memoDate,
-          items: [
-                  {
-                    name: this.memoPosts2[0].title,
-                    children: [
-                      {name: this.memoPosts2[0].contentList.items[0].content },
-                    ],
-                  },
-                  {
-                    name: this.memoPosts2[1].title,
-                    children: [
-                      { name: this.memoPosts2[1].contentList.items[0].content },
-                      // { name: 'ベンチプレス 120kg 5回' },
-                    ],
-                  },
-                ] 
-        },
-        {memoDate: "2020-12-05",
-          items: [
-                  {
-                    id: 1,
-                    name: '有酸素 :',
-                    children: [
-                      { id: 2, name: 'ランニング 10km 20分' },
-                    ],
-                  },
-                ] 
-        },
-      ]
-      console.log("aaaaa",this.trainingMemos2)
-
   },
   
   methods: {
@@ -548,23 +540,28 @@ export default {
     },
 
     dateFunctionEvents (date) {
-      // console.log("date:"+date)
+      console.log("date:"+date)
       // console.log("parseInt(day, 10):"+parseInt(day, 10))
       const [,, day] = date.split('-')
       const foodMemoDay = []
-      this.foodMemos.forEach(function (value) {
+      for(let i = 0; i < this.memoPosts.length; i++){
+      // this.memoPosts.forEach(function (value) {
         // console.log(index + '番目 : ' + value);
-        const [,, memo] = value.memoDate.split('-')
+        const [,, memo] = this.memoPosts[i][0].memoDate.split('-')
         foodMemoDay.push(Number(memo))
-      });
+      // });
+      }
       // if (foodMemoDay.includes(parseInt(day, 10))) return true
       const trainingMemoDay = []
-      this.trainingMemos.forEach(function (value) {
+      for(let i = 0; i < this.memoPosts2.length; i++){
+      // this.trainingMemos.forEach(function (value) {
         // console.log(index + '番目 : ' + value);
-        const [,, memo] = value.memoDate.split('-')
+        const [,, memo] = this.memoPosts2[i][0].memoDate.split('-')
         trainingMemoDay.push(Number(memo))
-      });
-      
+      // });
+      }
+      console.log(day)
+      console.log(parseInt(day, 10))
       if (foodMemoDay.includes(parseInt(day, 10)) && trainingMemoDay.includes(parseInt(day, 10))){
         return ['blue', 'red']
       } else if(foodMemoDay.includes(parseInt(day, 10))){
@@ -572,10 +569,12 @@ export default {
       } else if(trainingMemoDay.includes(parseInt(day, 10))){
         return 'red'
       }
+      // console.log(day)
       //[fix]ここら辺めっちゃ呼び出されてるけど、どうにかならないか？
       return false
     },
     monthFunctionEvents (date) {
+      console.log("month")
       const month = parseInt(date.split('-')[1], 10)
       if ([1, 3, 7].includes(month)) return true
       if ([2, 5, 12].includes(month)) return ['error', 'purple', 'rgba(0, 128, 0, 0.5)']
