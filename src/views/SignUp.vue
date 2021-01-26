@@ -64,8 +64,8 @@ export default {
   },
   methods: {
     submit() {
-      let email
-      let password
+      let email = this.email
+      let password = this.password
       if (this.$refs.form.validate()) {
         console.log(`SIGN UP email: ${this.email}, password: ${this.password}, email: ${this.email}`);
         store.commit('setUserEmail',email)

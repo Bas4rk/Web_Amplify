@@ -51,6 +51,9 @@ export default new Vuex.Store({
     setUserEmail(state, email) {
       state.UserEmail = email
     },
+    setUserPassword(state, password) {
+      state.UserPassword = password
+    },
     setUserId(state, id) {
       state.UserId = id
     },
