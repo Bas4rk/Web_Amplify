@@ -20,7 +20,7 @@
                 <v-avatar size="56">
                   <img
                     alt="user"
-                    src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
+                    :src="tweetUserIcon"
                   >
                 </v-avatar>
                 <p class="ml-3">
@@ -76,7 +76,7 @@
           </v-card>
 
           <!-- commentList開始 -->
-            <v-list>
+            <!-- <v-list>
               <template v-for="item in commentList">
                 
                 <v-menu
@@ -130,7 +130,7 @@
                   inset
                 ></v-divider>
               </template>
-            </v-list>
+            </v-list> -->
             <!-- commentList開始 -->
         </v-card>
       </v-col>
@@ -147,6 +147,7 @@ import Navigation from '@/components/Navigation.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlMutations from '../graphql/mutations'
+import {Storage} from 'aws-amplify'
 
 const deleteTweet_query = /* GraphQL */`
   mutation DeleteTweet(
@@ -178,7 +179,10 @@ export default {
   computed: {
     currentuser(){
       return this.$store.getters.getUserEmail
-    }
+    },
+    getAvatar(){
+      return this.tweetUserIcon
+    },
   },
   data() {
     return {
@@ -186,7 +190,8 @@ export default {
       tweetId:        this.$route.params.item.id,
       tweetContent:   this.$route.params.item.content,
       tweetUserName:  this.$route.params.item.user.name,
-      commentList:    this.$route.params.item.comments.items,
+      tweetUserIcon:  '',
+      // commentList:    this.$route.params.item.comments.items,
       prevRoute:      null
     };
   },
@@ -229,6 +234,8 @@ export default {
     });
   },
   async mounted() {
+    this.tweetUserIcon = await Storage.get(this.$route.params.item.user.iconImage)
+    console.log("this.$route.params.item.user.iconImage"+this.$route.params.item.user.iconImage)
     // const tweet = await API.graphql(
     //   graphqlOperation(gqlQueries.getTodo, {
     //     id: this.$route.params.id
