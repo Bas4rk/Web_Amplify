@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     UserName: null,
     UserEmail: null,
+    UserPassword: null,
     UserId: null,
     UserAvatar: null,
     Wholeposts: null,
