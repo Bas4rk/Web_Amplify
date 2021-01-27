@@ -258,7 +258,6 @@
 </template>
 
 <script>
-
 const query1 = /* GraphQL */ `
 query MyQuery {
   listMemos {
@@ -301,14 +300,10 @@ query MyQuery {
   }
 }
 `;
-
-
 import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlMutations from '../graphql/mutations'
 // import * as graphql from '../graphql/queries.js'
-
-
 export default {
   components: {
     Navigation
@@ -400,19 +395,18 @@ export default {
     },
     todayFoodMenus(){
       const menu = []
-      const today = this.picker
-      // FoodMenusの長さ分For回してデータを入れる
-      for(let i = 0; i < this.memoPosts.length; i++){
-        // {{memoPosts[0]}}とかで確認しつつやったので階層ぐちゃぐちゃです
-        if(this.memoPosts[i][0].memoDate == today){
-          for(let k = 0; k < this.memoPosts[i].length; k++){
-            menu.push(this.memoPosts[i][k])
-          }
-        }
-      }
+      // const today = this.picker
+      // // FoodMenusの長さ分For回してデータを入れる
+      // for(let i = 0; i < this.memoPosts.length; i++){
+      //   // {{memoPosts[0]}}とかで確認しつつやったので階層ぐちゃぐちゃです
+      //   if(this.memoPosts[i][0].memoDate == today){
+      //     for(let k = 0; k < this.memoPosts[i].length; k++){
+      //       menu.push(this.memoPosts[i][k])
+      //     }
+      //   }
+      // }
       return menu
     },
-
 // v-treeviewをあきらめた
     todayTrainingMenus(){
       let menu = []
@@ -455,7 +449,6 @@ export default {
     console.log(query.data)
     //ここに1月分のデータとってくる
     this.memoPosts3 = getMemo
-
     for(let i = 0; i < this.memoPosts3.items.length; i++){
       console.log("adas")
       this.memoPosts.push(getMemo.items[i].foodMemos.items)
@@ -466,7 +459,6 @@ export default {
   methods: {
     async createFoodMemo(){
       //メモを作る前にすでにメモがあるかどうか判定する
-
       if(this.memoPosts3.items.date != this.picker){
         //メモがないならメモを作る
         const creatememo = await API.graphql(
@@ -479,7 +471,6 @@ export default {
         )
         console.log(creatememo.data.createMemo);
       }
-
       //料理メモを作る
       const foodmemo = await API.graphql(
         graphqlOperation(gqlMutations.createFoodMemo, {
@@ -495,7 +486,6 @@ export default {
       )
       console.log(foodmemo.data.createFoodMemo);
     },
-
     async createTrainingMemo(){
       //メモを作る前にすでにメモがあるかどうか判定する
       if(this.memoPosts3.items.date != this.picker){
@@ -510,7 +500,6 @@ export default {
         )
         console.log(creatememo.data.createMemo);
       }
-
       //トレーニングメモを作る
       const trainingmemo = await API.graphql(
         graphqlOperation(gqlMutations.createTrainingMemo, {
@@ -526,7 +515,6 @@ export default {
       this.tId = trainingmemo;
       console.log(this.tId.data.createTrainingMemo);
       // console.log(trainingmemo.data.createTrainingMemo);
-
       //トレーニング内容記録
       const trainingcontent = await API.graphql(
         graphqlOperation(gqlMutations.createTrainingContent, {
@@ -538,40 +526,39 @@ export default {
       )
       console.log(trainingcontent.data.createTrainingContent);
     },
-
     dateFunctionEvents (date) {
       console.log("date:"+date)
       // console.log("parseInt(day, 10):"+parseInt(day, 10))
-      const [,, day] = date.split('-')
-      const foodMemoDay = []
-      for(let i = 0; i < this.memoPosts.length; i++){
-      // this.memoPosts.forEach(function (value) {
-        // console.log(index + '番目 : ' + value);
-        const [,, memo] = this.memoPosts[i][0].memoDate.split('-')
-        foodMemoDay.push(Number(memo))
-      // });
-      }
-      // if (foodMemoDay.includes(parseInt(day, 10))) return true
-      const trainingMemoDay = []
-      for(let i = 0; i < this.memoPosts2.length; i++){
-      // this.trainingMemos.forEach(function (value) {
-        // console.log(index + '番目 : ' + value);
-        const [,, memo] = this.memoPosts2[i][0].memoDate.split('-')
-        trainingMemoDay.push(Number(memo))
-      // });
-      }
-      console.log(day)
-      console.log(parseInt(day, 10))
-      if (foodMemoDay.includes(parseInt(day, 10)) && trainingMemoDay.includes(parseInt(day, 10))){
-        return ['blue', 'red']
-      } else if(foodMemoDay.includes(parseInt(day, 10))){
-        return 'blue'
-      } else if(trainingMemoDay.includes(parseInt(day, 10))){
-        return 'red'
-      }
+      // const [,, day] = date.split('-')
+      // const foodMemoDay = []
+      // for(let i = 0; i < this.memoPosts.length; i++){
+      // // this.memoPosts.forEach(function (value) {
+      //   // console.log(index + '番目 : ' + value);
+      //   const [,, memo] = this.memoPosts[i][0].memoDate.split('-')
+      //   foodMemoDay.push(Number(memo))
+      // // });
+      // }
+      // // if (foodMemoDay.includes(parseInt(day, 10))) return true
+      // const trainingMemoDay = []
+      // for(let i = 0; i < this.memoPosts2.length; i++){
+      // // this.trainingMemos.forEach(function (value) {
+      //   // console.log(index + '番目 : ' + value);
+      //   const [,, memo] = this.memoPosts2[i][0].memoDate.split('-')
+      //   trainingMemoDay.push(Number(memo))
+      // // });
+      // }
       // console.log(day)
-      //[fix]ここら辺めっちゃ呼び出されてるけど、どうにかならないか？
-      return false
+      // console.log(parseInt(day, 10))
+      // if (foodMemoDay.includes(parseInt(day, 10)) && trainingMemoDay.includes(parseInt(day, 10))){
+      //   return ['blue', 'red']
+      // } else if(foodMemoDay.includes(parseInt(day, 10))){
+      //   return 'blue'
+      // } else if(trainingMemoDay.includes(parseInt(day, 10))){
+      //   return 'red'
+      // }
+      // // console.log(day)
+      // //[fix]ここら辺めっちゃ呼び出されてるけど、どうにかならないか？
+      // return false
     },
     monthFunctionEvents (date) {
       console.log("month")
