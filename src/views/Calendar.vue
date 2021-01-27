@@ -395,16 +395,16 @@ export default {
     },
     todayFoodMenus(){
       const menu = []
-      // const today = this.picker
-      // // FoodMenusの長さ分For回してデータを入れる
-      // for(let i = 0; i < this.memoPosts.length; i++){
-      //   // {{memoPosts[0]}}とかで確認しつつやったので階層ぐちゃぐちゃです
-      //   if(this.memoPosts[i][0].memoDate == today){
-      //     for(let k = 0; k < this.memoPosts[i].length; k++){
-      //       menu.push(this.memoPosts[i][k])
-      //     }
-      //   }
-      // }
+      const today = this.picker
+      // FoodMenusの長さ分For回してデータを入れる
+      for(let i = 0; i < this.memoPosts.length; i++){
+        // {{memoPosts[0]}}とかで確認しつつやったので階層ぐちゃぐちゃです
+        if(this.memoPosts[i][0].memoDate == today){
+          for(let k = 0; k < this.memoPosts[i].length; k++){
+            menu.push(this.memoPosts[i][k])
+          }
+        }
+      }
       return menu
     },
 // v-treeviewをあきらめた
@@ -450,8 +450,10 @@ export default {
     //ここに1月分のデータとってくる
     this.memoPosts3 = getMemo
     for(let i = 0; i < this.memoPosts3.items.length; i++){
-      console.log("adas")
-      this.memoPosts.push(getMemo.items[i].foodMemos.items)
+      // console.log("aaaa", getMemo.items[i])
+      if(getMemo.items[i].foodMemos.items.length > 0){
+        this.memoPosts.push(getMemo.items[i].foodMemos.items)
+      }
       this.memoPosts2.push(getMemo2.items[i].trainingMemos.items)
     }
   },
