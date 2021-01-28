@@ -27,9 +27,7 @@
             <v-col cols="12" sm="6" md="3" justify="left">
             </v-col>
 
-            <v-col cols="12" sm="6" md="3" justify="right">
-
-              <!-- 投稿ボタン -->
+            <!-- <v-col cols="12" sm="6" md="3" justify="right">
               <v-btn
                 class="ma-2"
                 color="primary"
@@ -38,14 +36,13 @@
               >
                 献立記録
               </v-btn>
-            </v-col>
+            </v-col> -->
 
           </v-row>
 
           <v-row>
-
             <!-- 投稿記述場所 -->
-            <v-col cols="12" sm="6" md="3">
+            <!-- <v-col cols="12" sm="6" md="3">
               <v-text-field
                 placeholder="タイトル"
                 v-model="foodtitle"
@@ -70,54 +67,89 @@
                 placeholder="たんぱく質"
                 v-model="foodproteins"
               ></v-text-field>
-            </v-col>
-
-
+            </v-col> -->
           </v-row>
 
           <v-row>
-
-            <v-col cols="12" sm="6" md="3" justify="left">
-            </v-col>
-            
-
-            <v-col cols="12" sm="6" md="3" justify="right">
-
-              <!-- 投稿ボタン -->
-              <v-btn
-                class="ma-2"
-                color="primary"
-                dark
-                @click="createTrainingMemo"
-              >
-                筋トレ記録
-              </v-btn>
-            </v-col>
-
+            <v-dialog v-model="fooddialog" max-width="600px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="primary"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  料理メモ
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="headline">料理メモ</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field label="タイトル*" v-model="foodtitle" required></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field label="カロリー*" v-model="foodcalorele" required></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field label="脂質*" v-model="foodlipid" required></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field label="たんぱく質*" v-model="foodproteins" required></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <small>*必須項目</small>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="createFoodMemo()">保存</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-row>
 
-          <v-row>
+          <br>
 
-            <!-- 投稿記述場所 -->
-            <v-col cols="12" sm="6" md="3">
-              <v-text-field
-                placeholder="タイトル"
-                v-model="trainingtitle"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="3">
-              <v-text-field
-                placeholder="内容"
-                v-model="trainingcontent"
-              ></v-text-field>
-            </v-col>
-                <!-- <v-col>
-                  <v-text-field
-                    label="description"
-                    placeholder="説明"
-                    v-model="description"
-                  ></v-text-field>
-                </v-col> -->
+          <v-row>
+            <v-dialog v-model="trainingdialog" max-width="600px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="primary"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  筋トレメモ
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="headline">筋トレメモ</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field label="タイトル*" v-model="trainingtitle" required></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field label="コンテント*" v-model="trainingcontent" required></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <small>*必須項目</small>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="createTrainingMemo()">保存</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-row>
         </v-container>
     <v-row>
@@ -329,6 +361,8 @@ export default {
       enableEvents: true,
       dialog: false,
       currentCard: null,
+      fooddialog: false,
+      trainingdialog: false,
       foodMemos: [
         { memoDate: "2020-12-02",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 100 },
         { memoDate: "2020-12-02",title: "ハンバーガー",image: require('../assets/料理/ハンバーガー.png'),subtitle: "夜食",calorele: 200 },
@@ -404,10 +438,12 @@ export default {
       const today = this.picker
       // FoodMenusの長さ分For回してデータを入れる
       for(let i = 0; i < this.memoPosts.length; i++){
+        console.log("this.memoPosts.length:",this.memoPosts.length)
         // {{memoPosts[0]}}とかで確認しつつやったので階層ぐちゃぐちゃです
         if(this.memoPosts[i][0].memoDate == today){
           for(let k = 0; k < this.memoPosts[i].length; k++){
             menu.push(this.memoPosts[i][k])
+            console.log("faegaegsageag");
           }
         }
       }
@@ -468,6 +504,7 @@ export default {
   
   methods: {
     async createFoodMemo(){
+      this.fooddialog = false
       //メモを作る前にすでにメモがあるかどうか判定する
       if(this.memoPosts3.items.date != this.picker){
         //メモがないならメモを作る
@@ -497,6 +534,7 @@ export default {
       console.log(foodmemo.data.createFoodMemo);
     },
     async createTrainingMemo(){
+      this.tainingdialog = false
       //メモを作る前にすでにメモがあるかどうか判定する
       if(this.memoPosts3.items.date != this.picker){
         //メモがないならメモを作る
@@ -524,7 +562,7 @@ export default {
       // 内容記録時にidほしいのでtIdにいれる、trainingmemo.data.createTrainingMemo.idだとだめだったから別の変数に入れてる
       this.tId = trainingmemo;
       console.log(this.tId.data.createTrainingMemo);
-      // console.log(trainingmemo.data.createTrainingMemo);
+      console.log(trainingmemo.data.createTrainingMemo);
       //トレーニング内容記録
       const trainingcontent = await API.graphql(
         graphqlOperation(gqlMutations.createTrainingContent, {
@@ -537,8 +575,8 @@ export default {
       console.log(trainingcontent.data.createTrainingContent);
     },
     dateFunctionEvents (date) {
-      console.log("date:"+date)
-      console.log("parseInt(day, 10):"+parseInt(day, 10))
+     // console.log("date:"+date)
+      //console.log("parseInt(day, 10):"+parseInt(day, 10))
       const [,, day] = date.split('-')
       const foodMemoDay = []
       for(let i = 0; i < this.memoPosts.length; i++){
@@ -557,8 +595,8 @@ export default {
         trainingMemoDay.push(Number(memo))
       // });
       }
-      console.log(day)
-      console.log(parseInt(day, 10))
+      //console.log(day)
+      //console.log(parseInt(day, 10))
       if (foodMemoDay.includes(parseInt(day, 10)) && trainingMemoDay.includes(parseInt(day, 10))){
         return ['blue', 'red']
       } else if(foodMemoDay.includes(parseInt(day, 10))){
@@ -571,7 +609,7 @@ export default {
       return false
     },
     monthFunctionEvents (date) {
-      console.log("month")
+      //console.log("month")
       const month = parseInt(date.split('-')[1], 10)
       if ([1, 3, 7].includes(month)) return true
       if ([2, 5, 12].includes(month)) return ['error', 'purple', 'rgba(0, 128, 0, 0.5)']
