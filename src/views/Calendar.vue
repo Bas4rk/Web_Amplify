@@ -5,14 +5,20 @@
       {{}}
     </div> -->
     <v-container>
+      全体
+      {{memoPosts3}}
+      <br><br>
+      food
       {{memoPosts}}
       <br><br>
-      {{memoPosts.length}}
+      training
+      {{memoPosts2}}
+      <br><br>
+
       <!-- {{kakutra}} -->
+
       <br><br>
-      {{trainingMemos2}}
-      <br><br>
-      {{trainingMemos}}
+
           <v-row>
             <v-col cols="12" sm="6" md="3" justify="left">
             </v-col>
@@ -445,7 +451,7 @@ export default {
       graphqlOperation(query1)
     )
     let getMemo = query.data.listMemos
-    let getMemo2 = query.data.listMemos
+    //let getMemo2 = query.data.listMemos
     console.log(query.data)
     //ここに1月分のデータとってくる
     this.memoPosts3 = getMemo
@@ -454,7 +460,9 @@ export default {
       if(getMemo.items[i].foodMemos.items.length > 0){
         this.memoPosts.push(getMemo.items[i].foodMemos.items)
       }
-      this.memoPosts2.push(getMemo2.items[i].trainingMemos.items)
+      if(getMemo.items[i].trainingMemos.items.length > 0){
+        this.memoPosts2.push(getMemo.items[i].trainingMemos.items)
+      }
     }
   },
   
@@ -530,37 +538,37 @@ export default {
     },
     dateFunctionEvents (date) {
       console.log("date:"+date)
-      // console.log("parseInt(day, 10):"+parseInt(day, 10))
-      // const [,, day] = date.split('-')
-      // const foodMemoDay = []
-      // for(let i = 0; i < this.memoPosts.length; i++){
-      // // this.memoPosts.forEach(function (value) {
-      //   // console.log(index + '番目 : ' + value);
-      //   const [,, memo] = this.memoPosts[i][0].memoDate.split('-')
-      //   foodMemoDay.push(Number(memo))
-      // // });
-      // }
-      // // if (foodMemoDay.includes(parseInt(day, 10))) return true
-      // const trainingMemoDay = []
-      // for(let i = 0; i < this.memoPosts2.length; i++){
-      // // this.trainingMemos.forEach(function (value) {
-      //   // console.log(index + '番目 : ' + value);
-      //   const [,, memo] = this.memoPosts2[i][0].memoDate.split('-')
-      //   trainingMemoDay.push(Number(memo))
-      // // });
-      // }
+      console.log("parseInt(day, 10):"+parseInt(day, 10))
+      const [,, day] = date.split('-')
+      const foodMemoDay = []
+      for(let i = 0; i < this.memoPosts.length; i++){
+      // this.memoPosts.forEach(function (value) {
+        // console.log(index + '番目 : ' + value);
+        const [,, memo] = this.memoPosts[i][0].memoDate.split('-')
+        foodMemoDay.push(Number(memo))
+      // });
+      }
+      // if (foodMemoDay.includes(parseInt(day, 10))) return true
+      const trainingMemoDay = []
+      for(let i = 0; i < this.memoPosts2.length; i++){
+      // this.trainingMemos.forEach(function (value) {
+        // console.log(index + '番目 : ' + value);
+        const [,, memo] = this.memoPosts2[i][0].memoDate.split('-')
+        trainingMemoDay.push(Number(memo))
+      // });
+      }
+      console.log(day)
+      console.log(parseInt(day, 10))
+      if (foodMemoDay.includes(parseInt(day, 10)) && trainingMemoDay.includes(parseInt(day, 10))){
+        return ['blue', 'red']
+      } else if(foodMemoDay.includes(parseInt(day, 10))){
+        return 'blue'
+      } else if(trainingMemoDay.includes(parseInt(day, 10))){
+        return 'red'
+      }
       // console.log(day)
-      // console.log(parseInt(day, 10))
-      // if (foodMemoDay.includes(parseInt(day, 10)) && trainingMemoDay.includes(parseInt(day, 10))){
-      //   return ['blue', 'red']
-      // } else if(foodMemoDay.includes(parseInt(day, 10))){
-      //   return 'blue'
-      // } else if(trainingMemoDay.includes(parseInt(day, 10))){
-      //   return 'red'
-      // }
-      // // console.log(day)
-      // //[fix]ここら辺めっちゃ呼び出されてるけど、どうにかならないか？
-      // return false
+      //[fix]ここら辺めっちゃ呼び出されてるけど、どうにかならないか？
+      return false
     },
     monthFunctionEvents (date) {
       console.log("month")
