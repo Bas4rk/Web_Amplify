@@ -92,7 +92,7 @@
       v-if="currentItem"
       max-width="1000"
     >
-      <v-card v-show="currentItem==0">  <!-- TweetCreate -->
+      <v-card v-if="currentItem==0">  <!-- TweetCreate -->
         <v-form>
           <v-container>
             <v-row>
@@ -132,9 +132,8 @@
           </v-container>
         </v-form>
       </v-card>
-      <v-card v-show="currentItem==1">  <!-- CookingCreate -->
+      <v-card v-if="currentItem==1">  <!-- CookingCreate -->
         <div class="CreateCooking">
-          <Navigation></Navigation>
 
           <!-- v-layout justify-centerで中央に持ってくる -->
           <v-layout justify-center>
@@ -150,23 +149,6 @@
           <v-container>
 
             <v-row>
-
-              <!-- 戻るボタンです -->
-              <v-col cols="12" sm="6" md="3" justify="left">
-                <v-btn
-                  class="ma-2"
-                  color="primary"
-                  dark
-                  @click="back"
-                >
-                <v-icon
-                  dark
-                  left
-                >
-                  mdi-arrow-left
-                </v-icon>Back</v-btn>
-              </v-col>
-
               <!-- これ下書きボタンの位置調整用に書いた -->
               <v-col cols="12" sm="6" md="3" justify="center">
               </v-col>
@@ -332,9 +314,8 @@
           </v-container>
         </div>
       </v-card>
-      <v-card v-show="currentItem==2">  <!-- TrainingCreate -->
+      <v-card v-if="currentItem==2">  <!-- TrainingCreate -->
         <div class="CreateTraining">
-          <Navigation></Navigation>
 
           <!-- v-layout justify-centerで中央に持ってくる -->
           <v-layout justify-center>
@@ -350,22 +331,6 @@
           <v-container>
 
             <v-row>
-
-              <!-- 戻るボタンです -->
-              <v-col cols="12" sm="6" md="3" justify="left">
-                <v-btn
-                  class="ma-2"
-                  color="primary"
-                  dark
-                  @click="back"
-                >
-                <v-icon
-                  dark
-                  left
-                >
-                  mdi-arrow-left
-                </v-icon>Back</v-btn>
-              </v-col>
 
               <!-- これ下書きボタンの位置調整用に書いた -->
               <v-col cols="12" sm="6" md="3" justify="center">
