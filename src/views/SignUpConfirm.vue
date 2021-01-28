@@ -7,6 +7,15 @@
       <v-row justify="center">
         <v-col cols="5">
           <h1>Confirm</h1>
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="8" align="center">
+          ※Please do not change the email address you entered
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="5">  
           <v-form v-model="valid" ref="form" lazy-validation>
             <v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
             <v-text-field
@@ -20,17 +29,17 @@
               counter
               @click:append="passwordVisible = !passwordVisible"
               required/>
-              <!--<v-text-field
-              v-model="password"
+              <v-text-field
+              v-model="password2"
               :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[passwordRules.required, passwordRules.min]"
               :type="passwordVisible ? 'text' : 'password'"
-              name="password2"
-              label="Password"
+              name="passwordcomfirm"
+              label="Passwordconfirm"
               hint="At least 8 characters"
               counter
               @click:append="passwordVisible = !passwordVisible"
-              required/>-->
+              required/>
             <v-text-field v-model="code" :rules="codeRules" label="Code" required/>
             <v-text-field v-model="nickname" label="ニックネーム" required/>
             <v-btn :disabled="!valid" @click="submit">Submit</v-btn>
@@ -51,7 +60,7 @@ export default {
       valid: false,
       username: this.$store.getters.getUserEmail,
       password: this.$store.getters.getUserPassword,
-      //password2: '',
+      password2: '',
       passwordVisible: false,
       code: '',
       nickname: ''
@@ -86,11 +95,12 @@ export default {
   },
   methods: {
     submit() {
-      
-      if (this.$refs.form.validate()) {
-        console.log(`CONFIRM email: ${this.username}, code: ${this.code}`);
-        confirmSignUp(this.username, this.password, this.code, this.nickname);
-        signIn(this.username, this.password);
+      if(this.password === this.password2confirm){
+        if (this.$refs.form.validate()) {
+          console.log(`CONFIRM email: ${this.username}, code: ${this.code}`);
+          confirmSignUp(this.username, this.password, this.code, this.nickname);
+          signIn(this.username, this.password);
+        }
       }
     },
     resend() {

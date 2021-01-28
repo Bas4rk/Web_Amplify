@@ -20,6 +20,7 @@
               counter
               @click:append="passwordVisible = !passwordVisible"
               required/>
+            ※Be careful not to forget your password！
             <v-btn :disabled="!valid" @click="submit">登録する</v-btn>
           </v-form>
         </v-col>
