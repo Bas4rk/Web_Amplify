@@ -5,14 +5,7 @@
       {{}}
     </div> -->
     <v-container>
-      全体
-      {{memoPosts3}}
-      <br><br>
-      food
-      {{memoPosts}}
-      <br><br>
-      training
-      {{memoPosts2}}
+      
       <br><br>
 
       <!-- {{kakutra}} -->
@@ -100,6 +93,13 @@
                       </v-col>
                       <v-col cols="6">
                         <v-text-field label="たんぱく質*" v-model="foodproteins" required></v-text-field>
+                      </v-col>
+                      <v-col cols="5">
+                        <v-file-input
+                          accept="image/*"
+                          label="料理の写真を載せる"
+                          @change="onImgPicked"
+                        ></v-file-input>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -201,7 +201,7 @@
         <v-subheader>{{card.title}}</v-subheader>
         <v-card>
           <v-img
-            :src="card.image"
+            :src="getImage"
             class="white--text align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="200px"
@@ -341,6 +341,10 @@ query MyQuery {
 import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import * as gqlMutations from '../graphql/mutations'
+import store from '../store/index.js'
+import {Storage} from 'aws-amplify'
+
+
 // import * as graphql from '../graphql/queries.js'
 export default {
   components: {
@@ -427,6 +431,8 @@ export default {
       fId: null,
       memoPosts2: [],
       memoPosts3: [],
+      image: null,
+      getimage: null,
     }
   },
   computed: {
@@ -479,6 +485,9 @@ export default {
         }
       }
       return menu
+    },
+    getImage(){
+      return this.getimage
     }
   },
   mounted : async function(){
@@ -489,6 +498,9 @@ export default {
     let getMemo = query.data.listMemos
     //let getMemo2 = query.data.listMemos
     console.log(query.data)
+
+    this.getimage = await Storage.get(`${store.getters.getUserEmail}/Calendar`)
+
     //ここに1月分のデータとってくる
     this.memoPosts3 = getMemo
     for(let i = 0; i < this.memoPosts3.items.length; i++){
@@ -505,6 +517,7 @@ export default {
   methods: {
     async createFoodMemo(){
       this.fooddialog = false
+      this.createCooking();
       //メモを作る前にすでにメモがあるかどうか判定する
       if(this.memoPosts3.items.date != this.picker){
         //メモがないならメモを作る
@@ -618,7 +631,34 @@ export default {
     onClickBtn(card) {
       this.currentCard = card
       this.dialog = true
-    }
+    },
+    async createCooking(){
+
+      await Storage.put(
+        `${store.getters.getUserEmail}/Calendar`, // ファイル名
+        this.image // アップロードするファイル
+      )
+      .then (result => console.log(result)) // {key: "test.txt"}
+      .catch(err => console.log(err));
+      // createTweetにそのまま書いてるけど、thenとかerrorで投稿成功、投稿失敗とか分けた方がいいと思った。
+      // this.dialog = true;
+    },
+    onImgPicked(file) {
+      if (file !== undefined && file !== null) {
+        if (file.name.lastIndexOf('.') <= 0) {
+          return
+        }
+        var blob = new Blob([file], {type: "image/png"});
+        this.image = blob
+        const fr = new FileReader()
+        fr.readAsDataURL(file)
+        fr.addEventListener('load', () => {
+          this.uploadImageUrl = fr.result
+        })
+      } else {
+        this.uploadImageUrl = ''
+      }
+    },
   },
 };
 </script>
