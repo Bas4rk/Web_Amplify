@@ -146,11 +146,11 @@ import TrainingList from '@/components/TrainingList.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
 
-const listTranings = /* GraphQL */ `
-  query listTranings(
-    $filter: ModelTraningFilterInput
+const listTrainings = /* GraphQL */ `
+  query ListTrainings(
+    $filter: ModelTrainingFilterInput
   ) {
-    listTranings(filter: $filter) {
+    listTrainings(filter: $filter) {
       items {
         id
         image
@@ -195,13 +195,13 @@ export default {
   methods:{
     async searchTrainingPosts(){
       const TrainingPosts = await API.graphql(
-        graphqlOperation(listTranings, {
+        graphqlOperation(listTrainings, {
           filter: {title: {contains: this.word}}
         })
       ) 
       //きれいにする。
       this.searchWord = this.word 
-      this.trainingPostsList = TrainingPosts.data.listTranings.items
+      this.trainingPostsList = TrainingPosts.data.listTrainings.items
     }
   }
 }

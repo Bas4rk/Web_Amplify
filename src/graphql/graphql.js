@@ -12,9 +12,23 @@ query GetUser($id: ID!) {
         content
         createdAt
         image
+        comments {
+          items {
+            content
+            image
+            id
+            createdAt
+            user {
+              name
+              emailAddress
+              iconImage
+            }
+          }
+        }
         user {
           name
           emailAddress
+          iconImage
         }
       }
     }
@@ -29,6 +43,7 @@ query GetUser($id: ID!) {
         user {
           name
           emailAddress
+          iconImage
         }
       }
     }
@@ -42,6 +57,7 @@ query GetUser($id: ID!) {
         user {
           name
           emailAddress
+          iconImage
         }
       }
     }
@@ -58,6 +74,7 @@ query GetUser($id: ID!) {
               user {
                 name
                 emailAddress
+                iconImage
               }
             }
           }
@@ -73,6 +90,7 @@ query GetUser($id: ID!) {
               user {
                 name
                 emailAddress
+                iconImage
               }
             }
           }
@@ -87,6 +105,7 @@ query GetUser($id: ID!) {
               user {
                 name
                 emailAddress
+                iconImage
               }
             }
           }
