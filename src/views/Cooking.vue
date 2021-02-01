@@ -58,16 +58,12 @@
            <span>カロリー：{{item.calorie}}</span><br>
         </v-col>
 
-        <v-col cols="12" sm="6" md="3">
-          <span>タンパク質 10g</span><br>
-          <span>炭水化物 10g</span><br>
-          <span>脂質 10g</span><br>
-        </v-col>
+        
       </v-row>
 
       <v-row>
         <v-col cols="12" sm="6" md="3">
-          <div>料理の作り方</div>
+          
           <span>{{item.content}}</span><br>
         </v-col>
       </v-row>

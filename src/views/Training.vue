@@ -57,7 +57,7 @@
 
       <v-row>
         <v-col cols="12" sm="6" md="3">
-          <div>筋トレメニュー</div>
+          <div>やり方・コツ・ポイント</div>
           <span>{{item.content}}</span><br>
         </v-col>
       </v-row>

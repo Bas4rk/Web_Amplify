@@ -4,75 +4,24 @@
     <!-- <div>
       {{}}
     </div> -->
-    <v-container>
       
-      <br><br>
-
-      <!-- {{kakutra}} -->
-
-      <br><br>
-
-          <v-row>
-            <v-col cols="12" sm="6" md="3" justify="left">
-            </v-col>
-            <v-col cols="12" sm="6" md="3" justify="left">
-            </v-col>
-            <v-col cols="12" sm="6" md="3" justify="left">
-            </v-col>
-
-            <!-- <v-col cols="12" sm="6" md="3" justify="right">
-              <v-btn
-                class="ma-2"
-                color="primary"
-                dark
-                @click="createFoodMemo"
-              >
-                献立記録
-              </v-btn>
-            </v-col> -->
-
-          </v-row>
-
-          <v-row>
-            <!-- 投稿記述場所 -->
-            <!-- <v-col cols="12" sm="6" md="3">
-              <v-text-field
-                placeholder="タイトル"
-                v-model="foodtitle"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="3">
-              <v-text-field
-                placeholder="カロリー"
-                v-model="foodcalorele"
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="6" md="3">
-              <v-text-field
-                placeholder="脂質"
-                v-model="foodlipid"
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="6" md="3">
-              <v-text-field
-                placeholder="たんぱく質"
-                v-model="foodproteins"
-              ></v-text-field>
-            </v-col> -->
-          </v-row>
-
-          <v-row>
-            <v-dialog v-model="fooddialog" max-width="600px">
+      
+          <!-- <v-row> -->
+            
+          <!-- </v-row> -->
+    <v-row>
+      <v-col cols="2">
+        <v-dialog v-model="fooddialog" max-width="600px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="primary"
+                  color="red"
                   dark
                   v-bind="attrs"
                   v-on="on"
+                  fab
                 >
-                  料理メモ
+                <v-icon>mdi-silverware-fork-knife</v-icon>
+
                 </v-btn>
               </template>
               <v-card>
@@ -111,20 +60,22 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
-          </v-row>
+          <!-- </v-row> -->
 
-          <br>
+          <!-- <br> -->
 
-          <v-row>
+          <!-- <v-row> -->
             <v-dialog v-model="trainingdialog" max-width="600px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="primary"
+                  color="indigo"
                   dark
                   v-bind="attrs"
                   v-on="on"
+                  fab
                 >
-                  筋トレメモ
+                <v-icon>mdi-dumbbell</v-icon>
+
                 </v-btn>
               </template>
               <v-card>
@@ -138,7 +89,7 @@
                         <v-text-field label="タイトル*" v-model="trainingtitle" required></v-text-field>
                       </v-col>
                       <v-col cols="6">
-                        <v-text-field label="コンテント*" v-model="trainingcontent" required></v-text-field>
+                        <v-text-field label="内容*" v-model="trainingcontent" required></v-text-field>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -150,10 +101,8 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
-          </v-row>
-        </v-container>
-    <v-row>
-      <v-col  cols="8">
+      </v-col>
+      <v-col  cols="6">
         <v-row align-content="space-between">
           <v-col cols="12" align="center">
           <div class="display-4 ">{{picker}}日</div>
