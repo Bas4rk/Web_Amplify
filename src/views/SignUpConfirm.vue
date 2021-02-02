@@ -79,15 +79,6 @@ export default {
         v => (v && v.length === 6) || 'Code must be 6 digits'
       ]
     },
-    getUserEmail(){
-      return  this.$store.getters.getUserEmail
-    },
-    getUserPassword(){
-      return  this.$store.getters.getUserPassword
-    },
-    getUserNickname(){
-      return  this.$store.getters.getUserNickname
-    },
   },
   methods: {
     submit() {
