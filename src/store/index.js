@@ -12,6 +12,7 @@ export default new Vuex.Store({
     UserEmail: null,
     UserPassword: null,
     UserId: null,
+    UserNickname: null,
     UserAvatar: null,
     Wholeposts: null,
     Messages: [],
@@ -33,6 +34,11 @@ export default new Vuex.Store({
     getUserId(state) {
       // return state.user.signInUserSession.idToken.payload.email
       return state.UserId
+    },
+    //ニックネーム保存用
+    getUserNickname(state) {
+      // return state.user.signInUserSession.idToken.payload.email
+      return state.UserNickname
     },
     getUserAvatar(state) {
       // return state.user.signInUserSession.idToken.payload.email
@@ -57,6 +63,9 @@ export default new Vuex.Store({
     },
     setUserId(state, id) {
       state.UserId = id
+    },
+    setUserNickname(state, nickname) {
+      state.UserNikename = nickname
     },
     setUserAvatar(state, avatar) {
       state.UserAvatar = avatar

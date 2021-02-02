@@ -7,17 +7,8 @@
       <v-row justify="center">
         <v-col cols="5">
           <h1>Confirm</h1>
-        </v-col>
-      </v-row>
-      <v-row justify="center">
-        <v-col cols="8" align="center">
-          ※Please do not change the email address you entered
-        </v-col>
-      </v-row>
-      <v-row justify="center">
-        <v-col cols="5">  
           <v-form v-model="valid" ref="form" lazy-validation>
-            <v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
+            <!--<v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
             <v-text-field
               v-model="password"
               :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
@@ -29,19 +20,20 @@
               counter
               @click:append="passwordVisible = !passwordVisible"
               required/>
+
               <v-text-field
-              v-model="password2"
-              :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+              v-model="passwordconfirm"
+              :append-icon="passwordconfirmVisible ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[passwordRules.required, passwordRules.min]"
-              :type="passwordVisible ? 'text' : 'password'"
-              name="passwordcomfirm"
-              label="Passwordconfirm"
+              :type="passwordconfirmVisible ? 'text' : 'password'"
+              name="password comfirm"
+              label="Password confirm"
               hint="At least 8 characters"
               counter
-              @click:append="passwordVisible = !passwordVisible"
-              required/>
+              @click:append="passwordconfirmVisible = !passwordconfirmVisible"
+              required/>-->
             <v-text-field v-model="code" :rules="codeRules" label="Code" required/>
-            <v-text-field v-model="nickname" label="ニックネーム" required/>
+            <!--<v-text-field v-model="nickname" label="ニックネーム" required/>-->
             <v-btn :disabled="!valid" @click="submit">Submit</v-btn>
           </v-form>
           <v-btn @click="resend">Resend Code</v-btn>
@@ -53,17 +45,18 @@
 
 <script>
 import {confirmSignUp, resendSignUp, signIn} from '@/utils/auth.js'
+import store from '../store/index.js'
 export default {
   name: "SignUpConfirm",
   data() {
     return {
       valid: false,
-      username: this.$store.getters.getUserEmail,
+      /*username: this.$store.getters.getUserEmail,
       password: this.$store.getters.getUserPassword,
       password2: '',
-      passwordVisible: false,
+      passwordVisible: false,*/
       code: '',
-      nickname: ''
+      //nickname: ''
     }
   },
   computed: {
@@ -92,16 +85,22 @@ export default {
     getUserPassword(){
       return  this.$store.getters.getUserPassword
     },
+    getUserNickname(){
+      return  this.$store.getters.getUserNickname
+    },
   },
   methods: {
     submit() {
-      if(this.password === this.password2confirm){
-        if (this.$refs.form.validate()) {
-          console.log(`CONFIRM email: ${this.username}, code: ${this.code}`);
-          confirmSignUp(this.username, this.password, this.code, this.nickname);
-          signIn(this.username, this.password);
-        }
+      let username = store.getters.getUserEmail
+      let password = store.getters.getUserPassword
+      let nickname = store.getters.getUserNickname
+      //if(this.password === this.password2confirm){
+      if (this.$refs.form.validate()) {
+        console.log(`CONFIRM email: ${username}, code: ${this.code}`);
+        confirmSignUp(username, password, this.code, nickname);
+        signIn(username, password);
       }
+      //}
     },
     resend() {
       console.log(`RESEND email: ${this.username}`);
