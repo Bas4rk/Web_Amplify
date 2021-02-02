@@ -20,14 +20,14 @@
               counter
               @click:append="passwordVisible = !passwordVisible"
               required/>
-            <v-btn :disabled="!valid" @click="submit">ログイン</v-btn>
+            <v-btn :disabled="!valid" @click="submit">Login</v-btn>
           </v-form>
         </v-col>
       </v-row>
       <v-row justify="center">
         <v-col cols="5">
-          アカウントをお持ちでないですか？
-          <v-btn  @click="signUp">登録する</v-btn>
+          Do you have an account?
+          <v-btn  @click="signUp">To registration screen</v-btn>
         </v-col>
       </v-row>
     </v-container>
