@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <Navigation></Navigation>
+    
       <NoticeList :items="getMessages"></NoticeList>
   </div>
 </template>

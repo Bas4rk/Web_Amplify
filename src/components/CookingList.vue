@@ -104,6 +104,7 @@ const deleteCooking_query = /* GraphQL */`
           })
         )
         console.log("投稿を削除しました"+deleteCooking.data.deleteCooking)
+        this.$router.push('/');
       },
       getImage(i){
         return  this.list[i]

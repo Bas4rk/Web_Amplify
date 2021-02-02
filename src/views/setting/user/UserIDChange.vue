@@ -1,7 +1,20 @@
 <template>
   <div class="calendar">
     <Navigation></Navigation>
-
+    <v-col cols="12" sm="6" md="3" justify="left">
+              <v-btn
+                class="ma-2"
+                color="primary"
+                dark
+                @click="back"
+              >
+              <v-icon
+                dark
+                left
+              >
+                mdi-arrow-left
+              </v-icon>Back</v-btn>
+    </v-col>
     <!-- fluidで左右いっぱいにコンテナを広げる、らしい、py-8 px-6は余白の設定（公式見たらある） -->
     <v-container
       class="py-8 px-6"
@@ -57,7 +70,8 @@ export default {
   },
   data() {
     return {
-      theme: false
+      theme: false,
+      message:null
     };
   },
     // computed: {
@@ -72,6 +86,9 @@ export default {
     //   }
     // },
   methods: {
+    back: function(){
+      this.$router.push('/SettingAccount');
+    },
     signOut() {
       signOut().then((data) => console.log('DONE', data)).catch((err) => console.log('SIGN OUT ERR', err));
     }

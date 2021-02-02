@@ -163,7 +163,7 @@ export default {
   },
   methods: {
     back: function(){
-      this.$router.push('/Profile');
+      this.$router.push('/');
       // historyできてなくね？
     },
     // 保存ボタン

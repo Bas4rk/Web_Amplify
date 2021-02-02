@@ -224,7 +224,7 @@ export default {
       console.log(training.data.createTraining);
 
       await Storage.put(
-        `${store.getters.getUserEmail}/Training/${this.title}`, // ファイル名
+        `${store.getters.getUserEmail}/Training/${this.title+training.data.createCooking.id}`, // ファイル名
         this.image // アップロードするファイル
       )
       .then (result => console.log(result)) // {key: "test.txt"}

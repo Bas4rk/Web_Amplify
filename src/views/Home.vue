@@ -35,6 +35,15 @@
         >
           <v-icon>{{item.icon}}</v-icon>
         </v-btn>
+        <v-btn
+              fab
+              dark
+              small
+              color="pink"
+              @click="test"
+            >
+              <v-icon>mdi-silverware-fork-knife</v-icon>
+            </v-btn>
       </v-speed-dial>
     </v-card>
 
@@ -98,7 +107,7 @@ import Navigation from '@/components/Navigation.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
 import * as graphql from '../graphql/graphql.js'
-
+var caljudge="ghvgzvhgzhzkgvh"
 export default {
   name: 'home',
   data() {
@@ -140,6 +149,18 @@ export default {
   computed: {
   },
   methods: {
+    test:function(){
+      let j=10
+      /*console.log(this.cookingPosts.length)
+      for(let i=0;i<this.cookingPosts.length;i++){
+        console.log(this.cookingPosts[i].content.includes(caljudge))
+      }*/
+      for(let i=0;i<j;i++){
+        j--
+        console.log(j)
+      }
+      
+    },
     // behavior: autoだと瞬間移動になる
     scrollTop: function(){
       window.scrollTo({
@@ -181,9 +202,15 @@ export default {
     for(let i = 0; i < getUser.followees.items.length; i++){
       for(let j = 0; j < getUser.followees.items[i].follower.cookingPosts.items.length; j++){
         this.cookingPosts.push(getUser.followees.items[i].follower.cookingPosts.items[j])
+        
       }
     }
-
+    for(let i=0;i<this.cookingPosts.length;i++){
+      if(this.cookingPosts[i].content.includes(caljudge)){
+          this.cookingPosts.splice(i,1)
+          i--
+        }
+    }
     //筋トレリスト
     this.trainingPosts = getUser.trainingPosts.items
     for(let i = 0; i < getUser.followees.items.length; i++){
