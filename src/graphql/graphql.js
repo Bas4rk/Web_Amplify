@@ -185,6 +185,40 @@ export const onDeleteTraning = /* GraphQL */ `
   }
 `;
 
+// export const MQSearchUser = /* GraphQL */ `
+//   query MQSearchUser($filter: ModelUserFilterInput!) {
+//     listUsers(filter: $filter) {
+//       items {
+//         name
+//         id
+//         iconImage
+//         emailAddress
+//         followees {
+//           items {
+//             id
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
+export const MQSearchUser = /* GraphQL */ `
+  query MQSearchUser($nameFilter: ModelUserFilterInput!, $followFilter: ModelRelationshipFilterInput!) {
+    listUsers(filter: $nameFilter) {
+      items {
+        name
+        id
+        iconImage
+        emailAddress
+        followers(filter: $followFilter) {
+          items {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
 
 // subscribe(){
 //   // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
