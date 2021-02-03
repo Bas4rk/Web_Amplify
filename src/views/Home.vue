@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <Navigation></Navigation>
-
     <!-- 投稿ボタン -->
     <v-card id="create">
       <v-speed-dial
@@ -214,7 +213,7 @@ export default {
       graphqlOperation(graphql._query2, {id : this.$store.getters.getUserId})
     )
     let getUser = query.data.getUser
-
+    
     //ツイートリスト
     this.tweetPosts = getUser.tweetPosts.items
     for(let i = 0; i < getUser.followees.items.length; i++){
@@ -222,8 +221,9 @@ export default {
         this.tweetPosts.push(getUser.followees.items[i].follower.tweetPosts.items[j])
       }
     }
+    
 
-    //料理リスト
+    // //料理リスト
     this.cookingPosts = getUser.cookingPosts.items
     for(let i = 0; i < getUser.followees.items.length; i++){
       for(let j = 0; j < getUser.followees.items[i].follower.cookingPosts.items.length; j++){
@@ -231,7 +231,7 @@ export default {
       }
     }
 
-    //筋トレリスト
+    // //筋トレリスト
     this.trainingPosts = getUser.trainingPosts.items
     for(let i = 0; i < getUser.followees.items.length; i++){
       for(let j = 0; j < getUser.followees.items[i].follower.trainingPosts.items.length; j++){
