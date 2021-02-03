@@ -38,35 +38,49 @@
       </v-row>
 
       <!-- 載せた画像表示場所 -->
-      <v-row>
-        <v-col cols="12" sm="6" md="3" justify="left">
-          <v-img
-            :src="image"
-            max-width="600"
-            max-height="600"
-          ></v-img>
-        </v-col>
-      </v-row>
+      <v-card class="mx-auto">
+        <v-row>
+          <v-col cols="12" sm="6" md="3" justify="center">
+            <v-img
+            class="white--text align-end"
+              :src="image"
+            >
+            </v-img>
+          </v-col>
+        </v-row>
 
-      <v-row>
-        <v-col cols="12" sm="6" md="3">
-          <span>料理名：{{item.title}}</span><br>
-          <span>投稿者：{{item.user.name}}</span><br>
-        </v-col>
-
-        <v-col cols="12" sm="6" md="3">
-           <span>カロリー：{{item.calorie}}</span><br>
-        </v-col>
-
+        <v-list-item>
+          <span class="display-1 text--primary">料理名：{{item.title}}</span><br>
+        </v-list-item>
         
-      </v-row>
+        <v-list-item>
+          <span class="text--primary">投稿者：{{item.user.name}}</span>
+        </v-list-item>
 
-      <v-row>
-        <v-col cols="12" sm="6" md="3">
-          
-          <span>{{item.content}}</span><br>
-        </v-col>
-      </v-row>
+        <v-list-item>
+          <span class="text--primary">カロリー：{{item.calorie}}</span>
+        </v-list-item>
+
+        <v-list-item></v-list-item>
+
+        <v-list-item class="font-weight-bold">
+          作り方
+        </v-list-item>
+        <v-row>
+          <v-col v-for="(item2, index) in item.content" :key=item2.content cols="3">
+            <v-list-item class="font-weight-bold">
+              {{index+1}}．
+            </v-list-item>
+
+            <v-list-item>
+            <span class="text--primary">
+              {{item2}}
+            </span>
+            </v-list-item>
+          </v-col>
+        </v-row>
+      </v-card>
+
     </v-container>
     <!-- prevRoute{{prevRoute}} -->
     <!-- prevRoute1{{prevRoute1}} -->
