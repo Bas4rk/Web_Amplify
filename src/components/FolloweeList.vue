@@ -20,7 +20,9 @@
         </v-icon>Back
       </v-btn>
       <!-- されてるほう -->
-      <!-- <div>{{follows}}</div> -->
+      <!-- <div>{{follows}}</div>
+      <br><br>
+      {{followees}} -->
       <!-- <br> -->
       <!-- <div>{{currentuser}}</div>
       <br>
@@ -74,11 +76,11 @@
           <!-- v-forで配列kotaeの長さ分回してる、keyの指定はしないとエラーで怒られるので:key="item2"て書いてる
           v-for="item2 in kotae"はitem2にkotaeを入れて、v-forの中でkotaeを認識させてる。これがないと'kotae'undefinedで定義されてないって怒られる、
           ここでDuplicate keys detected: 'true'. This may cause an update error.出たので:key="item2.trueで消した、これが正しいかどうかはわからない -->
-          <v-col v-for="item2 in kotae" :key="item2.true">
+          <v-col v-for="(item2, index) in kotae" :key="index">
             <!-- item2（配列kotae）の中身がfalse（フォローしてない人）の時 -->
-            <v-btn v-if="item2 == false" @click="createRelation" color="primary">フォローする</v-btn>
+            <v-btn v-if="item2 == false" @click="createRelation(index)" color="primary">フォローする</v-btn>
             <!-- item2（配列kotae）の中身がtrue（フォローしてる人）の時 -->
-            <v-btn v-if="item2 == true" @click="deleteRelation" color="error">フォロー解除</v-btn>
+            <v-btn v-if="item2 == true" @click="deleteRelation(index)" color="error">フォロー解除</v-btn>
           </v-col>
         </v-list>
         
@@ -283,27 +285,33 @@ const deleteRelationship_query = `
       }
     },
     // フォローするところ
-    async createRelation(){
+    async createRelation(index){
       // [fix]押したボタンによって関係が変わるようになってない、要修正
       const createRelation = await API.graphql(
         graphqlOperation(createRelation_query, {
-          // input: {
-          //   blockBool: false, 
-          //   followeeId: this.currentuser, 
-          //   followerId: "a903aa7a-fa56-4285-b4cd-db68bffa3c8f"
-          // }
+          input: {
+          // よくわかんないけど全部falseだった
+            blockBool: false, 
+
+          // フォローする人のid
+            followeeId: this.$store.getters.getUserId,
+          
+          // 自分がフォローされる人の
+            followerId: this.follows[index].followee.id
+          }
         })
       )
       console.log("フォローしました"+createRelation.data.createRelationship)
     },
     // フォロー解除するところ
-    async deleteRelation(){
+    async deleteRelation(index){
       // [fix]押したボタンによって関係が変わるようになってない、要修正
       const deleteRelation = await API.graphql(
         graphqlOperation(deleteRelationship_query, {
-      //     input: {
-      //       id: this.judgment.items[0].id
-      //     }
+          input: {
+            id: this.followees[index].id
+            // id: this.judgment.items[index].id
+          }
         })
       )
       console.log("フォロー解除しました"+deleteRelation.data.deleteRelationship)
