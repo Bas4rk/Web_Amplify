@@ -32,7 +32,7 @@
           :multiple="multiple"
           :readonly="readonly"
           :disabled="disabled"
-          :events="enableEvents ? functionEvents : null"
+          :events="arrayEvents"
         ></v-date-picker>
       </v-col>
     </v-row>
@@ -170,6 +170,7 @@ export default {
       enableEvents: true,
       dialog: false,
       currentCard: null,
+      arrayEvents: ["2021-02-28", "2021-02-17", "2021-02-20", "2021-02-05", "2021-02-08", "2021-02-20"],
       foodMemos: [
         { memoDate: "2020-12-02",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 100 },
         { memoDate: "2020-12-02",title: "ハンバーガー",image: require('../assets/料理/ハンバーガー.png'),subtitle: "夜食",calorele: 200 },

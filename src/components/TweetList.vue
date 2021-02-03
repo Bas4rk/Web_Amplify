@@ -1,8 +1,5 @@
 <template>
   <div class="TweetList">
-    <!-- {{items}} -->
-    <br>
-    <!-- {{list}} -->
     <v-card>
       <!-- <v-subheader>{{ card }}</v-subheader> -->
       <v-subheader>投稿一覧</v-subheader>

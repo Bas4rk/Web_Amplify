@@ -39,13 +39,7 @@
 
         <!-- 下書きボタンです、中身はまだない -->
         <v-col cols="12" sm="6" md="3" justify="right">
-          <v-btn
-            class="ma-2"
-            color="primary"
-            dark
-          >
-            下書き
-          </v-btn>
+         
 
           <!-- 投稿ボタン -->
           <v-btn
@@ -92,10 +86,7 @@
 
         <!--タグ入力です、Prottにあったから作った、でもDynamoDBに？タグの項目ない -->
         <v-col cols="12" sm="6" md="3">
-          <v-text-field
-            placeholder="#タグ（必須でない）"
-          >
-          </v-text-field>
+          
         </v-col>
 
       </v-row>
@@ -106,8 +97,8 @@
         <!-- clearableいらない？ -->
         <v-col cols="12" sm="6" md="3">
           <v-textarea
-            label="メニュー"
-            placeholder="1.これを３０秒行う。"
+            label="やり方・コツ・ポイント"
+            placeholder="リズムよく行いましょう"
             clearable
             clear-icon="mdi-close-circle"
             v-model="content"

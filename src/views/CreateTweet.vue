@@ -30,13 +30,7 @@
 
             <!-- 下書きボタンです、中身はまだない -->
             <v-col cols="12" sm="6" md="3" justify="right">
-              <v-btn
-                class="ma-2"
-                color="primary"
-                dark
-              >
-                下書き
-              </v-btn>
+           
 
               <!-- 投稿ボタン -->
               <v-btn

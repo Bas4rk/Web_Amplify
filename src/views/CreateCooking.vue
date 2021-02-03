@@ -39,13 +39,7 @@
 
         <!-- 下書きボタンです、中身はまだない -->
         <v-col cols="12" sm="6" md="3" justify="right">
-          <v-btn
-            class="ma-2"
-            color="primary"
-            dark
-          >
-            下書き
-          </v-btn>
+          
 
           <!-- 投稿ボタン -->
           <v-btn
@@ -147,7 +141,7 @@
         <!-- clearableいらない？ -->
         <v-col cols="12" sm="6" md="3">
           <v-textarea
-            label="料理の作り方！"
+            label="コツ・ポイント"
             clearable
             clear-icon="mdi-close-circle"
             v-model="content"
@@ -190,7 +184,7 @@
           >
             mdi-plus
           </v-icon>
-            作り方を追加
+            コツ・ポイントを追加
           </v-btn>
         </v-col>
 
