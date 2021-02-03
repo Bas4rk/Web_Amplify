@@ -1,9 +1,6 @@
 <template>
   <div class="searchUser">
     <v-row justify="center">
-      
-      <!-- {{judgment.items[0].id}}<br> -->
-      <!-- {{user}}<br> -->
       <v-col cols="12">
         <v-text-field
           label="検索キーワードを入力してください。"
@@ -16,32 +13,43 @@
         </template>
         </v-text-field>
 
+        <v-card>
+          <v-list v-if="searchResult">
+            <template  v-for="user in searchResult.data.listUsers.items">
+                
+                <v-list-item :key="`first-${user.id}`" height="200">
+                  <!-- icon -->
+                  <v-list-item-avatar color="grey darken-1">
+                    <img :src="user.iconImage">
+                  </v-list-item-avatar>
 
-        <v-list v-if="this.user">
-              <v-list-item height="200">
-              <v-list-item-avatar color="grey darken-1">
-                <v-icon size="30">mdi-account</v-icon>
-              </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title>{{user.name}}</v-list-item-title>
 
-              <v-list-item-content>
-                <v-list-item-title>{{ this.user.data.listUsers.items[0].name}}</v-list-item-title>
+                    <v-list-item-subtitle>
+                      <div>
+                        <small>{{ user.emailAddress }}</small>
+                      </div>
+                    </v-list-item-subtitle>
 
-                <v-list-item-subtitle>
-                  <div>
-                    <small>{{ this.user.data.listUsers.items[0].emailAddress }}</small>
-                  </div>
-                </v-list-item-subtitle>
-
-                <v-btn v-if="this.judgment.items.length == 0 && this.currentuser != this.user.data.listUsers.items[0].id" @click="createRelation" color="primary">フォローする</v-btn>
-
-                <v-btn v-if="this.judgment.items.length > 0" @click="deleteRelation" color="error">フォロー解除</v-btn>
-<!-- {{judgment}} -->
-              </v-list-item-content>
-            </v-list-item>
-        </v-list>
+                    <!-- ボタン -->
+                    <div v-if="user.id != $store.getters.getUserId">
+                      <v-btn v-if="0 == user.followers.items.length" @click="createRelation(user)" color="primary" class="right">フォローする</v-btn>
+                      <v-btn v-if="1 == user.followers.items.length" @click="deleteRelation(user)" color="error">フォロー解除</v-btn>
+                    </div>
+                    
+                  </v-list-item-content>
+                </v-list-item>
+                              <v-divider
+                  :key="`divider-${user.id}`"
+                  inset
+                ></v-divider>
+            </template>
+          </v-list>
+        </v-card>
       </v-col>
     </v-row>
-    {{this.user}}
+    {{this.searchResult}}
 
   </div>
 </template>
@@ -49,152 +57,62 @@
 <script>
 
 import { API, graphqlOperation } from 'aws-amplify'
-import * as gqlQueries from '../../graphql/queries'
+// import * as gqlQueries from '../../graphql/queries'
+import * as gqlMutations from '../../graphql/mutations'
 import * as myGraphql from '../../graphql/graphql'
-
-
-// const _query = /* GraphQL */ `
-//   query FolloweeIndex(
-//     $followeeId: ID
-//     $filter: ModelRelationshipFilterInput
-//   ) {
-//   followeeIndex(
-//     followeeId: $followeeId
-//     filter: $filter
-//   ) {
-//     items{
-//       id
-//     }
-//   }
-// }
-// `
-
-
-const createRelationship = /* GraphQL */ `
-  mutation CreateRelationship(
-    $input: CreateRelationshipInput!
-  ) {
-    createRelationship(input: $input) {
-      id
-      blockBool
-      followerId
-      followee {
-        id
-        name
-        emailAddress
-      }
-      follower {
-        id
-        name
-        emailAddress
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`
-
-
-const deleteRelationship = /* GraphQL */ `
-  mutation DeleteRelationship(
-    $input: DeleteRelationshipInput!
-  ) {
-    deleteRelationship(input: $input) {
-      id
-      blockBool
-      followee {
-        id
-        name
-        emailAddress
-      }
-      follower {
-        id
-        name
-        emailAddress
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`
-
+import {Storage} from 'aws-amplify'
 
 export default {
   data () {
     return {
-      user: null,
-      judgment: null,
+      searchResult: null,
       searchUserName: '',
-      currentuser: null
+      // currentuser: null
     }
   },
   components: {
 
   },
   methods:{
-    async searchUser(){
-      // // [fix]必要な情報だけのクエリー作成する
-      // const Graphqluser = await API.graphql(
-      //   graphqlOperation(gqlQueries.emailIndex, {
-      //     emailAddress: this.emailAddress
-      //   })
-      // )
-      // console.log(Graphqluser.data.emailIndex);
-      // this.user = Graphqluser.data.emailIndex
-      // console.log("ユーザ検索でクエリー飛ばしてます");
-
-      // this.currentuser= this.$store.getters.getUserId
-
-      // const followJudg = await API.graphql(
-      //   graphqlOperation(_query, {
-      //     filter: {followerId: {eq: this.user.items[0].id}},
-      //     followeeId: this.currentuser
-      //   })
-      // )
-      // console.log(followJudg.data.followeeIndex);
-      // this.judgment = followJudg.data.followeeIndex
-      this.user = await API.graphql(
+    async searchUser(){//ユーザー検索
+      this.searchResult = await API.graphql(
         graphqlOperation(myGraphql.MQSearchUser, {
           nameFilter: {name: {contains: this.searchUserName}},
           followFilter: {followeeId: {eq: this.$store.getters.getUserId}}
-
         })
       )
-
-      console.log(this.user.data)
-
-      const followJudg = await API.graphql(
-        graphqlOperation(gqlQueries.followeeIndex, {
-          filter: {followerId: {eq: this.user.data.listUsers.items[0].id}},
-          followeeId: this.$store.getters.getUserId
-        })
-      )
-      this.judgment = followJudg.data.followeeIndex
-
+      for(var item of this.searchResult.data.listUsers.items){
+        console.log("check")
+        if(item.iconImage != null){
+          console.log(item.iconImage)
+          item.iconImage = await Storage.get(item.iconImage)
+        }
+      }
+      console.log(this.searchResult.data)
     },
-    async followJudg(){
-      return
-    },
-    async createRelation(){
+    async createRelation(targetUser){ //フォロー
       const createRelation = await API.graphql(
-        graphqlOperation(createRelationship, {
+        graphqlOperation(gqlMutations.createRelationship, {
           input: {
             blockBool: false,
-            followeeId: this.currentuser,
-            followerId: this.user.data.listUsers.items[0].id
+            followeeId: this.$store.getters.getUserId,
+            followerId: targetUser.id
           }
         })
       )
+
+      targetUser.followers.items = [{id: createRelation.data.createRelationship.id}]
       console.log("フォローしました"+createRelation.data.createRelationship)
     },
-    async deleteRelation(){
+    async deleteRelation(targetUser){//フォロー解除
       const deleteRelation = await API.graphql(
-        graphqlOperation(deleteRelationship, {
+        graphqlOperation(gqlMutations.deleteRelationship, {
           input: {
-            id: this.judgment.items[0].id
+            id: targetUser.followers.items[0].id
           }
         })
       )
+      targetUser.followers.items = []
       console.log("フォロー解除しました"+deleteRelation.data.deleteRelationship)
     }
   }
