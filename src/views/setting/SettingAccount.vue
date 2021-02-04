@@ -15,7 +15,7 @@
             <v-btn block to="/PasswdChange">パスワード</v-btn><br>
             <v-btn block to="/MailAdressChange">メールアドレス</v-btn><br>
             <v-btn block to="/PhoneNumberChange">電話番号</v-btn><br>
-            <v-btn block to="Security">セキュリティ</v-btn><br>
+            <v-btn block to="/Security">セキュリティ</v-btn><br>
             <v-dialog
               v-model="dialog"
               persistent

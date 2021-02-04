@@ -43,9 +43,12 @@
         <v-col cols="5">
         Do you have an account?
           <v-btn  @click="signIn">To login screen</v-btn>
-            <br>※If you do not enter the code on the next page, this email address will be invalid.
+            <!--<br>※If you do not enter the code on the next page, this email address will be invalid.
             please note.
-            <div>In that case, please contact us from <a href="contactUs">here</a>.</div>
+            <div>In that case, please contact us from <a @click="contactus">here</a>.</div>-->
+            <br>If you do not enter the code on the next page, the email address you entered will be invalid.
+            In that case, please contact us.
+            <br>phone number:XXXX-YY=ZZZZ
         </v-col>
       </v-row>
     </v-container>
@@ -97,7 +100,10 @@ export default {
     },
     signIn(){
       this.$router.push('/signIn')
-    }
+    },
+    // contactus(){
+    //   this.$router.push('/contactUs')
+    // }
   },
 }
 </script>

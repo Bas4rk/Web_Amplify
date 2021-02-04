@@ -40,7 +40,7 @@ import Training from '../views/Training.vue'
 
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
-// import ContactUs from '../views/ContactUs.vue'
+//import ContactUs from '../views/ContactUs.vue'
 
 import SignIn from '../views/SignIn.vue'
 import Terms from '../views/Terms.vue'
