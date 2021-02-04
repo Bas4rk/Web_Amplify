@@ -1,11 +1,11 @@
 <template>
   <div class="calendar">
     <Navigation></Navigation>
-    <div>
+    <!-- <div>
       calendar
       {{calendar}}
     </div>
-    <br>
+    <br> -->
     <div>
       memos
       {{memos}}
@@ -17,14 +17,24 @@
     </div>
     <br>
     <div>
-      foodMemos
+      todayfoodMemos
       {{foodMemos}}
     </div>
-    <br>
+    <!-- <br>
     <div>
       foodMemos.length
       {{foodMemos.length}}
-    </div>
+    </div> -->
+    <!-- <br>
+    <div>
+      foodList
+      {{foodList}}
+    </div> -->
+    <!-- <br>
+    <div>
+      foodListImage
+      {{foodListImage}}
+    </div> -->
 
       <v-dialog v-model="fooddialog" max-width="600px">
         <template v-slot:activator="{ on, attrs }">
@@ -163,15 +173,14 @@
       >
         <v-subheader>{{card.title}}</v-subheader>
         <v-card>
-          {{card.image}}
-          <!-- <v-img
+          <v-img
             :src="getImage(card.image)"
             class="white--text align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="200px"
           >
             <v-card-title v-text="card.title"></v-card-title>
-          </v-img> -->
+          </v-img>
           <!-- {{getImage(card.image)}} -->
 
           <v-card-actions>
@@ -287,6 +296,8 @@ export default {
       memo: "",
       bfp: "",
       weight: "",
+      foodList: "",
+      foodListImage: {},
 
 
       fooddialog: false,
@@ -370,8 +381,7 @@ export default {
     memoItems(bfp,weight,foodMemos,trainingMemos){
       this.bfp = bfp
       this.weight = weight
-      // this.foodMemos = foodMemos
-      this.getImage(foodMemos)
+      this.foodMemos = foodMemos
       this.trainingMemos = trainingMemos
     },
     async createFoodMemo(){
@@ -433,13 +443,11 @@ export default {
         this.uploadImageUrl = ''
       }
     },
-    async getImage(foodMemos){
-      for(var memo of foodMemos){
-        if(memo.image != null){
-          memo.image = await Storage.get(memo.image)
-        }
+    getImage(image){
+      if(image == null){
+        return require('../assets/料理/料理投稿.png')
       }
-      this.foodMemos = foodMemos
+      return this.foodListImage[image]
     },
   },
   mounted : async function(){
@@ -450,6 +458,21 @@ export default {
     )
 
     this.memos = this.calendar.data.getCalendar.memo.items
+
+    this.foodList = await API.graphql(
+      graphqlOperation(gqlQueries.listFoodMemos, {
+        filter: {userId: {eq: store.getters.getUserId}}
+      })
+    ) 
+    
+    for(var item of this.foodList.data.listFoodMemos.items){
+      if(item.image != null){
+        // this.foodListImage.push(await Storage.get(item.image))
+        var image = await Storage.get(item.image)
+        this.foodListImage[item.image] = image
+      }
+    }
   }
 };
 </script>
+
