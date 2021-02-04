@@ -70,11 +70,7 @@
           label="名前"
           clearable
         ></v-text-field>
-        <!-- [fix]自己紹介文入力できるようになったらv-modelで変更できるようにする -->
-        <v-textarea
-          label="自己紹介"
-          clearable
-        ></v-textarea>
+        
       </v-col>
     </v-row>
 

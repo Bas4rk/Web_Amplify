@@ -39,13 +39,7 @@
 
         <!-- 下書きボタンです、中身はまだない -->
         <v-col cols="12" sm="6" md="3" justify="right">
-          <v-btn
-            class="ma-2"
-            color="primary"
-            dark
-          >
-            下書き
-          </v-btn>
+         
 
           <!-- 投稿ボタン -->
           <v-btn
@@ -92,44 +86,25 @@
 
         <!--タグ入力です、Prottにあったから作った、でもDynamoDBに？タグの項目ない -->
         <v-col cols="12" sm="6" md="3">
-          <v-text-field
-            placeholder="#タグ（必須でない）"
-          >
-          </v-text-field>
+          
         </v-col>
 
       </v-row>
 
       <!-- 作り方書くところ -->
-      <v-row>
+      <v-row v-for="(item, index) in content"
+          :key="index">
 
         <!-- clearableいらない？ -->
         <v-col cols="12" sm="6" md="3">
           <v-textarea
             label="メニュー"
-            placeholder="1.これを３０秒行う。"
+            placeholder="これを３０秒行う。"
             clearable
             clear-icon="mdi-close-circle"
-            v-model="content"
+            v-model="content[index]"
           >
           </v-textarea>
-        </v-col>
-
-        <!-- 写真投稿ボタンです、中身はまだない -->
-        <v-col cols="12" sm="6" md="3" justify="left">
-          <v-btn
-            class="ma-2"
-            color="primary"
-            dark
-          >
-          <v-icon
-            dark
-            left
-          >
-            mdi-camera
-          </v-icon>
-            写真を載せる
-          </v-btn>
         </v-col>
 
       </v-row>
@@ -143,6 +118,7 @@
             class="ma-2"
             color="primary"
             dark
+            @click="addContent()"
           >
           <v-icon
             dark
@@ -151,6 +127,23 @@
             mdi-plus
           </v-icon>
           メニューを追加
+          </v-btn>
+
+          <!-- 作り方削除 -->
+          <v-btn
+            block
+            class="ma-2"
+            color="primary"
+            dark
+            @click="deleteContent()"
+          >
+          <v-icon
+            dark
+            left
+          >
+            mdi-minus
+          </v-icon>
+            メニューを削除
           </v-btn>
         </v-col>
 
@@ -188,7 +181,8 @@ export default {
   data() {
     return{
       // メニュー
-      content: null,
+      content: [[]],
+      newContent:null,
       // タイトル
       title: null,
       dialog: false,
@@ -248,6 +242,14 @@ export default {
         this.uploadImageUrl = ''
       }
     },
+    addContent(){
+      this.content.push(this.newContent)
+    },
+    deleteContent(){
+      if(this.content.length > 1){
+        this.content.pop()
+      }
+    }
   },
 }
 </script>

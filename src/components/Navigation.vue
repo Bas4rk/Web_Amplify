@@ -95,7 +95,7 @@ export default {
       ['mdi-home', 'ホーム','/'],
       ['mdi-magnify', '検索','/search'],
       ['mdi-calendar', 'カレンダー','/calendar'],
-      ['mdi-bell', '通知','/notice'],
+      // ['mdi-bell', '通知','/notice'],
       ['mdi-account', 'プロフィール','/profile'],
       ['mdi-cog', '設定','/setting'],
     ],
