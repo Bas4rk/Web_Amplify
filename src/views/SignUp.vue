@@ -46,9 +46,10 @@
             <!--<br>※If you do not enter the code on the next page, this email address will be invalid.
             please note.
             <div>In that case, please contact us from <a @click="contactus">here</a>.</div>-->
-            <br>If you do not enter the code on the next page, the email address you entered will be invalid.
-            In that case, please contact us.
-            <br>phone number:XXXX-YY=ZZZZ
+            <br>A security code will be sent to the email address you entered. 
+            Please note that your email address will be invalid if you do not enter it.
+            <br>In that case, please contact us at the following number.
+            <br>phone number:XXXX-YY-ZZZZ
         </v-col>
       </v-row>
     </v-container>
