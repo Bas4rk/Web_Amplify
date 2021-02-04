@@ -69,7 +69,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"/>
       <!-- <v-app-bar-nav-icon @click="drawer = !drawer; click=drawer2 = !drawer2"/> -->
       <v-icon>mdi-dumbbell</v-icon>
-      <v-toolbar-title>筋トレアプリ</v-toolbar-title>
+      <v-toolbar-title>Logiet</v-toolbar-title>
       <!-- <template v-if="drawer2">
         <v-spacer />
         <v-btn icon to="/">
