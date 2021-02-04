@@ -89,7 +89,9 @@ export default {
   },
   methods: {
     submit() {
-      if(this.password === this.passwordconfirm){
+      if (this.nickname === ""){
+        console.log("No nickname entered")
+      }else if(this.password === this.passwordconfirm){
         if (this.$refs.form.validate()) {
           console.log(`SIGN UP email: ${this.email}, password: ${this.password}, email: ${this.email}`);
           store.commit('setUserEmail',this.email)
@@ -100,6 +102,7 @@ export default {
       }else{
         console.log("Passwords do not match")
       }
+      
     },
     signIn(){
       this.$router.push('/signIn')
