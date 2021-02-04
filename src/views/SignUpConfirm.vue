@@ -39,7 +39,7 @@
           <v-btn @click="resend">Resend Code</v-btn>
           <!--<br>We have sent a security code to the email address you entered. 
           Please note that if you do not enter it, the email address you entered will be invalid.
-          <div><br>In that case, please contact us from <a href="contactUs">here</a></div>
+          <div><br>In that case, please contact us from <a href="contactUs">here</a>.</div>
           -->
 
           <br>We have sent a security code to the email address you entered. 
