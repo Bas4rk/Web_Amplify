@@ -35,15 +35,6 @@
         >
           <v-icon>{{item.icon}}</v-icon>
         </v-btn>
-        <v-btn
-              fab
-              dark
-              small
-              color="pink"
-              @click="test"
-            >
-              <v-icon>mdi-silverware-fork-knife</v-icon>
-            </v-btn>
       </v-speed-dial>
     </v-card>
 
@@ -149,18 +140,6 @@ export default {
   computed: {
   },
   methods: {
-    test:function(){
-      let j=10
-      /*console.log(this.cookingPosts.length)
-      for(let i=0;i<this.cookingPosts.length;i++){
-        console.log(this.cookingPosts[i].content.includes(caljudge))
-      }*/
-      for(let i=0;i<j;i++){
-        j--
-        console.log(j)
-      }
-      
-    },
     // behavior: autoだと瞬間移動になる
     scrollTop: function(){
       window.scrollTo({
@@ -206,7 +185,7 @@ export default {
       }
     }
     for(let i=0;i<this.cookingPosts.length;i++){
-      if(this.cookingPosts[i].content.includes(caljudge)){
+      if(this.cookingPosts[i].content[0].includes(caljudge)){
           this.cookingPosts.splice(i,1)
           i--
         }

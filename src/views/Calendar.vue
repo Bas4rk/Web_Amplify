@@ -4,8 +4,106 @@
     <!-- <div>
       {{}}
     </div> -->
+    
     <v-row>
-    <v-col  cols="8">
+      <v-col cols="2">
+      <v-dialog v-model="fooddialog" max-width="600px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="red"
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                  fab
+                >
+                <v-icon>mdi-silverware-fork-knife</v-icon>
+                </v-btn>
+              </template>
+              <v-card>
+    <v-list-item></v-list-item><br><br>
+    
+    
+    <v-file-input
+          accept="image/*"
+          label="料理の写真を載せる"
+          @change="onImgPicked"
+        ></v-file-input><br><br>
+        <v-row>
+        <v-img
+          v-if="uploadImageUrl"
+          :src="uploadImageUrl"
+          max-width="600"
+          max-height="600">
+        </v-img>
+      </v-row><br><br>
+      <v-list-item>
+    <v-text-field
+            class="text"
+            placeholder="タイトル"
+            v-model="title"
+          >
+          </v-text-field>
+    </v-list-item><br><br>
+    <v-list-item>
+    <v-col cols="3">
+    <v-select
+      :items="times"
+      label="いつ食べた"
+      v-model="foodenergy"
+    />
+    </v-col>
+    <v-col cols="3">
+    <v-text-field
+      ref="count"
+      label="カロリー"
+      type="number"
+      v-model="foodcalorie"
+    />
+    </v-col>
+    <v-col cols="3">
+    <v-text-field
+      ref="count"
+      label="炭水化物"
+      type="number"
+      v-model="carbohydrates"
+    />
+    </v-col></v-list-item><br><br>
+    <v-list-item>
+    <v-col cols="3">
+    <v-text-field
+      ref="count"
+      label="タンパク質"
+      type="number"
+      v-model="foodproteins"
+    />
+    </v-col><br><br>
+    <v-col cols="3">
+    <v-text-field
+      ref="count"
+      label="脂質"
+      type="number"
+      v-model="foodlipid"
+    />
+    </v-col>
+    </v-list-item><br><br>
+    <v-list-item>
+    <v-textarea
+            id="tears"
+            label="その他"
+            clearable
+            clear-icon="mdi-close-circle"
+            v-model="athers"
+          >
+    </v-textarea>
+    </v-list-item><br><br>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="blue darken-1" text @click="AddCalendarCooking()">保存</v-btn>
+    </v-card-actions>
+    </v-card>
+            </v-dialog>
+    </v-col>
+    <v-col  cols="6">
         <v-row align-content="space-between">
           <v-col cols="12" align="center">
           <div class="display-4 ">{{picker}}日</div>
@@ -48,45 +146,7 @@
        <button v-on:click="kind" class="bt"><b>+</b></button>
 
 
-        <v-speed-dial
-          v-model="fab"
-          :top="top"
-          :right="right"
-          :left="left"
-          :direction="direction"
-          :open-on-hover="hover"
-          :transition="transition"
-        >
-          <template v-slot:activator>
-            <v-btn
-              v-model="fab"
-              color="blue darken-2"
-              dark
-              fab
-            >
-              <v-icon v-if="fab">mdi-close</v-icon>
-              <v-icon v-else>mdi-plus</v-icon>
-            </v-btn>
-          </template>
-           <v-btn
-              fab
-              dark
-              small
-              color="indigo"
-              @click="teskin"
-            >
-              <v-icon>mdi-dumbbell</v-icon>
-            </v-btn>
-            <v-btn
-              fab
-              dark
-              small
-              color="red"
-              @click="test"
-            >
-              <v-icon>mdi-silverware-fork-knife</v-icon>
-            </v-btn>
-          </v-speed-dial>	
+        
       </v-col>
     </v-row>
     <v-divider></v-divider>
@@ -98,7 +158,7 @@
         :cols=3
         @click.stop="onClickBtn(card)"
       >
-        <v-subheader>{{card.subtitle}}</v-subheader>
+        <v-subheader>{{card.energy}}</v-subheader>
         <v-card>
           <v-img
             :src="card.image"
@@ -136,24 +196,22 @@
           <v-card-title>栄養成分</v-card-title>
           <v-list class="transparent">
             <v-list-item>
-              <v-list-item-title>エネルギー</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
-            </v-list-item>
-            <v-list-item>
               <v-list-item-title>炭水化物</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              <v-list-item-subtitle>{{currentCard.carbohydrates}}kcal</v-list-item-subtitle>
             </v-list-item>
             <v-list-item>
               <v-list-item-title>タンパク質</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              <v-list-item-subtitle>{{currentCard.proteins}}kcal</v-list-item-subtitle>
             </v-list-item>
             <v-list-item>
               <v-list-item-title>脂質</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              <v-list-item-subtitle>{{currentCard.lipid}}kcal</v-list-item-subtitle>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title>なんか</v-list-item-title>
-              <v-list-item-subtitle>400kcal</v-list-item-subtitle>
+              <v-list-item-title>その他</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-subtitle>{{currentCard.athers}}</v-list-item-subtitle>
             </v-list-item>
           </v-list>
 
@@ -195,119 +253,6 @@
       </div>
     </v-row>
     <br><br>
-
-
-    <v-dialog
-        v-model="dialog2"
-        max-width="900"
-      >
-      <v-card>
-    <div id="add" align="center">
-    <v-list-item>
-    <h1 align="center"><span id="space">カレンダーから日付を選択</span></h1>
-    <v-col cols="6" align="right">
-        <v-date-picker
-          v-model="picker2"
-          locale="jp-ja"
-          @click:date="addtest"
-          :day-format="date => new Date(date).getDate()"
-          :landscape="landscape"
-          :reactive="reactive"
-          :flat="flat"
-          :full-width="fullWidth"
-          :show-current="showCurrent"
-          :type="month ? 'month' : 'date'"
-          :multiple="multiple"
-          :readonly="readonly"
-          :disabled="disabled"
-          :events="enableEvents ? functionEvents : null"
-        ></v-date-picker>
-      </v-col></v-list-item><br><br>
-    
-    
-    <v-file-input
-          accept="image/*"
-          label="料理の写真を載せる"
-          @change="onImgPicked"
-        ></v-file-input><br><br>
-        <v-row>
-        <v-img
-          v-if="uploadImageUrl"
-          :src="uploadImageUrl"
-          max-width="600"
-          max-height="600">
-        </v-img>
-      </v-row><br><br>
-      <v-list-item>
-    <h3><span id="space">食べたもの</span></h3>
-    <v-text-field
-            class="text"
-            placeholder="タイトル"
-            v-model="title"
-          >
-          </v-text-field>
-    </v-list-item><br><br>
-    <v-list-item>
-    <h3><span id="space">いつ食べた</span></h3>
-    <select id="time" class="time">
-    <option value="朝食">朝食</option>
-    <option value="昼食">昼食</option>
-    <option value="夜食">夜食</option>
-    </select>
-    </v-list-item><br><br>
-    <v-list-item>
-    <h3><span id="space1">カロリー</span></h3>
-    <input id="col" type="number" class="num">
-    </v-list-item><br><br>
-    <br><button v-on:click="add" class="addm">add</button><br><br>
-    
-    </div>
-    </v-card>
-    </v-dialog>
-    
-
-
-    <v-dialog
-        v-model="dialog3"
-        max-width="900"
-      >
-      <v-card>
-    <div id="add" align="center">
-    <v-list-item>
-    <h1 align="center"><span id="space">カレンダーから日付を選択</span></h1>
-    <v-col cols="6" align="right">
-        <v-date-picker
-          v-model="picker2"
-          locale="jp-ja"
-          @click:date="addtest"
-          :day-format="date => new Date(date).getDate()"
-          :landscape="landscape"
-          :reactive="reactive"
-          :flat="flat"
-          :full-width="fullWidth"
-          :show-current="showCurrent"
-          :type="month ? 'month' : 'date'"
-          :multiple="multiple"
-          :readonly="readonly"
-          :disabled="disabled"
-          :events="enableEvents ? functionEvents : null"
-        ></v-date-picker>
-      </v-col></v-list-item><br><br>
-    
-    <v-list-item>
-    <h3><span id="space1">トレーニング内容</span></h3>
-    <input type="text" id="menutt" class="text">
-    </v-list-item><br><br>
-    <v-list-item>
-    <h3><span id="space">トレーニングの種類</span></h3>
-    <input type="text" id="tra" class="text">
-    </v-list-item><br><br>
-    <br><button v-on:click="addd" class="addm">add</button><br><br>
-    
-    </div>
-    </v-card>
-    </v-dialog>
-
   </div>
 </template>
 
@@ -325,9 +270,9 @@ import * as graphql from '../graphql/graphql.js'
 // var hide=true
 var AddDate=""
 var GeneralPurpose
-var AddCalorie=""
 var c=0
 const caljudge="ghvgzvhgzhzkgvh"
+const jleng=caljudge.length-1
 //var now= new Date()
 export default {
   components: {
@@ -335,6 +280,7 @@ export default {
   },
    data () {
     return {
+
       picker: new Date().toISOString().substr(0, 10),
       picker2: AddDate,
       landscape: false,
@@ -361,18 +307,28 @@ export default {
       uploadImageUrl: '',
       cookingPosts:null,
       trainingPosts:null,
-      title:null,
+      title:"",
+      foodenergy:"",
+      carbohydrates:"",
+      // 献立タンパク質
+      foodproteins: '',
+      // 献立脂質
+      foodlipid: '',
+      athers:"",
+      foodathers:"",
+      foodcalorie:"",
 
       dialog: false,
       currentCard: null,
-      dialog2: false,
-      dialog3: false,
+      fooddialog: false,
+      //dialog3: false,
       currentCard2: null,
+      times:["朝食","昼食","夜食"],
       foodMemos: [
-        { memoDate: "2020-12-02",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 100 },
+        /*{ memoDate: "2020-12-02",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 100 },
         { memoDate: "2020-12-02",title: "ハンバーガー",image: require('../assets/料理/ハンバーガー.png'),subtitle: "夜食",calorele: 200 },
         { memoDate: "2020-12-06",title: "牛丼",image: require('../assets/料理/牛丼.png'),subtitle: "朝食",calorele: 500 },
-      ],
+      */],
       // trainingMemosのフィールドどうするか
       trainingMemos: [
         {memoDate: "2021-01-02",
@@ -466,29 +422,21 @@ export default {
       this.currentCard = card
       this.dialog = true
     },
-    test:function(){
-      this.dialog2=true
-    },
-    teskin:function(){
-          this.dialog3=true
-    },
-    addtest:function(value){
-      AddDate=value
-    },
-    add:function(){
+    AddCalendarCooking:function(){
+      AddDate=this.picker
       //this.image=require('../assets/料理/牛丼.png')
-      AddDate+=caljudge
       if(AddDate.includes("-")){
-        GeneralPurpose=document.getElementById("time").value
-        AddCalorie=parseInt(document.getElementById("col").value,10)
+        //AddCalorie=parseInt(document.getElementById("col").value,10)
         //alert(this.title+GeneralPurpose+AddCalorie)
-        if(this.title===""||isNaN(AddCalorie)){
+        if(this.title===""||isNaN(this.foodcalorie)){
           alert("食べたものかカロリーが入力されていません")
-        }else if(AddCalorie<0){
+        }else if(this.foodcalorie<0){
           alert("正しいカロリーが入力されていません")
         }else{
+          alert(this.title)
         this.createCooking()
-        this.dialog2=false
+        this.fooddialog=false
+        location.reload(true)
         }
       }else{
         alert("日付を選択してください")
@@ -504,7 +452,7 @@ export default {
           }else{
             //ここにデータ送信のコード
 
-            this.dialog3=false
+            //this.dialog3=false
             //追加するトレーニング項目入力ダイアログを閉じる
             location.reload(true)
           }
@@ -516,8 +464,10 @@ export default {
 
     //テスト用のボタン
     kin:function(){
-       c=this.cookingPosts[3].createdAt.substr( 4, 1 )
-      alert(c+":")
+      //var a=this.cookingPosts.length-1
+       c=this.cookingPosts[0].content
+      alert(c+"")
+      alert(this.cookingPosts[0].content[0].length)
     },
     kind:function(){
       console.log(this.cookingPosts[2].image)
@@ -528,8 +478,8 @@ export default {
           graphqlOperation(gqlMutations.createCooking,{
             input: {userId: this.$store.getters.getUserId,
             title: this.title,
-            calorie: AddCalorie,
-            content: AddDate,
+            calorie: this.foodcalorie,
+            content: AddDate+this.foodenergy+"%$%"+this.carbohydrates+"!$!"+this.foodproteins+"#$#"+this.foodlipid+"?$?"+this.athers+caljudge,
             image: `${store.getters.getUserEmail}/calendarCooking/${this.title}`
             }
           })
@@ -567,28 +517,62 @@ export default {
       graphqlOperation(graphql._query2, {id : this.$store.getters.getUserId})
     )
     let getUser = query.data.getUser
+    var count1=0
+    var count2=0
+    var count3=0
+    var count4=0
+    var count5=0
+    //var jleng=caljudge.length
 
     //投稿されている料理の情報取得
     this.cookingPosts = getUser.cookingPosts.items
     for(let i=0;i<this.cookingPosts.length;i++){
       //投稿されている料理の画像取得
-      if(this.cookingPosts[i].content.includes(caljudge)){
+      if(this.cookingPosts[i].content[0].includes(caljudge)){
+        count1=this.cookingPosts[i].content[0].indexOf("%$%")-1
+        this.foodenergy=this.cookingPosts[i].content[0].substr( 10, count1-9 )
+        count2=this.cookingPosts[i].content[0].indexOf("!$!",count1+3)-1
+        this.carbohydrates=this.cookingPosts[i].content[0].substr( count1+4, count2-(count1+3) )
+        count3=this.cookingPosts[i].content[0].indexOf("#$#",count2+3)-1
+        this.foodproteins=this.cookingPosts[i].content[0].substr( count2+4, count3-(count2+3) )
+        count4=this.cookingPosts[i].content[0].indexOf("?$?",count3+3)-1
+        this.foodlipid=this.cookingPosts[i].content[0].substr( count3+4, count4-(count3+3) )
+        count5=this.cookingPosts[i].content[0].length-1
+        this.foodathers=this.cookingPosts[i].content[0].substr( count4+jleng+1, count5-(count4+jleng) )
         this.cookingPosts[i].image=await Storage.get(`${store.getters.getUserEmail}/calendarCooking/${this.cookingPosts[i].title+this.cookingPosts[i].id}`)
         this.foodMemos.push(...[
-          {memoDate: this.cookingPosts[i].content.substr( 0, 10 ),
+          {memoDate: this.cookingPosts[i].content[0].substr( 0, 10 ),
           title: this.cookingPosts[i].title,
           image: this.cookingPosts[i].image,
-          subtitle: "",calorele: this.cookingPosts[i].calorie}])
+          subtitle: "",calorele: this.cookingPosts[i].calorie,
+          energy:this.foodenergy,
+          carbohydrates:this.carbohydrates,
+          proteins:this.foodproteins,
+          lipid:this.foodlipid,
+          athers:this.foodathers
+          }])
+          console.log(this.foodMemos[i].lipid)
       }else{
+        console.log("free")
         this.cookingPosts[i].image=await Storage.get(this.cookingPosts[i].image)
         this.foodMemos.push(...[
           {memoDate: this.cookingPosts[i].createdAt.substr( 0, 10 ),
           title: this.cookingPosts[i].title,
           image: this.cookingPosts[i].image,
-          subtitle: "",calorele: this.cookingPosts[i].calorie}])
+          subtitle: "",calorele: this.cookingPosts[i].calorie,
+          energy:"",
+          carbohydrates:"",
+          proteins:"",
+          lipid:""}])
       }
-      
+      console.log(this.cookingPosts[i].content[0])
     }
+    this.title=""
+        this.foodenergy=this.times[0]
+        this.foodcalorie=""
+        this.carbohydrates=""
+        this.foodproteins=""
+        this.foodlipid=""
     //筋トレデータ取得 
     //以下のような形で配列に突っ込むと追加されずに上書きされます
     /*for(var tete=0;tete<this.trainingMemos.length;tete++){
@@ -658,7 +642,7 @@ button.addm {
 button.addm:hover {
   margin-top: 3px;
   color: #000;
-  background: # fff20a;
+  background: #fff20a;
   border-bottom: 2px solid #ccc100;
 }
 
@@ -676,13 +660,39 @@ select.time{
   border: 2px solid #ddd; /*枠線*/
   box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
 }
+#lipid{
+  padding: 10px 15px; /*ボックスを大きくする*/
+  font-size: 16px;
+  border-radius: 3px; /*ボックス角の丸み*/
+  border: 2px solid #ddd; /*枠線*/
+  box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+#carbohydrates{
+  padding: 10px 15px; /*ボックスを大きくする*/
+  font-size: 16px;
+  border-radius: 3px; /*ボックス角の丸み*/
+  border: 2px solid #ddd; /*枠線*/
+  box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+#proteins{
+  padding: 10px 15px; /*ボックスを大きくする*/
+  font-size: 16px;
+  border-radius: 3px; /*ボックス角の丸み*/
+  border: 2px solid #ddd; /*枠線*/
+  box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
 #space{
-  margin-right : 20px;
+  margin-right : 60px;
 }
 #space1{
   margin-right : 40px;
 }
-
+#space2{
+  margin-right : 59px;
+}
+#space3{
+  margin-right : 95px;
+}
 #menutt{
   padding: 10px 15px; /*ボックスを大きくする*/
   font-size: 16px;

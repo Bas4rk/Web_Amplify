@@ -111,6 +111,7 @@
           <v-text-field
             placeholder="カロリー"
             v-model="calorie"
+            type="number"
           >
           </v-text-field>
         </v-col>
