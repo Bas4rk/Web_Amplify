@@ -97,6 +97,8 @@ export default {
           store.commit('setUserNickname',this.nickname)
           signUp(this.email, this.password);
         }
+      }else{
+        console.log("Passwords do not match")
       }
     },
     signIn(){
