@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <Navigation></Navigation>
-
     <!-- 投稿ボタン -->
     <v-card id="create">
       <v-speed-dial
@@ -99,6 +98,34 @@ import Navigation from '@/components/Navigation.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import * as graphql from '../graphql/graphql.js'
 var caljudge="ghvgzvhgzhzkgvh"
+// import * as subscriptions from '../graphql/subscriptions.js'
+
+const onCreateTweet = /* GraphQL */ `
+  # フォローしてない人も取ってきてしまうのでこうしたい
+  # subscription onCreateTweet($followerId: ID!) {
+  subscription onCreateTweet($followerId: ID!) {
+    #  ここもこうしたい
+    # onCreateTweet(followerId: $followerId){
+    onCreateTweet(followerId: $followerId) {
+      id
+      createdAt
+      content
+    }
+  }
+`;
+
+const onDeleteTweet = /* GraphQL */ `
+  # subscription onDeleteTweet($followerId: ID!) {
+  subscription onDeleteTweet($followerId: ID!) {
+    # onDeleteTweet(followerId: $followerId) {
+    onDeleteTweet(followerId: $followerId) {
+      id
+      createdAt
+      content
+    }
+  }
+`;
+
 export default {
   name: 'home',
   data() {
@@ -129,6 +156,8 @@ export default {
       trainingPosts: null,
       //直前のパス
       prevRoute: 'tweet',
+      createSubscription: null,
+      deleteSubscription: null,
     }
   },
   components: {
@@ -157,6 +186,24 @@ export default {
         this.buttonActive = false
       }
     },
+    subscribe(){
+      // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
+      this.createSubscription = API.graphql(graphqlOperation(onCreateTweet)).subscribe({
+        next: (eventData) => {
+          console.log("evenData:"+eventData)
+          const tweet = eventData.value.data.onCreateTweet;
+          this.wholeposts.push(tweet);
+          this.relation = eventData
+        }
+      })
+
+      this.deleteSubscription = API.graphql(graphqlOperation(onDeleteTweet)).subscribe({
+        next: (eventData) => {
+          const tweet = eventData.value.data.onDeleteTweet;
+          this.wholeposts = this.wholeposts.filter(post => post.id != tweet.id);
+        }
+      })
+    },
   },
   mounted : async function(){
     // 上行くボタン
@@ -167,7 +214,7 @@ export default {
       graphqlOperation(graphql._query2, {id : this.$store.getters.getUserId})
     )
     let getUser = query.data.getUser
-
+    
     //ツイートリスト
     this.tweetPosts = getUser.tweetPosts.items
     for(let i = 0; i < getUser.followees.items.length; i++){
@@ -175,8 +222,9 @@ export default {
         this.tweetPosts.push(getUser.followees.items[i].follower.tweetPosts.items[j])
       }
     }
+    
 
-    //料理リスト
+    // //料理リスト
     this.cookingPosts = getUser.cookingPosts.items
     for(let i = 0; i < getUser.followees.items.length; i++){
       for(let j = 0; j < getUser.followees.items[i].follower.cookingPosts.items.length; j++){

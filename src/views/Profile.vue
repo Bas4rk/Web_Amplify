@@ -16,15 +16,27 @@
     <!-- <v-btn dark @click="sample5">sample2</v-btn> -->
     <!-- {{getUserGraphql}}
     {{this.$store.getters.getUserCognito}} -->
-    <!-- {{followees}} -->
-
     <v-container>
 
       <!-- アカウントアイコン、なんか位置ずれてる？ -->
-      <v-row justify="center">
+      <!-- <v-row justify="center">
         <v-list-item-avatar size="130" color="grey darken-1">
           <v-icon size="130">mdi-account</v-icon>
         </v-list-item-avatar>
+      </v-row> -->
+
+      <v-row justify="center">
+        <v-avatar
+            class="mb-4"
+            color="grey darken-1"
+            size="127"
+          >
+          <img
+            :src="getAvatar"
+          >
+          <!-- <v-icon size="60">mdi-account</v-icon> -->
+          <!-- <amplify-s3-image :imagePath="imagePath" /> -->
+        </v-avatar>
       </v-row>
 
       <!-- アカウント名 -->
@@ -38,9 +50,9 @@
       </v-row>
 
       <!-- プロフィール文、位置はここか左にあるボタンとTabの間？ -->
-      <v-row justify="center">
+      <!-- <v-row justify="center">
         ここにプロフィール紹介文
-      </v-row>
+      </v-row> -->
 
       <!-- スペースの有無どうする？ -->
        <!-- class="d-flex justify-space-around mb-6" -->
@@ -142,7 +154,8 @@ import TweetList from '@/components/TweetList.vue';
 import CookingList from '@/components/CookingList.vue';
 import TrainingList from '@/components/TrainingList.vue';
 import Navigation from '@/components/Navigation.vue';
-import { API, graphqlOperation } from 'aws-amplify'
+import { API, graphqlOperation } from 'aws-amplify';
+import store from '../store/index.js';
 
 // import * as gqlQueries from '../graphql/queries'
 // import * as gqlMutations from '../graphql/mutations'
@@ -159,6 +172,7 @@ const _query2 = `query GetUser($id: ID!) {
         user {
           name
           emailAddress
+          iconImage
         }
       }
     }
@@ -169,6 +183,7 @@ const _query2 = `query GetUser($id: ID!) {
         content
         calorie
         createdAt
+        image
         user {
           name
           emailAddress
@@ -181,6 +196,7 @@ const _query2 = `query GetUser($id: ID!) {
         title
         content
         createdAt
+        image
         user {
           name
           emailAddress
@@ -196,6 +212,7 @@ const _query2 = `query GetUser($id: ID!) {
               id
               content
               createdAt
+              image
               user {
                 name
                 emailAddress
@@ -210,6 +227,7 @@ const _query2 = `query GetUser($id: ID!) {
               createdAt
               id
               title
+              image
               user {
                 name
                 emailAddress
@@ -223,6 +241,7 @@ const _query2 = `query GetUser($id: ID!) {
               content
               createdAt
               title
+              image
               user {
                 name
                 emailAddress
@@ -282,7 +301,10 @@ export default {
     },
     getUserEmail(){
       return  this.$store.getters.getUserEmail
-    }
+    },
+    getAvatar(){
+      return this.$store.getters.getUserAvatar
+    },
   },
   methods: {
     // behavior: autoだと瞬間移動になる
@@ -371,6 +393,13 @@ export default {
       // }
 
       this.wholeposts3= this.myposts3.concat(this.followeeposts3)
+
+      //アイコン画像判定
+      let avatar = store.getters.getUserAvatar
+      if(!avatar){
+        avatar = await Storage.get(`${store.getters.getUserEmail}/avatar`)
+        store.commit('setUserAvatar',avatar)
+      }
     }
 
     // 直前に見ていたタブに戻る

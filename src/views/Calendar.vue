@@ -433,7 +433,6 @@ export default {
         }else if(this.foodcalorie<0){
           alert("正しいカロリーが入力されていません")
         }else{
-          alert(this.title)
         this.createCooking()
         this.fooddialog=false
         location.reload(true)

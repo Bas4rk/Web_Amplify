@@ -7,7 +7,8 @@
 
       <!-- class="title"で文字の大きさを変えてます、ここ"display-1"でもいいかも -->
       <div class="title">料理投稿画面</div>
-
+{{content}}
+{{content.length}}
     </v-layout>
 
     <!-- 横線です -->
@@ -39,13 +40,7 @@
 
         <!-- 下書きボタンです、中身はまだない -->
         <v-col cols="12" sm="6" md="3" justify="right">
-          <v-btn
-            class="ma-2"
-            color="primary"
-            dark
-          >
-            下書き
-          </v-btn>
+          
 
           <!-- 投稿ボタン -->
           <v-btn
@@ -143,34 +138,18 @@
       </v-row>
 
       <!-- 作り方書くところ -->
-      <v-row>
+      <v-row v-for="(item, index) in content"
+          :key="index">
 
         <!-- clearableいらない？ -->
         <v-col cols="12" sm="6" md="3">
           <v-textarea
-            label="料理の作り方！"
+            label="作り方"
             clearable
             clear-icon="mdi-close-circle"
-            v-model="content"
+            v-model="content[index]"
           >
           </v-textarea>
-        </v-col>
-
-        <!-- 写真投稿ボタンです、中身はまだない -->
-        <v-col cols="12" sm="6" md="3" justify="left">
-          <v-btn
-            class="ma-2"
-            color="primary"
-            dark
-          >
-          <v-icon
-            dark
-            left
-          >
-            mdi-camera
-          </v-icon>
-            料理の写真を載せる
-          </v-btn>
         </v-col>
 
       </v-row>
@@ -184,6 +163,7 @@
             class="ma-2"
             color="primary"
             dark
+            @click="addContent()"
           >
           <v-icon
             dark
@@ -193,6 +173,24 @@
           </v-icon>
             作り方を追加
           </v-btn>
+
+          <!-- 作り方削除 -->
+          <v-btn
+            block
+            class="ma-2"
+            color="primary"
+            dark
+            @click="deleteContent()"
+          >
+          <v-icon
+            dark
+            left
+          >
+            mdi-minus
+          </v-icon>
+            作り方を削除
+          </v-btn>
+
         </v-col>
 
       </v-row>
@@ -236,7 +234,8 @@ export default {
   data() {
     return{
       // 作り方
-      content: null,
+      content: [[]],
+      newContent:null,
       // タイトル
       title: null,
       // カロリー
@@ -299,6 +298,16 @@ export default {
         this.uploadImageUrl = ''
       }
     },
+    addContent(){
+      this.content.push(this.newContent)
+      console.log(this.content)
+    },
+    deleteContent(){
+      console.log(this.content)
+      if(this.content.length > 1){
+        this.content.pop()
+      }
+    }
   },
 }
 </script>

@@ -6,19 +6,12 @@
     <v-row justify="center">
       <v-col cols="5">
         <v-card> 
-          <v-btn
-            class="ma-2"
-            color="primary"
-            dark
-            @click="back"
-          >
-            <v-icon
-              dark
-              left
-            >
+          <v-btn class="ma-2" color="primary" dark @click="back"> <!-- 戻るボタン -->
+            <v-icon dark left>
               mdi-arrow-left
             </v-icon>Back
           </v-btn>
+
           <v-divider></v-divider>
           <!-- [fix]v-cardの中にv-cardあるけどいいんだっけ？ -->
           <v-card>
@@ -27,11 +20,11 @@
                 <v-avatar size="56">
                   <img
                     alt="user"
-                    src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
+                    :src="tweetUserIcon"
                   >
                 </v-avatar>
                 <p class="ml-3">
-                  {{tweetData.content}}
+                  {{tweetContent}}
                 </p>
 
                 <!-- <v-menu
@@ -68,7 +61,9 @@
             </v-card-text> -->
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn icon color="pink">
+              <v-btn 
+              icon color="pink"
+              @click="createFavorite">
                 <v-icon>mdi-heart</v-icon>
               </v-btn>
               <v-spacer></v-spacer>
@@ -76,9 +71,67 @@
                 <v-icon>mdi-cached</v-icon>
               </v-btn>
               <v-spacer></v-spacer>
-              <small>{{tweetData.user.name}}</small>
+              <small>{{tweetUserName}}</small>
             </v-card-actions>
           </v-card>
+
+          <!-- commentList開始 -->
+            <!-- <v-list>
+              <template v-for="item in commentList">
+                
+                <v-menu
+                    :close-on-click="true"
+                    :close-on-content-click="true"
+                    :key="`option-${item.id}`"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        <v-icon>mdi-dots-horizontal</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-list>
+                      <v-list-item
+                        v-if="item.user.emailAddress == currentuser"
+                        @click="deleteTweet(item.id)"
+                      > 
+                        <v-list-item-icon>
+                          <v-icon>mdi-trash-can</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>投稿削除</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
+
+                <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{item: item}}">
+                  <v-list-item-avatar color="grey darken-1">
+                    <v-icon size="30">mdi-account</v-icon>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.content }}</v-list-item-title>
+                    <v-list-item-subtitle>
+                      <div class="right">
+                        <small>投稿者:{{ item.user.name }}</small>
+                      </div>
+                      <div class="right">
+                        <small>{{ item.user.emailAddress }}</small>
+                      </div>
+                      <div class="right">
+                        <small>{{ item.createdAt }}</small>
+                      </div>
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-divider
+                  :key="`divider-${item.postId}`"
+                  inset
+                ></v-divider>
+              </template>
+            </v-list> -->
+            <!-- commentList開始 -->
         </v-card>
       </v-col>
     </v-row>
@@ -93,6 +146,8 @@
 import Navigation from '@/components/Navigation.vue';
 
 import { API, graphqlOperation } from 'aws-amplify'
+import * as gqlMutations from '../graphql/mutations'
+import {Storage} from 'aws-amplify'
 
 const deleteTweet_query = /* GraphQL */`
   mutation DeleteTweet(
@@ -124,13 +179,20 @@ export default {
   computed: {
     currentuser(){
       return this.$store.getters.getUserEmail
-    }
+    },
+    getAvatar(){
+      return this.tweetUserIcon
+    },
   },
   data() {
     return {
-      tweetId: this.$route.params.id,
-      tweetData: this.$route.params.item,
-      prevRoute: null,
+      tweetData:      this.$route.params.item,
+      tweetId:        this.$route.params.item.id,
+      tweetContent:   this.$route.params.item.content,
+      tweetUserName:  this.$route.params.item.user.name,
+      tweetUserIcon:  '',
+      // commentList:    this.$route.params.item.comments.items,
+      prevRoute:      null
     };
   },
   methods:{
@@ -138,13 +200,29 @@ export default {
       this.$router.push(this.prevRoute);
       // historyできてなくね？
     },
-    async deleteTweet(id){
-      const deleteTweet = await API.graphql(
-        graphqlOperation(deleteTweet_query, {
+    async createFavorite(){
+      const favorite = await API.graphql(
+        graphqlOperation(gqlMutations.createFavorite, {
           input: {
-            id: id
+            userId: this.$store.getters.getUserId,
+            tweetId: this.tweetId,
+            // この日付スキーマ変更
+            favoDate: "2021-01-08"
           }
         })
+      )
+      console.log(favorite.data.createFavorite);
+    },
+    async deleteTweet(id){
+      const deleteTweet = await API.graphql(
+        graphqlOperation(
+          deleteTweet_query, {
+            input: {
+              id: id
+            }
+          },
+          
+        )
       )
       console.log("投稿を削除しました"+deleteTweet.data.deleteTweet)
       this.$router.push(this.prevRoute);
@@ -156,6 +234,8 @@ export default {
     });
   },
   async mounted() {
+    this.tweetUserIcon = await Storage.get(this.$route.params.item.user.iconImage)
+    console.log("this.$route.params.item.user.iconImage"+this.$route.params.item.user.iconImage)
     // const tweet = await API.graphql(
     //   graphqlOperation(gqlQueries.getTodo, {
     //     id: this.$route.params.id

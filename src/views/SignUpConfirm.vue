@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {confirmSignUp, resendSignUp} from '@/utils/auth.js'
+import {confirmSignUp, resendSignUp, signIn} from '@/utils/auth.js'
 export default {
   name: "SignUpConfirm",
   data() {
@@ -71,6 +71,7 @@ export default {
       if (this.$refs.form.validate()) {
         console.log(`CONFIRM email: ${this.username}, code: ${this.code}`);
         confirmSignUp(this.username, this.password, this.code, this.nickname);
+        signIn(this.username, this.password);
       }
     },
     resend() {

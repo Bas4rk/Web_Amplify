@@ -111,7 +111,7 @@ type Favorite
   id: ID!
   userId: ID!
   tweetId: ID!
-  favoDate: AWSDate!
+  favoDate: AWSDateTime!
 }
 
 type Bookmark
@@ -122,7 +122,7 @@ type Bookmark
   id: ID!
   userId: ID!
   tweetId: ID!
-  bmDate: AWSDate!
+  bmDate: AWSDateTime!
 }
 
 
