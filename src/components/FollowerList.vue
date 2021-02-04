@@ -18,7 +18,6 @@
           mdi-arrow-left
         </v-icon>Back
       </v-btn>
-            <!-- {{followees}} -->
       <v-row justify="center">
         <v-col cols="5">
           <v-card>
@@ -30,9 +29,9 @@
                 <!-- <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}"> -->
                   <v-list-item :key="item.follower.id" height="200">
                   <v-list-item-avatar color="grey darken-1">
-                    <v-icon size="30">mdi-account</v-icon>
+                    <!-- <v-icon size="30">mdi-account</v-icon> -->
+                    <img :src="item.follower.iconImage">
                   </v-list-item-avatar>
-
                   <v-list-item-content>
                     <v-list-item-title>{{ item.follower.name}}</v-list-item-title>
 
@@ -42,8 +41,7 @@
                         <small>{{ item.follower.emailAddress }}</small>
                       </div>
                     </v-list-item-subtitle>
-                    
-                    <v-btn @click="deleteRelation(item.id)" color="error">フォロー解除</v-btn>
+                    <v-btn @click="deleteRelation(item.follower.followers.items[0].id)" color="error">フォロー解除</v-btn>
                   </v-list-item-content>
                 </v-list-item>
 
@@ -81,36 +79,9 @@ import Navigation from '@/components/Navigation.vue';
 // import NewTodo from '@/components/NewTodo.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 // import * as gqlQueries from '../graphql/queries'
-
-//[fix]follweeは「フォローされている人」という意味で、ここに書いてある内容は「フォローしている人」なので名前が逆です。
-const followees_query = /* GraphQL */ `
-  query FolloweeIndex(
-    $followeeId: ID
-  ) {
-    followeeIndex(
-      followeeId: $followeeId
-    ) {
-      items {
-        id
-        follower {
-          id
-          name
-          emailAddress
-        }
-      }
-    }
-  }
-`;
-
-const deleteRelationship_query = /* GraphQL */ `
-  mutation DeleteRelationship(
-    $input: DeleteRelationshipInput!
-  ) {
-    deleteRelationship(input: $input) {
-      id
-    }
-  }
-`
+import * as myGraphql from '../graphql/graphql'
+import * as gqlMutations from '../graphql/mutations'
+import {Storage} from 'aws-amplify'
 
   export default {
     data() {
@@ -142,16 +113,18 @@ const deleteRelationship_query = /* GraphQL */ `
         this.buttonActive = false
       }
     },
-    async deleteRelation(id){
+
+    async deleteRelation(RelationId){
       const deleteRelation = await API.graphql(
-        graphqlOperation(deleteRelationship_query, {
+        graphqlOperation(gqlMutations.deleteRelationship, {
           input: {
-            id: id
+            id: RelationId
           }
         })
       )
       console.log("フォロー解除しました"+deleteRelation.data.deleteRelationship)
     },
+
     back: function(){
       this.$router.push('/Profile');
       // historyできてなくね？
@@ -163,10 +136,21 @@ const deleteRelationship_query = /* GraphQL */ `
     
     // const usersorce= this.$store.getters.getUserGraphql
     const query = await API.graphql(
-      graphqlOperation(followees_query, {followeeId : this.$store.getters.getUserId})
+      graphqlOperation(myGraphql.followees_query, {
+        followeeId : this.$store.getters.getUserId,
+        followFilter: {followeeId: {eq: this.$store.getters.getUserId}}
+      })
     )
     console.log("followeesクエリー飛ばしました。")
     this.followees= query.data.followeeIndex.items
+
+    for(var i = 0; i < this.followees.length; i++){
+      // console.log("check")
+      if(this.followees[i].follower.iconImage != null){
+        // console.log("atta")
+        this.followees[i].follower.iconImage = await Storage.get(this.followees[i].follower.iconImage)
+      }
+    }
   }
   }
 </script>

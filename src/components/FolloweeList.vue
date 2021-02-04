@@ -40,12 +40,14 @@
             <v-subheader>フォローされているユーザー</v-subheader>
             
             <v-list>
+              <!-- {{followees[0].follower.followers.items[0].id}} -->
                 <!-- v-forでfollowsの数だけ回します -->
               <template v-for="(item) in follows">
                 <!-- <v-list-item :key="item.id" height="200" :to="{name:'tweet',params:{id:item.id}}"> -->
                   <v-list-item :key="`first-${item.id}`" height="200">
                   <v-list-item-avatar color="grey darken-1">
-                    <v-icon size="30">mdi-account</v-icon>
+                    <!-- <v-icon size="30">mdi-account</v-icon> -->
+                    <img :src="item.followee.iconImage">
                   </v-list-item-avatar>
             
                   <v-list-item-content>
@@ -112,142 +114,10 @@ import Navigation from '@/components/Navigation.vue';
 // import NewTodo from '@/components/NewTodo.vue';
 import { API, graphqlOperation } from 'aws-amplify'
 // import * as gqlQueries from '../graphql/queries'
-//[add]ここgetUserだったけどFollowerIndexで取ってこれた、mock?でテストして取ってこれたのでそのままコピペしてます
-const follows_query =`
-  query followerIndex(
-    $followerId: ID
-  ) {
-  followerIndex(
-    followerId: $followerId ,
-  ) {
-    items {
-      id
-      followee {
-        id
-        name
-        emailAddress
-      }
-    }
-  }
-}
-`;
-const followees_query = `
-  query FolloweeIndex(
-    $followeeId: ID
-  ) {
-    followeeIndex(
-      followeeId: $followeeId
-    ) {
-      items {
-        id
-        follower {
-          id
-          name
-          emailAddress
-        }
-      }
-    }
-  }
-`;
-// const a = `
-//   query MyQuery {
-//     listRelationships {
-//       items {
-//         followerId
-//         followeeId
-//         id
-//       }
-//     }
-//   }
-// `;
-// const follows_query =`
-//   query followerIndex(
-//     $followerId: ID
-//     $filter: ModelRelationshipFilterInput
-//   ) {
-//     followerIndex(
-//       followerId: $followerId
-//       filter: $filter
-//     ) {
-//       items {
-//         id
-//         followee {
-//           id
-//           name
-//           emailAddress
-//         }
-//       }
-//     }
-//   }
-// `;
-// const _query = `
-//   query FolloweeIndex(
-//     $followeeId: ID 
-//     $filter: ModelRelationshipFilterInput
-//   ) {
-//   followeeIndex(
-//     followeeId: $followeeId 
-//     filter: $filter
-//   ) {
-//     items{
-//       id
-//     }
-//   }
-// }
-// `
-const createRelation_query = `
-  mutation CreateRelationship(
-    $input: CreateRelationshipInput!
-  ) {
-    createRelationship(input: $input) {
-      id
-      blockBool
-      followee {
-        id
-        name
-        emailAddress
-      }
-      follower {
-        id
-        name
-        emailAddress
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`
-const deleteRelationship_query = `
-  mutation DeleteRelationship(
-    $input: DeleteRelationshipInput!
-  ) {
-    deleteRelationship(input: $input) {
-      id
-      blockBool
-      followee {
-        id
-        name
-        emailAddress
-      }
-      follower {
-        id
-        name
-        emailAddress
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`
-// const deleteRelationship_query = /* GraphQL */ `
-//   mutation DeleteRelationship(
-//     $input: DeleteRelationshipInput!
-//   ) {
-//     deleteRelationship(input: $input) {
-//       id
-//     }
-//   }
-// `
+import * as myGraphql from '../graphql/graphql'
+import * as gqlMutations from '../graphql/mutations'
+import {Storage} from 'aws-amplify'
+
   export default {
     data() {
       return{
@@ -288,7 +158,7 @@ const deleteRelationship_query = `
     async createRelation(index){
       // [fix]押したボタンによって関係が変わるようになってない、要修正
       const createRelation = await API.graphql(
-        graphqlOperation(createRelation_query, {
+        graphqlOperation(gqlMutations.createRelationship, {
           input: {
           // よくわかんないけど全部falseだった
             blockBool: false, 
@@ -307,10 +177,9 @@ const deleteRelationship_query = `
     async deleteRelation(index){
       // [fix]押したボタンによって関係が変わるようになってない、要修正
       const deleteRelation = await API.graphql(
-        graphqlOperation(deleteRelationship_query, {
+        graphqlOperation(gqlMutations.deleteRelationship, {
           input: {
-            id: this.followees[index].id
-            // id: this.judgment.items[index].id
+            id: this.followees[index].follower.followers.items[0].id
           }
         })
       )
@@ -323,18 +192,18 @@ const deleteRelationship_query = `
     },
   },
   mounted: async function(){
-    // const usersorce= this.$store.getters.getUserGraphql
     const query = await API.graphql(
-      graphqlOperation(followees_query, {followeeId : this.$store.getters.getUserId})
+      graphqlOperation(myGraphql.followees_query, {
+        followeeId : this.$store.getters.getUserId,
+        followFilter: {followeeId: {eq: this.$store.getters.getUserId}}
+      })
     )
     console.log("followeesクエリー飛ばしました。")
     this.followees= query.data.followeeIndex.items
     
     //フォローされてる人リスト取得、変数名がクソ
-    // ここusersource再利用しようとしたらだめだったからusersource2を新しく作った
-    // const usersource2 = this.$store.getters.getUserGraphql
     const query2 = await API.graphql(
-      graphqlOperation(follows_query, {
+      graphqlOperation(myGraphql.follows_query, {
         followerId : this.$store.getters.getUserId
       })
     )
@@ -356,6 +225,13 @@ const deleteRelationship_query = `
         }
       }
     }
+
+    for(var i = 0; i < this.follows.length; i++){
+      if(this.follows[i].followee.iconImage != null){
+        this.follows[i].followee.iconImage = await Storage.get(this.follows[i].followee.iconImage)
+      }
+    }
+
   },
   }
 </script>
