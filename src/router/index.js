@@ -7,8 +7,8 @@ import createCooking from '../views/CreateCooking.vue'
 import Search from '../views/Search.vue'
 import Calendar from '../views/Calendar.vue'
 
-import TrainingPage from '../views/Calendar/Training.vue'
-import MenuPage from '../views/Calendar/Menu.vue'
+// import TrainingPage from '../views/Calendar/Training.vue'
+// import MenuPage from '../views/Calendar/Menu.vue'
 
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
@@ -40,7 +40,7 @@ import Training from '../views/Training.vue'
 
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
-import ContactUs from '../views/ContactUs.vue'
+// import ContactUs from '../views/ContactUs.vue'
 
 import SignIn from '../views/SignIn.vue'
 import Terms from '../views/Terms.vue'
@@ -130,20 +130,20 @@ const router = new Router({
       component: Calendar,
       meta: { requiresAuth: true }
     },
-    {
-      // カレンダートレーニングページ
-      path: '/training',
-      name: 'training',
-      component: TrainingPage,
-      meta: { requiresAuth: true }
-    },
-    {
-      // カレンダー献立ページ
-      path: '/menu',
-      name: 'menu',
-      component: MenuPage,
-      meta: { requiresAuth: true }
-    },
+    // {
+    //   // カレンダートレーニングページ
+    //   path: '/training',
+    //   name: 'training',
+    //   component: TrainingPage,
+    //   meta: { requiresAuth: true }
+    // },
+    // {
+    //   // カレンダー献立ページ
+    //   path: '/menu',
+    //   name: 'menu',
+    //   component: MenuPage,
+    //   meta: { requiresAuth: true }
+    // },
     {
       // 通知ページ
       path: '/notice',
@@ -235,13 +235,13 @@ const router = new Router({
       component: SetHelp,
       meta: { requiresAuth: true }
     },
-    {
-      // サインアップお問い合わせはこちらページ
-      path: '/contactus',
-      name: 'contactus',
-      component: ContactUs,
-      meta: { requiresAuth: true }
-    },
+    // {
+    //   // サインアップお問い合わせはこちらページ
+    //   path: '/contactus',
+    //   name: 'contactus',
+    //   component: ContactUs,
+    //   meta: { requiresAuth: true }
+    // },
     {
       // 個人情報ページ
       path: '/settingpersonal',
