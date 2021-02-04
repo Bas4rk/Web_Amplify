@@ -844,48 +844,84 @@ export const listBookmarks = /* GraphQL */ `
     }
   }
 `;
+// export const getCalendar = /* GraphQL */ `
+//   query GetCalendar($userId: ID!) {
+//     getCalendar(userId: $userId) {
+//       userId
+//       memo {
+//         items {
+//           userId
+//           date
+//           weight
+//           bfp
+//           createdAt
+//           updatedAt
+//           owner
+//         }
+//         nextToken
+//       }
+//       createdAt
+//       updatedAt
+//       owner
+//     }
+//   }
+// `;
 export const getCalendar = /* GraphQL */ `
-  query GetCalendar($owner: ID!) {
-    getCalendar(owner: $owner) {
-      owner
+  query GetCalendar($userId: ID!) {
+    getCalendar(userId: $userId) {
       memo {
         items {
-          owner
-          date
-          weight
           bfp
-          createdAt
-          updatedAt
+          foodMemos {
+            items {
+              proteins
+              lipid
+              calorele
+              carbohydrate
+              image
+              title
+            }
+          }
+          trainingMemos {
+            items {
+              title
+              contentList {
+                items {
+                  content
+                }
+              }
+            }
+          }
+          weight
+          date
         }
-        nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
 export const listCalendars = /* GraphQL */ `
   query ListCalendars(
-    $owner: ID
+    $userId: ID
     $filter: ModelCalendarFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
     listCalendars(
-      owner: $owner
+      userId: $userId
       filter: $filter
       limit: $limit
       nextToken: $nextToken
       sortDirection: $sortDirection
     ) {
       items {
-        owner
+        userId
         memo {
           nextToken
         }
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -894,38 +930,42 @@ export const listCalendars = /* GraphQL */ `
 export const getMemo = /* GraphQL */ `
   query GetMemo($date: AWSDate!) {
     getMemo(date: $date) {
-      owner
+      userId
       date
       weight
       bfp
       foodMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           image
           calorele
           lipid
           proteins
+          carbohydrate
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       trainingMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -945,7 +985,7 @@ export const listMemos = /* GraphQL */ `
       sortDirection: $sortDirection
     ) {
       items {
-        owner
+        userId
         date
         weight
         bfp
@@ -957,6 +997,7 @@ export const listMemos = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -966,15 +1007,17 @@ export const getFoodMemo = /* GraphQL */ `
   query GetFoodMemo($id: ID!) {
     getFoodMemo(id: $id) {
       id
-      owner
+      userId
       memoDate
       title
       image
       calorele
       lipid
       proteins
+      carbohydrate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -987,15 +1030,17 @@ export const listFoodMemos = /* GraphQL */ `
     listFoodMemos(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        owner
+        userId
         memoDate
         title
         image
         calorele
         lipid
         proteins
+        carbohydrate
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -1005,7 +1050,7 @@ export const getTrainingMemo = /* GraphQL */ `
   query GetTrainingMemo($id: ID!) {
     getTrainingMemo(id: $id) {
       id
-      owner
+      userId
       memoDate
       title
       contentList {
@@ -1021,6 +1066,7 @@ export const getTrainingMemo = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1033,7 +1079,7 @@ export const listTrainingMemos = /* GraphQL */ `
     listTrainingMemos(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        owner
+        userId
         memoDate
         title
         contentList {
@@ -1041,6 +1087,7 @@ export const listTrainingMemos = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
