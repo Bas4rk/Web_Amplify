@@ -40,7 +40,7 @@
           <br>We have sent a security code to the email address you entered. 
           Please note that if you do not enter it, the email address you entered will be invalid.
           In that case, please contact us at the number below.
-          <br>phone number:XXXX-YY-ZZZZ
+          <br>TEL:XXXX-YY-ZZZZ
         </v-col>
       </v-row>
     </v-container>

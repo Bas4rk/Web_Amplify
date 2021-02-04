@@ -49,7 +49,7 @@
             <br>A security code will be sent to the email address you entered. 
             Please note that your email address will be invalid if you do not enter it.
             <br>In that case, please contact us at the following number.
-            <br>phone number:XXXX-YY-ZZZZ
+            <br>TEL:XXXX-YY-ZZZZ
         </v-col>
       </v-row>
     </v-container>
