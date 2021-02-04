@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar">
+  <div class="mailadresschange">
     <Navigation></Navigation>
     <v-container
       class="py-8 px-6"

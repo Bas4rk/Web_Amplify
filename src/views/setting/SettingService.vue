@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar">
+  <div class="settingservice">
     <Navigation></Navigation>
 
     <v-container

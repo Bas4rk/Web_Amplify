@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar">
+  <div class="settingaccount">
     <Navigation></Navigation>
     <v-container
       class="py-8 px-6"

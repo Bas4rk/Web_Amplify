@@ -70,6 +70,9 @@ export default {
     },
     signUp(){
       this.$router.push('/signUp')
+    },
+    mounted : async function(){
+      console.log("Sign In Page")
     }
   },
 }

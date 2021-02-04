@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar">
+  <div class="contactus">
     <v-container
       class="py-8 px-6"
       fluid
@@ -25,9 +25,7 @@
             label="contents"
           ></v-textarea>
 
-          <v-btn color="primary">送信</v-btn>
-
-            
+          <v-btn color="primary">Send</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -36,13 +34,8 @@
 
 <script>
 export default {
-  data() {
-    return {
-      theme: false
-    };
-  },
   mounted : async function(){
-    console.log("err")
+    console.log("ContactUs Page")
   }
 }
 </script>
