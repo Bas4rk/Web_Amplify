@@ -185,6 +185,50 @@ export const onDeleteTraning = /* GraphQL */ `
   }
 `;
 
+// FollowerListとFolloweeListで使う
+export const followees_query = /* GraphQL */ `
+  query followeeIndex($followeeId: ID!, $followFilter: ModelRelationshipFilterInput!) {
+    followeeIndex(followeeId: $followeeId) {
+      items {
+        follower {
+          id
+          name
+          emailAddress
+          iconImage
+          followers (filter: $followFilter){
+            items {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+// FolloweeList.vueで使う
+export const follows_query = /* GraphQL */ `
+  query followerIndex(
+    $followerId: ID
+  ) {
+  followerIndex(
+    followerId: $followerId ,
+  ) {
+    items {
+      id
+      followee {
+        id
+        name
+        emailAddress
+        iconImage
+      }
+    }
+  }
+}
+`;
+
+
+
 
 // subscribe(){
 //   // TODO(3-1) GraphQLエンドポイントにsubscriptionを発行し、mutationを監視する
