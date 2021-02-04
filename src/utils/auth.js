@@ -39,7 +39,7 @@ function getUser() {
     }
   }).catch(err => {
     console.log(err);
-    //store.commit('setUserCognito', null);
+    store.commit('setUserCognito', null);
     return null;
   });
 }
