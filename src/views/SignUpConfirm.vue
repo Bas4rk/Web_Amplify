@@ -34,7 +34,7 @@
               required/>-->
             <v-text-field v-model="code" :rules="codeRules" label="Code" required/>
             <!--<v-text-field v-model="nickname" label="ニックネーム" required/>-->
-            <v-btn :disabled="!valid" @click="submit">Submit</v-btn>
+            <br><v-btn :disabled="!valid" @click="submit">Submit</v-btn>
           </v-form>
           <v-btn @click="resend">Resend Code</v-btn>
         </v-col>

@@ -34,7 +34,8 @@
             required/>
             
             <v-text-field v-model="nickname" label="Nickname" required/>
-            <v-btn :disabled="!valid" @click="submit">Registration</v-btn>
+            
+            <v-btn :disabled="!valid" @click="submit">next</v-btn>
           </v-form>
         </v-col>
       </v-row>
@@ -42,6 +43,9 @@
         <v-col cols="5">
         Do you have an account?
           <v-btn  @click="signIn">To login screen</v-btn>
+            <br>※If you do not enter the code on the next page, this email address will be invalid.
+            please note.
+            <div>In that case, please contact us from <a href="contactUs">here</a>.</div>
         </v-col>
       </v-row>
     </v-container>

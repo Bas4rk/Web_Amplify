@@ -37,8 +37,11 @@ import Test from '../views/setting/TestComponents.vue'
 import Tweet from '../views/Tweet.vue'
 import Cooking from '../views/Cooking.vue'
 import Training from '../views/Training.vue'
+
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
+import ContactUs from '../views/ContactUs.vue'
+
 import SignIn from '../views/SignIn.vue'
 import Terms from '../views/Terms.vue'
 // import help from '../views/help.vue'
@@ -230,6 +233,13 @@ const router = new Router({
       path: '/settinghelp',
       name: 'settinghelp',
       component: SetHelp,
+      meta: { requiresAuth: true }
+    },
+    {
+      // サインアップお問い合わせはこちらページ
+      path: '/contactus',
+      name: 'contactus',
+      component: ContactUs,
       meta: { requiresAuth: true }
     },
     {

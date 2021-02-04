@@ -15,7 +15,7 @@
             <v-btn block to="/SettingAccount">アカウント管理</v-btn><br>
             <v-btn block to="/SettingNotification">通知の設定</v-btn><br>
             <v-btn block to="/SettingHelp" color="black" class="white--text">お困りの方はこちら</v-btn><br>
-            <v-btn block to="/SettingPersonal">個人情報に関するお問い合わせ</v-btn><br>
+            <v-btn block to="/SettingPersonal">お問い合わせ</v-btn><br>
             <v-btn block to="/SettingContact">お問い合わせ履歴</v-btn><br>
             <v-btn block to="/SettingService">利用規約</v-btn><br>
             <v-divider></v-divider>
