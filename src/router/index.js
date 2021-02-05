@@ -6,6 +6,10 @@ import createTraining from '../views/CreateTraining.vue'
 import createCooking from '../views/CreateCooking.vue'
 import Search from '../views/Search.vue'
 import Calendar from '../views/Calendar.vue'
+
+// import TrainingPage from '../views/Calendar/Training.vue'
+// import MenuPage from '../views/Calendar/Menu.vue'
+
 import Notice from '../views/Notice.vue'
 import Profile from '../views/Profile.vue'
 // import FolloweeList from '../views/FolloweeList.vue'
@@ -21,22 +25,23 @@ import SetPersonal from '../views/setting/SettingPersonal.vue'
 import SetContact from '../views/setting/SettingContact.vue'
 import SetService from '../views/setting/SettingService.vue'
 
-import UserName from '../views/setting/user/UserNameChange.vue'
 import UserID from '../views/setting/user/UserIDChange.vue'
 import UserPhone from '../views/setting/user/PhoneNumberChange.vue'
 import UserMail from '../views/setting/user/MailAdressChange.vue'
 import Passwd from '../views/setting/user/PasswdChange.vue'
 import PasswdNew from '../views/setting/user/PasswdChangeNew.vue'
 import UserSecurity from '../views/setting/user/Security.vue'
-import UserDelete from '../views/setting/user/AccountDelete.vue'
 
 import Test from '../views/setting/TestComponents.vue'
 
 import Tweet from '../views/Tweet.vue'
 import Cooking from '../views/Cooking.vue'
 import Training from '../views/Training.vue'
+
 import SignUp from '../views/SignUp.vue'
 import SignUpConfirm from '../views/SignUpConfirm.vue'
+//import ContactUs from '../views/ContactUs.vue'
+
 import SignIn from '../views/SignIn.vue'
 import Terms from '../views/Terms.vue'
 // import help from '../views/help.vue'
@@ -125,6 +130,20 @@ const router = new Router({
       component: Calendar,
       meta: { requiresAuth: true }
     },
+    // {
+    //   // カレンダートレーニングページ
+    //   path: '/training',
+    //   name: 'training',
+    //   component: TrainingPage,
+    //   meta: { requiresAuth: true }
+    // },
+    // {
+    //   // カレンダー献立ページ
+    //   path: '/menu',
+    //   name: 'menu',
+    //   component: MenuPage,
+    //   meta: { requiresAuth: true }
+    // },
     {
       // 通知ページ
       path: '/notice',
@@ -182,14 +201,7 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      // ユーザ名前変更ページ
-      path: '/usernamechange',
-      name: 'usernamechange',
-      component: UserName,
-      meta: { requiresAuth: true }
-    },
-    {
-      // ユーザネーム変更ページ
+      // ユーザID変更ページ
       path: '/useridchange',
       name: 'useridchange',
       component: UserID,
@@ -223,6 +235,13 @@ const router = new Router({
       component: SetHelp,
       meta: { requiresAuth: true }
     },
+    // {
+    //   // サインアップお問い合わせはこちらページ
+    //   path: '/contactus',
+    //   name: 'contactus',
+    //   component: ContactUs,
+    //   meta: { requiresAuth: true }
+    // },
     {
       // 個人情報ページ
       path: '/settingpersonal',
@@ -249,13 +268,6 @@ const router = new Router({
       path: '/security',
       name: 'security',
       component: UserSecurity,
-      meta: { requiresAuth: true }
-    },
-    {
-      // アカウント削除ページ
-      path: '/accountdelete',
-      name: 'accountdelete',
-      component: UserDelete,
       meta: { requiresAuth: true }
     },
     {

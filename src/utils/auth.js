@@ -44,6 +44,7 @@ function getUser() {
   });
 }
 
+//SignUpで入力したメールアドレスとパスワードをSignUpConfirmのメールアドレス・パスワードに渡したい
 function signUp(email, password) {
   const username = email
   return Auth.signUp({
@@ -53,18 +54,18 @@ function signUp(email, password) {
       email: username,
     },
   })
-    .then(data => {
-      AmplifyEventBus.$emit('localUser', data.user);
-      if (data.userConfirmed === false) {
-        AmplifyEventBus.$emit('authState', 'confirmSignUp');
-      } else {
-        AmplifyEventBus.$emit('authState', 'signIn');
-      }
-      return data;
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  .then(data => {
+    AmplifyEventBus.$emit('localUser', data.user);
+    if (data.userConfirmed === false) {
+      AmplifyEventBus.$emit('authState', 'confirmSignUp');
+    } else {
+      AmplifyEventBus.$emit('authState', 'signIn');
+    }
+    return data;
+  })
+  .catch(err => {
+    console.log(err);
+  });
 }
 
 function confirmSignUp(username, password, code, nickname) {
@@ -98,6 +99,7 @@ function confirmSignUp(username, password, code, nickname) {
       throw err;
     });
 }
+
 
 function resendSignUp(username) {
   return Auth.resendSignUp(username).then(() => {

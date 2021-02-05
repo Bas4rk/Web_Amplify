@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar">
+  <div class="settingcntact">
     <Navigation></Navigation>
 
     <!-- fluidで左右いっぱいにコンテナを広げる、らしい、py-8 px-6は余白の設定（公式見たらある） -->
@@ -22,16 +22,17 @@
         cols="8"とcols="4"で8対4で表示とか（2対1）最大は12 -->
         <v-col cols="5">
 
-          <!-- リストです -->
-          <v-list>
-            <!-- ↓後できれいにする -->
-            <!-- v-btn、ボタンです、blockは横幅最大に表示するやつです、<br>はいい感じの空白が欲しくてつけました -->
-            <!-- 遷移はまだない -->
-            
+            <v-divider></v-divider>
+            2020/12/17 20:00<br>
+            内容:ログインできない<br>
+            回答:お困りの方はこちら方はこちらをご覧ください
+            <v-divider></v-divider>
+            2020/12/16 10:00<br>
+            内容:質問内容<br>
+            回答:回答内容
+            <v-divider></v-divider>
 
-
             
-          </v-list>
         </v-col>
       </v-row>
     </v-container>

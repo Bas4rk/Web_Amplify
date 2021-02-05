@@ -268,8 +268,6 @@ import * as gqlQueries from '../graphql/queries'
 import * as gqlMutations from '../graphql/mutations'
 import {Storage} from 'aws-amplify'
 import store from '../store/index.js'
-
-
 export default {
   components: {
     Navigation
@@ -299,14 +297,10 @@ export default {
       foodMemoDay: [],
       trainingList: "",
       trainingMemoDay:[],
-
       snackbar: false,
       text: '必須項目が入力されていません',
       timeout: 4000,
-
       
-
-
       fooddialog: false,
       trainingdialog: false,
       //献立カロリー
@@ -374,12 +368,10 @@ export default {
       this.trainingMemos = trainingMemos
     },
     async createFoodMemo(){
-
       if(this.foodtitle == '' || this.foodcalorele == ''){
         this.snackbar = true
         return
       }
-
       this.fooddialog = false
       this.createCooking();
       //メモを作る前にすでにメモがあるかどうか判定する
@@ -418,10 +410,8 @@ export default {
         this.snackbar = true
         return
       }
-
       this.trainingdialog = false
       this.createMemo()
-
       for(var training of this.trainingMemos){
         if(this.trainingtitle == training.title){ 
           await API.graphql(
@@ -436,7 +426,6 @@ export default {
           return
         }
       }
-
       const trainingmemo = await API.graphql(
         graphqlOperation(gqlMutations.createTrainingMemo, {
           input: {
@@ -446,7 +435,6 @@ export default {
           }
         })
       )
-
       console.log("trainingmemo :"+trainingmemo)
       
       await API.graphql(
@@ -458,7 +446,6 @@ export default {
         })
       )
       location.reload();
-
     },
     async createMemo(){
       if(this.todayMemo == null){
@@ -500,15 +487,12 @@ export default {
         userId: store.getters.getUserId
       })
     )
-
     this.memos = this.calendar.data.getCalendar.memo.items
-
     this.foodList = await API.graphql(
       graphqlOperation(gqlQueries.listFoodMemos, {
         filter: {userId: {eq: store.getters.getUserId}}
       })
     ) 
-
     for(var food of this.foodList.data.listFoodMemos.items){
       if(food.image != null){
         var image = await Storage.get(food.image)
@@ -516,17 +500,14 @@ export default {
       }
       this.foodMemoDay.push(food.memoDate)
     }
-
     this.trainingList = await API.graphql(
       graphqlOperation(gqlQueries.listTrainingMemos, {
         filter: {userId: {eq: store.getters.getUserId}}
       })
     ) 
-
     for(var training of this.trainingList.data.listTrainingMemos.items){
       this.trainingMemoDay.push(training.memoDate)
     }
   }
 };
 </script>
-

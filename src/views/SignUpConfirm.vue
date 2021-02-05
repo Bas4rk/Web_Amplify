@@ -8,7 +8,7 @@
         <v-col cols="5">
           <h1>Confirm</h1>
           <v-form v-model="valid" ref="form" lazy-validation>
-            <v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
+            <!--<v-text-field v-model="username" :rules="emailRules" label="Email Address" required/>
             <v-text-field
               v-model="password"
               :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
@@ -20,11 +20,32 @@
               counter
               @click:append="passwordVisible = !passwordVisible"
               required/>
+
+              <v-text-field
+              v-model="passwordconfirm"
+              :append-icon="passwordconfirmVisible ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[passwordRules.required, passwordRules.min]"
+              :type="passwordconfirmVisible ? 'text' : 'password'"
+              name="password comfirm"
+              label="Password confirm"
+              hint="At least 8 characters"
+              counter
+              @click:append="passwordconfirmVisible = !passwordconfirmVisible"
+              required/>-->
             <v-text-field v-model="code" :rules="codeRules" label="Code" required/>
-            <v-text-field v-model="nickname" label="ニックネーム" required/>
-            <v-btn :disabled="!valid" @click="submit">Submit</v-btn>
+            <!--<v-text-field v-model="nickname" label="ニックネーム" required/>-->
+            <br><v-btn :disabled="!valid" @click="submit">Submit</v-btn>
           </v-form>
           <v-btn @click="resend">Resend Code</v-btn>
+          <!--<br>We have sent a security code to the email address you entered. 
+          Please note that if you do not enter it, the email address you entered will be invalid.
+          <div><br>In that case, please contact us from <a href="contactUs">here</a>.</div>
+          -->
+
+          <br>We have sent a security code to the email address you entered. 
+          Please note that if you do not enter it, the email address you entered will be invalid.
+          In that case, please contact us at the number below.
+          <br>TEL:XXXX-YY-ZZZZ
         </v-col>
       </v-row>
     </v-container>
@@ -33,16 +54,18 @@
 
 <script>
 import {confirmSignUp, resendSignUp, signIn} from '@/utils/auth.js'
+import store from '../store/index.js'
 export default {
   name: "SignUpConfirm",
   data() {
     return {
       valid: false,
-      username: '',
-      password: '',
-      passwordVisible: false,
+      /*username: this.$store.getters.getUserEmail,
+      password: this.$store.getters.getUserPassword,
+      password2: '',
+      passwordVisible: false,*/
       code: '',
-      nickname: ''
+      //nickname: ''
     }
   },
   computed: {
@@ -68,11 +91,16 @@ export default {
   },
   methods: {
     submit() {
+      let username = store.getters.getUserEmail
+      let password = store.getters.getUserPassword
+      let nickname = store.getters.getUserNickname
+      //if(this.password === this.password2confirm){
       if (this.$refs.form.validate()) {
-        console.log(`CONFIRM email: ${this.username}, code: ${this.code}`);
-        confirmSignUp(this.username, this.password, this.code, this.nickname);
-        signIn(this.username, this.password);
+        console.log(`CONFIRM email: ${username}, code: ${this.code}`);
+        confirmSignUp(username, password, this.code, nickname);
+        signIn(username, password);
       }
+      //}
     },
     resend() {
       console.log(`RESEND email: ${this.username}`);

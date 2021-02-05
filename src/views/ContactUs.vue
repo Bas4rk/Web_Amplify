@@ -1,12 +1,11 @@
 <template>
-  <div class="settingpersonal">
-    <Navigation></Navigation>
+  <div class="contactus">
     <v-container
       class="py-8 px-6"
       fluid
     > 
     <v-layout justify-center>
-      <div class="title">個人情報に関するお問い合わせはこちら</div>
+      <div class="title">お問い合わせはこちら</div>
     </v-layout>
       <v-row justify="center">
 
@@ -26,9 +25,7 @@
             label="contents"
           ></v-textarea>
 
-          <v-btn color="primary">送信</v-btn>
-
-            
+          <v-btn color="primary">Send</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -36,27 +33,9 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation.vue';
-import {signOut} from '@/utils/auth.js'
-
 export default {
-  components: {
-    Navigation
-  },
-  data() {
-    return {
-      theme: false
-    };
-  },
-  methods: {
-    signOut() {
-      signOut().then((data) => console.log('DONE', data)).catch((err) => console.log('SIGN OUT ERR', err));
-    }
-  },
-  watch: {
-    theme() {
-      this.$vuetify.theme.dark = this.theme
-    }
+  mounted : async function(){
+    console.log("ContactUs Page")
   }
 }
 </script>

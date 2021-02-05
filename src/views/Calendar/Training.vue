@@ -1,28 +1,24 @@
 <template>
-  <div class="mailadresschange">
+  <div class="calendar">
     <Navigation></Navigation>
     <v-container
       class="py-8 px-6"
       fluid
     > 
     <v-layout justify-center>
-      <div class="title">メールアドレス変更</div>
+      <div class="title">【トレーニング内容】</div>
     </v-layout>
       <v-row justify="center">
         <v-col cols="5">
           <v-list>
-            <p>現在</p>
-            <p>{{getUserEmail}}</p>
-            新規
-            <v-text-field
-              v-model="message"
-              label="mailadress"
-              type="text"
-            >
-            <template v-slot:append-outer>
-              <v-btn color="primary">完了</v-btn>
-            </template>
-            </v-text-field>
+            <v-row align-content="space-between">
+              <v-col cols="12" xs="12" sm="12" md="12" align="center">
+                <div class="display-1">ベンチプレス:10回</div>
+              </v-col>
+              <v-col cols="12" xs="12" sm="12" md="12" align="center">
+                <div class="display-1">ベンチプレス:5回</div>
+              </v-col>
+            </v-row>
           </v-list>
         </v-col>
       </v-row>
@@ -60,3 +56,4 @@ export default {
   },
 }
 </script>
+

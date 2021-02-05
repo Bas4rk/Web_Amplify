@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar">
+  <div class="settingpremium">
     <Navigation></Navigation>
 
     <!-- fluidで左右いっぱいにコンテナを広げる、らしい、py-8 px-6は余白の設定（公式見たらある） -->
