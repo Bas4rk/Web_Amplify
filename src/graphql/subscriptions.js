@@ -1627,174 +1627,192 @@ export const onDeleteBookmark = /* GraphQL */ `
 export const onCreateCalendar = /* GraphQL */ `
   subscription OnCreateCalendar($owner: String!) {
     onCreateCalendar(owner: $owner) {
-      owner
+      userId
       memo {
         items {
-          owner
+          userId
           date
           weight
           bfp
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdateCalendar = /* GraphQL */ `
   subscription OnUpdateCalendar($owner: String!) {
     onUpdateCalendar(owner: $owner) {
-      owner
+      userId
       memo {
         items {
-          owner
+          userId
           date
           weight
           bfp
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeleteCalendar = /* GraphQL */ `
   subscription OnDeleteCalendar($owner: String!) {
     onDeleteCalendar(owner: $owner) {
-      owner
+      userId
       memo {
         items {
-          owner
+          userId
           date
           weight
           bfp
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onCreateMemo = /* GraphQL */ `
   subscription OnCreateMemo($owner: String!) {
     onCreateMemo(owner: $owner) {
-      owner
+      userId
       date
       weight
       bfp
       foodMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           image
           calorele
           lipid
           proteins
+          carbohydrate
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       trainingMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdateMemo = /* GraphQL */ `
   subscription OnUpdateMemo($owner: String!) {
     onUpdateMemo(owner: $owner) {
-      owner
+      userId
       date
       weight
       bfp
       foodMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           image
           calorele
           lipid
           proteins
+          carbohydrate
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       trainingMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeleteMemo = /* GraphQL */ `
   subscription OnDeleteMemo($owner: String!) {
     onDeleteMemo(owner: $owner) {
-      owner
+      userId
       date
       weight
       bfp
       foodMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           image
           calorele
           lipid
           proteins
+          carbohydrate
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       trainingMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1802,15 +1820,17 @@ export const onCreateFoodMemo = /* GraphQL */ `
   subscription OnCreateFoodMemo($owner: String!) {
     onCreateFoodMemo(owner: $owner) {
       id
-      owner
+      userId
       memoDate
       title
       image
       calorele
       lipid
       proteins
+      carbohydrate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1818,15 +1838,17 @@ export const onUpdateFoodMemo = /* GraphQL */ `
   subscription OnUpdateFoodMemo($owner: String!) {
     onUpdateFoodMemo(owner: $owner) {
       id
-      owner
+      userId
       memoDate
       title
       image
       calorele
       lipid
       proteins
+      carbohydrate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1834,15 +1856,17 @@ export const onDeleteFoodMemo = /* GraphQL */ `
   subscription OnDeleteFoodMemo($owner: String!) {
     onDeleteFoodMemo(owner: $owner) {
       id
-      owner
+      userId
       memoDate
       title
       image
       calorele
       lipid
       proteins
+      carbohydrate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1850,7 +1874,7 @@ export const onCreateTrainingMemo = /* GraphQL */ `
   subscription OnCreateTrainingMemo($owner: String!) {
     onCreateTrainingMemo(owner: $owner) {
       id
-      owner
+      userId
       memoDate
       title
       contentList {
@@ -1866,6 +1890,7 @@ export const onCreateTrainingMemo = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1873,7 +1898,7 @@ export const onUpdateTrainingMemo = /* GraphQL */ `
   subscription OnUpdateTrainingMemo($owner: String!) {
     onUpdateTrainingMemo(owner: $owner) {
       id
-      owner
+      userId
       memoDate
       title
       contentList {
@@ -1889,6 +1914,7 @@ export const onUpdateTrainingMemo = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1896,7 +1922,7 @@ export const onDeleteTrainingMemo = /* GraphQL */ `
   subscription OnDeleteTrainingMemo($owner: String!) {
     onDeleteTrainingMemo(owner: $owner) {
       id
-      owner
+      userId
       memoDate
       title
       contentList {
@@ -1912,6 +1938,7 @@ export const onDeleteTrainingMemo = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;

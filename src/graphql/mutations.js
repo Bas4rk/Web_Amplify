@@ -1702,20 +1702,22 @@ export const createCalendar = /* GraphQL */ `
     $condition: ModelCalendarConditionInput
   ) {
     createCalendar(input: $input, condition: $condition) {
-      owner
+      userId
       memo {
         items {
-          owner
+          userId
           date
           weight
           bfp
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1725,20 +1727,22 @@ export const updateCalendar = /* GraphQL */ `
     $condition: ModelCalendarConditionInput
   ) {
     updateCalendar(input: $input, condition: $condition) {
-      owner
+      userId
       memo {
         items {
-          owner
+          userId
           date
           weight
           bfp
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1748,20 +1752,22 @@ export const deleteCalendar = /* GraphQL */ `
     $condition: ModelCalendarConditionInput
   ) {
     deleteCalendar(input: $input, condition: $condition) {
-      owner
+      userId
       memo {
         items {
-          owner
+          userId
           date
           weight
           bfp
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1771,38 +1777,42 @@ export const createMemo = /* GraphQL */ `
     $condition: ModelMemoConditionInput
   ) {
     createMemo(input: $input, condition: $condition) {
-      owner
+      userId
       date
       weight
       bfp
       foodMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           image
           calorele
           lipid
           proteins
+          carbohydrate
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       trainingMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1812,38 +1822,42 @@ export const updateMemo = /* GraphQL */ `
     $condition: ModelMemoConditionInput
   ) {
     updateMemo(input: $input, condition: $condition) {
-      owner
+      userId
       date
       weight
       bfp
       foodMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           image
           calorele
           lipid
           proteins
+          carbohydrate
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       trainingMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1853,38 +1867,42 @@ export const deleteMemo = /* GraphQL */ `
     $condition: ModelMemoConditionInput
   ) {
     deleteMemo(input: $input, condition: $condition) {
-      owner
+      userId
       date
       weight
       bfp
       foodMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           image
           calorele
           lipid
           proteins
+          carbohydrate
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       trainingMemos {
         items {
           id
-          owner
+          userId
           memoDate
           title
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1895,15 +1913,17 @@ export const createFoodMemo = /* GraphQL */ `
   ) {
     createFoodMemo(input: $input, condition: $condition) {
       id
-      owner
+      userId
       memoDate
       title
       image
       calorele
       lipid
       proteins
+      carbohydrate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1914,15 +1934,17 @@ export const updateFoodMemo = /* GraphQL */ `
   ) {
     updateFoodMemo(input: $input, condition: $condition) {
       id
-      owner
+      userId
       memoDate
       title
       image
       calorele
       lipid
       proteins
+      carbohydrate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1933,15 +1955,17 @@ export const deleteFoodMemo = /* GraphQL */ `
   ) {
     deleteFoodMemo(input: $input, condition: $condition) {
       id
-      owner
+      userId
       memoDate
       title
       image
       calorele
       lipid
       proteins
+      carbohydrate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1952,7 +1976,7 @@ export const createTrainingMemo = /* GraphQL */ `
   ) {
     createTrainingMemo(input: $input, condition: $condition) {
       id
-      owner
+      userId
       memoDate
       title
       contentList {
@@ -1968,6 +1992,7 @@ export const createTrainingMemo = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1978,7 +2003,7 @@ export const updateTrainingMemo = /* GraphQL */ `
   ) {
     updateTrainingMemo(input: $input, condition: $condition) {
       id
-      owner
+      userId
       memoDate
       title
       contentList {
@@ -1994,6 +2019,7 @@ export const updateTrainingMemo = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -2004,7 +2030,7 @@ export const deleteTrainingMemo = /* GraphQL */ `
   ) {
     deleteTrainingMemo(input: $input, condition: $condition) {
       id
-      owner
+      userId
       memoDate
       title
       contentList {
@@ -2020,6 +2046,7 @@ export const deleteTrainingMemo = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;

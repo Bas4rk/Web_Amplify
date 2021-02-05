@@ -59,7 +59,7 @@ type Training
   userId: ID!
   image: String
   title: String!
-  content: String!
+  content: [String!]
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
   user: User @connection(fields: ["userId"])
@@ -75,7 +75,7 @@ type Cooking
   userId: ID!
   image: String
   title: String!
-  content: String!
+  content: [String!]
   calorie: Int!
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
@@ -161,6 +161,7 @@ type FoodMemo
     calorele: Int
     lipid: Int
     proteins: Int
+    carbohydrate: Int
 }
 type TrainingMemo
     @model
