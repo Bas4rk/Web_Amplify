@@ -1,41 +1,10 @@
 <template>
   <div class="calendar">
     <Navigation></Navigation>
-    <!-- <div>
-      calendar
-      {{calendar}}
-    </div>
-    <br> -->
-    <div>
-      memos
-      {{memos}}
-    </div>
-    <br>
-    <div>
+    <div hidden>
       todayMemo
       {{todayMemo}}
     </div>
-    <br>
-    <div>
-      todayfoodMemos
-      {{foodMemos}}
-    </div>
-    <!-- <br>
-    <div>
-      foodMemos.length
-      {{foodMemos.length}}
-    </div> -->
-    <!-- <br>
-    <div>
-      foodList
-      {{foodList}}
-    </div> -->
-    <!-- <br>
-    <div>
-      foodListImage
-      {{foodListImage}}
-    </div> -->
-
       <v-dialog v-model="fooddialog" max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -62,18 +31,18 @@
                   <v-text-field label="カロリー*" v-model="foodcalorele" required></v-text-field>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field label="炭水化物*" v-model="foodcarbohydrate" required></v-text-field>
+                  <v-text-field label="炭水化物" v-model="foodcarbohydrate" required></v-text-field>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field label="たんぱく質*" v-model="foodproteins" required></v-text-field>
+                  <v-text-field label="たんぱく質" v-model="foodproteins" required></v-text-field>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field label="脂質*" v-model="foodlipid" required></v-text-field>
+                  <v-text-field label="脂質" v-model="foodlipid" required></v-text-field>
                 </v-col>
                 
                 <v-col cols="12">
                   <v-file-input
-                    accept="image/*"
+                    accept="image/"
                     label="料理の写真を載せる"
                     @change="onImgPicked"
                   ></v-file-input>
@@ -109,10 +78,10 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field label="タイトル*" v-model="trainingtitle" required></v-text-field>
+                  <v-text-field label="種目*" v-model="trainingtitle" required></v-text-field>
                 </v-col>
                 <v-col cols="6">
-                  <v-text-field label="コンテント*" v-model="trainingcontent" required></v-text-field>
+                  <v-text-field label="回数*" v-model="trainingcontent" required></v-text-field>
                 </v-col>
               </v-row>
             </v-container>
@@ -171,7 +140,6 @@
         :cols=3
         @click.stop="onClickBtn(card)"
       >
-        <v-subheader>{{card.title}}</v-subheader>
         <v-card>
           <v-img
             :src="getImage(card.image)"
@@ -247,18 +215,48 @@
     </v-row>
     <v-divider></v-divider>
 
-    <!-- <v-row v-if="trainingMemos.length > 0" id="clmenu" align="center">
-      <v-treeview
-        open-all
-        :items="todayTrainingMenus.items"
-      ></v-treeview>
+    <v-row v-if="trainingMemos.length > 0" id="clmenu" align="center">
+      <v-col
+        v-for="(training,index) in trainingMemos"
+        :key="index"
+        :cols=12
+        class="title"
+      >
+      {{training.title}}
+      <br>
+        <v-col
+          v-for="(trainingContent,index2) in training.contentList.items"
+          :key="index2"
+          :cols=12
+        >
+        {{trainingContent.content}}
+        </v-col>
+      </v-col>
     </v-row>
     <v-row v-else justify="center" class="my-5">
       <div class="display-2">
         トレーニングしていません。
       </div>
-    </v-row> -->
+    </v-row>
 
+
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+    >
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+           color="error"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
 
   </div>
 </template>
@@ -288,7 +286,7 @@ export default {
       multiple: false,
       readonly: false,
       disabled: false,
-      enableEvents: false,
+      enableEvents: true,
       dialog: false,
       currentCard: null,
       calendar: "",
@@ -298,6 +296,15 @@ export default {
       weight: "",
       foodList: "",
       foodListImage: {},
+      foodMemoDay: [],
+      trainingList: "",
+      trainingMemoDay:[],
+
+      snackbar: false,
+      text: '必須項目が入力されていません',
+      timeout: 4000,
+
+      
 
 
       fooddialog: false,
@@ -340,40 +347,22 @@ export default {
     },
   },
   methods: {
-    // dateFunctionEvents (date) {
-    //   // console.log("date:"+date)
-    //   // console.log("parseInt(day, 10):"+parseInt(day, 10))
-    //   const [,, day] = date.split('-')
-    //   const foodMemoDay = []
-    //   this.foodMemos.forEach(function (value) {
-    //     // console.log(index + '番目 : ' + value);
-    //     const [,, memo] = value.memoDate.split('-')
-    //     foodMemoDay.push(Number(memo))
-    //   });
-    //   // if (foodMemoDay.includes(parseInt(day, 10))) return true
-    //   const trainingMemoDay = []
-    //   this.trainingMemos.forEach(function (value) {
-    //     // console.log(index + '番目 : ' + value);
-    //     const [,, memo] = value.memoDate.split('-')
-    //     trainingMemoDay.push(Number(memo))
-    //   });
-      
-    //   if (foodMemoDay.includes(parseInt(day, 10)) && trainingMemoDay.includes(parseInt(day, 10))){
-    //     return ['blue', 'red']
-    //   } else if(foodMemoDay.includes(parseInt(day, 10))){
-    //     return 'blue'
-    //   } else if(trainingMemoDay.includes(parseInt(day, 10))){
-    //     return 'red'
-    //   }
-    //   //[fix]ここら辺めっちゃ呼び出されてるけど、どうにかならないか？
-    //   return false
-    // },
-    // monthFunctionEvents (date) {
-    //   const month = parseInt(date.split('-')[1], 10)
-    //   if ([1, 3, 7].includes(month)) return true
-    //   if ([2, 5, 12].includes(month)) return ['error', 'purple', 'rgba(0, 128, 0, 0.5)']
-    //   return false
-    // },
+    dateFunctionEvents (date) {
+      if (this.foodMemoDay.includes(String(date)) && this.trainingMemoDay.includes(String(date))){
+        return ['blue', 'red']
+      } else if(this.foodMemoDay.includes(String(date))){
+        return 'blue'
+      } else if(this.trainingMemoDay.includes(String(date))){
+        return 'red'
+      }
+      return false
+    },
+    monthFunctionEvents (date) {
+      const month = parseInt(date.split('-')[1], 10)
+      if ([1, 3, 7].includes(month)) return true
+      if ([2, 5, 12].includes(month)) return ['error', 'purple', 'rgba(0, 128, 0, 0.5)']
+      return false
+    },
     onClickBtn(card) {
       this.currentCard = card
       this.dialog = true
@@ -385,21 +374,16 @@ export default {
       this.trainingMemos = trainingMemos
     },
     async createFoodMemo(){
+
+      if(this.foodtitle == '' || this.foodcalorele == ''){
+        this.snackbar = true
+        return
+      }
+
       this.fooddialog = false
       this.createCooking();
       //メモを作る前にすでにメモがあるかどうか判定する
-      if(this.todayMemo == null){
-        //メモがないならメモを作る
-        const creatememo = await API.graphql(
-          graphqlOperation(gqlMutations.createMemo, {
-            input: {
-              userId: this.$store.getters.getUserId,
-              date: this.picker
-            }
-          })
-        )
-        console.log(creatememo.data.createMemo);
-      }
+      this.createMemo()
       //料理メモを作る
       const foodmemo = await API.graphql(
         graphqlOperation(gqlMutations.createFoodMemo, {
@@ -416,6 +400,7 @@ export default {
         })
       )
       console.log(foodmemo.data.createFoodMemo);
+      location.reload();
     },
     async createCooking(){
       await Storage.put(
@@ -426,6 +411,68 @@ export default {
       .catch(err => console.log(err));
       // createTweetにそのまま書いてるけど、thenとかerrorで投稿成功、投稿失敗とか分けた方がいいと思った。
       // this.dialog = true;
+    },
+    async createTrainingMemo(){
+      
+      if(this.trainingtitle == '' || this.trainingcontent == ''){
+        this.snackbar = true
+        return
+      }
+
+      this.trainingdialog = false
+      this.createMemo()
+
+      for(var training of this.trainingMemos){
+        if(this.trainingtitle == training.title){ 
+          await API.graphql(
+            graphqlOperation(gqlMutations.createTrainingContent, {
+              input: {
+                trainingMemoId: training.id,
+                content: this.trainingcontent
+              }
+            })
+          )
+          location.reload();
+          return
+        }
+      }
+
+      const trainingmemo = await API.graphql(
+        graphqlOperation(gqlMutations.createTrainingMemo, {
+          input: {
+            userId: this.$store.getters.getUserId,
+            title: this.trainingtitle,
+            memoDate: this.picker,
+          }
+        })
+      )
+
+      console.log("trainingmemo :"+trainingmemo)
+      
+      await API.graphql(
+        graphqlOperation(gqlMutations.createTrainingContent, {
+          input: {
+            trainingMemoId: trainingmemo.data.createTrainingMemo.id,
+            content: this.trainingcontent
+          }
+        })
+      )
+      location.reload();
+
+    },
+    async createMemo(){
+      if(this.todayMemo == null){
+        //メモがないならメモを作る
+        const creatememo = await API.graphql(
+          graphqlOperation(gqlMutations.createMemo, {
+            input: {
+              userId: this.$store.getters.getUserId,
+              date: this.picker
+            }
+          })
+        )
+        console.log(creatememo.data.createMemo);
+      }
     },
     onImgPicked(file) {
       if (file !== undefined && file !== null) {
@@ -444,9 +491,6 @@ export default {
       }
     },
     getImage(image){
-      if(image == null){
-        return require('../assets/料理/料理投稿.png')
-      }
       return this.foodListImage[image]
     },
   },
@@ -464,13 +508,23 @@ export default {
         filter: {userId: {eq: store.getters.getUserId}}
       })
     ) 
-    
-    for(var item of this.foodList.data.listFoodMemos.items){
-      if(item.image != null){
-        // this.foodListImage.push(await Storage.get(item.image))
-        var image = await Storage.get(item.image)
-        this.foodListImage[item.image] = image
+
+    for(var food of this.foodList.data.listFoodMemos.items){
+      if(food.image != null){
+        var image = await Storage.get(food.image)
+        this.foodListImage[food.image] = image
       }
+      this.foodMemoDay.push(food.memoDate)
+    }
+
+    this.trainingList = await API.graphql(
+      graphqlOperation(gqlQueries.listTrainingMemos, {
+        filter: {userId: {eq: store.getters.getUserId}}
+      })
+    ) 
+
+    for(var training of this.trainingList.data.listTrainingMemos.items){
+      this.trainingMemoDay.push(training.memoDate)
     }
   }
 };

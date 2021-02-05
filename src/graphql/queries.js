@@ -884,6 +884,7 @@ export const getCalendar = /* GraphQL */ `
           }
           trainingMemos {
             items {
+              id
               title
               contentList {
                 items {
